@@ -1,0 +1,88 @@
+name: 💡 Feature request
+description: Suggest a new feature or improvement for PPAT.
+title: "💡 [FEATURE] "
+labels: ["enhancement"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement to PPAT.
+
+        Feature requests help us understand real-world needs and shape the roadmap. 
+        At this stage, implementation is handled by the PPAT maintainers to ensure consistency and quality across the project.
+
+  - type: checkboxes
+    id: existing-request-check
+    attributes:
+      label: Existing request check
+      description: Have you checked that this feature has not already been requested in the [backlog](https://github.com/Powerbouwer/power-platform-administration-tool/issues)?
+      options:
+        - label: I have searched the existing issues and confirm that this feature has not already been requested.
+          required: true
+
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      description: Select the PPAT module where you would like this functionality to be available.
+      options:
+        - Inventory
+        - Governance Processes
+        - Maker Hub
+        - Environment Settings Configurator
+        - Tenant Monitor
+        - Message Center Triage
+        - Maker Enablement
+        - Change Viewer
+        - Other / Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: Describe the problem you are trying to solve or the use case that is currently not supported.
+      placeholder: |
+        Describe what you are trying to achieve and why the current functionality does not meet this need.
+    validations:
+      required: true
+
+  - type: textarea
+    id: desired-behavior
+    attributes:
+      label: Desired functionality
+      description: Describe what you would like PPAT to do.
+      placeholder: |
+        Describe the functionality or behavior you would like to see.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed solution
+      description: If you already have an idea for how this could work, describe it here.
+      placeholder: |
+        This is optional. You do not need to provide a technical solution.
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or workarounds
+      description: Describe any workaround, alternative solution, or existing tool you currently use.
+      placeholder: Describe how you currently deal with this problem, if applicable.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add examples, screenshots, links, Microsoft documentation, APIs, or other information that may help explain the request.
+      placeholder: Add any additional context here.
+    validations:
+      required: false

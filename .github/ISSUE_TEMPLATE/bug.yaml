@@ -1,0 +1,89 @@
+name: 🐞 Bug report
+description: Report a reproducible problem with PPAT.
+title: "🐞 [BUG] "
+labels: ["bug"]
+
+body:
+  - type: checkboxes
+    id: existing-issue-check
+    attributes:
+      label: Existing issue check
+      description: Have you checked that this issue has not already been reported in the [backlog](https://github.com/Powerbouwer/power-platform-administration-tool/issues)?
+      options:
+        - label: I have searched the existing issues and confirm that this bug has not already been reported.
+          required: true
+
+  - type: dropdown
+    id: module
+    attributes:
+      label: Affected module
+      description: Select the module where the bug occurs.
+      options:
+        - Inventory
+        - Governance Processes
+        - Maker Hub
+        - Environment Settings Configurator
+        - Tenant Monitor
+        - Message Center Triage
+        - Maker Enablement
+        - Change Viewer
+        - Other / Not sure
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Specify the PPAT solution version you are using.
+      placeholder: "e.g. 1.0.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Describe the bug
+      description: Provide a clear and concise description of what is happening.
+      placeholder: Describe what went wrong.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide the steps required to reproduce the problem.
+      placeholder: |
+        1. Go to ...
+        2. Select ...
+        3. Run ...
+        4. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: Describe what you expected to happen instead.
+      placeholder: Describe the expected result.
+    validations:
+      required: true
+
+  - type: upload
+    id: attachments
+    attributes:
+      label: Attachments
+      description: Upload screenshots, log files, or other files that help demonstrate the problem.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional information
+      description: Add any other information that may help diagnose the problem.
+      placeholder: Include relevant configuration, environment details, error messages, or other context.
+    validations:
+      required: false

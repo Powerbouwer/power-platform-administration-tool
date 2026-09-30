@@ -1,0 +1,104 @@
+name: 📚 Documentation feedback
+description: Report an issue or suggest an improvement for the PPAT documentation.
+title: "📚 [DOCS] "
+labels: ["documentation"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us improve the PPAT documentation.
+
+        Use this form to report missing, incorrect, outdated, or unclear documentation, or to suggest improvements to the documentation website.
+
+  - type: checkboxes
+    id: existing-issue-check
+    attributes:
+      label: Existing issue check
+      description: Have you checked that this documentation issue has not already been reported in the [backlog](https://github.com/Powerbouwer/power-platform-administration-tool/issues)?
+      options:
+        - label: I have searched the existing issues and confirm that this has not already been reported.
+          required: true
+
+  - type: dropdown
+    id: feedback-type
+    attributes:
+      label: Type of feedback
+      description: What kind of documentation feedback are you providing?
+      options:
+        - Incorrect information
+        - Outdated information
+        - Missing documentation
+        - Unclear explanation
+        - Broken link
+        - Formatting or layout issue
+        - Navigation or structure
+        - Example or screenshot improvement
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: module
+    attributes:
+      label: Related module
+      description: Select the PPAT module this documentation relates to.
+      options:
+        - General / Getting started
+        - Inventory
+        - Governance Processes
+        - Maker Hub
+        - Environment Settings Configurator
+        - Tenant Monitor
+        - Message Center Triage
+        - Maker Enablement
+        - Change Viewer
+        - Installation / Configuration
+        - Architecture
+        - Other / Not sure
+    validations:
+      required: true
+
+  - type: input
+    id: page-url
+    attributes:
+      label: Documentation page
+      description: Provide the URL of the documentation page, if applicable.
+      placeholder: "https://..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: current-problem
+    attributes:
+      label: What should be improved?
+      description: Describe what is incorrect, missing, outdated, unclear, or otherwise needs improvement.
+      placeholder: Describe the issue with the current documentation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-improvement
+    attributes:
+      label: Suggested improvement
+      description: Describe what you think would make the documentation clearer or more useful.
+      placeholder: Explain how you think the documentation could be improved.
+    validations:
+      required: false
+
+  - type: upload
+    id: attachments
+    attributes:
+      label: Attachments
+      description: Upload screenshots or other files that help explain the documentation issue.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other information that may help us understand the feedback.
+      placeholder: Add any additional context here.
+    validations:
+      required: false
