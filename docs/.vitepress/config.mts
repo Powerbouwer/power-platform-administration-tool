@@ -28,7 +28,7 @@ export default defineConfig({
       ]},
       { text: 'Installation', link: '/installation' },
       { text: 'Architecture', link: '/architecture' },
-      { text: 'Contributor Guide', link: '/contributor-guide' },
+      { text: 'Contributor Guide', link: '/developer' },
       { text: 'Team', link: '/team' }
     ],
 

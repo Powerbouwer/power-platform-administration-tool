@@ -3,9 +3,13 @@
 layout: home
 
 hero:
-  name: "Power Platform Administration Tool"
-  text: "Open-source administration and governance toolkit for Microsoft Power Platform, built on the Power Platform Inventory API."
-  tagline: My great project tagline
+  name: PPAT
+  text: |
+    Power
+    Platform
+    Administration
+    Tool
+  tagline: Open-source administration and governance toolkit for Microsoft Power Platform, built on the Power Platform Inventory API.
   actions:
     - theme: brand
       text: Markdown Examples
