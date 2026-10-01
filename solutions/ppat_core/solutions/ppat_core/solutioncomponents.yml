@@ -1,3 +1,4 @@
 SolutionComponents:
   Component:
-    '@path': /publishers/ppat
+  - '@path': /appmodulesitemaps/ppat_PowerPlatformAdministrationTool
+  - '@path': /publishers/ppat
