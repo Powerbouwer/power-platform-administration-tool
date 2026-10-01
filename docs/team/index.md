@@ -17,4 +17,4 @@ Contributor acknowledgements will be added here.
 
 ## Contributing
 
-See the [Contributor Guide](/contributor-guide/) to learn how to participate in the project.
+See the [Contributor Guide](/developer/) to learn how to participate in the project.
