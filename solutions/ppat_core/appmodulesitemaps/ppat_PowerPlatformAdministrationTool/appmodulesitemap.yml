@@ -16,6 +16,25 @@ AppModuleSiteMap:
         Title:
           '@LCID': 1033
           '@Title': Area1
+      Group:
+        '@Id': group_37204909
+        '@ResourceId': SitemapDesigner.NewGroup
+        '@DescriptionResourceId': SitemapDesigner.NewGroup
+        '@IntroducedVersion': 7.0.0.0
+        '@IsProfile': false
+        '@ToolTipResourseId': SitemapDesigner.Unknown
+        SubArea:
+          '@Id': subarea_52403fe7
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          '@Page': ppat_ppattemplate_97904
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': PPAT - Template
   LocalizedNames:
     LocalizedName:
       '@description': Power Platform Administration Tool

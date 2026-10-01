@@ -20,6 +20,13 @@ AppModule:
     LocalizedName:
       '@description': Power Platform Administration Tool
       '@languagecode': 1033
+  appelements:
+    appelement:
+      '@uniquename': ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_ppattemplate_97904
+      canvasappid:
+        name: ppat_ppattemplate_97904
+      iscustomizable: 1
+      name: ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_ppattemplate_97904
   appsettings:
     appsetting:
       '@settingdefinitionid.uniquename': AppChannel
