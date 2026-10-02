@@ -12,18 +12,15 @@ hero:
   tagline: Open-source administration and governance toolkit for Microsoft Power Platform, built on the Power Platform Inventory API.
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
-    - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: View releases
+      link: https://github.com/Powerbouwer/power-platform-administration-tool/releases
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: CoE Starter Kit
+    details: The good from the sunsetted CoE Starter Kit
+  - title: Inventory API
+    details: Drasctically limits sync flows using the modern Inventory API
+  - title: Governance Experience
+    details: Added features based on years of Power Platform governance experience
 ---
 

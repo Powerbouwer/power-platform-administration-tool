@@ -103,6 +103,12 @@ The identity is created asynchronously. If it is not available yet, wait briefly
 
 PPAT uses shared release and sprint branches:
 
+<VPButton
+	text="Create development branches"
+	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/create-dev-branch.yml"
+	theme="brand"
+/>
+
 1. Open **Actions** > **Create development branches** in GitHub.
 1. Select the `solution` you are going to work on, enter the three-part release version without a `v` prefix, for example `1.0.0`, and enter the numeric sprint number.
 1. The workflow creates `{solution}/v{major}.{minor}.{build}` from `main`, updates that solution to `{major}.{minor}.{build}.0`, and creates the `release:{solution}-v{major}.{minor}.{build}` issue label.
@@ -167,6 +173,12 @@ Existing branches and tags that predate the solution namespaces are not renamed.
 
 Documentation work does not require a solution release cycle:
 
+<VPButton
+	text="Create documentation branch"
+	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/create-docs-branch.yml"
+	theme="brand"
+/>
+
 1. Open **Actions** > **Create documentation branch**.
 1. Enter a short lowercase kebab-case name, for example `update-installation`.
 1. The workflow creates `docs/update-installation` from the current `main` branch.
@@ -177,6 +189,12 @@ A pull request from `docs/*` may modify files below `docs/`, plus the root files
 ## Project Changes
 
 Repository-wide changes that don't modify Power Platform solutions use a separate project branch:
+
+<VPButton
+	text="Create project branch"
+	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/create-project-branch.yml"
+	theme="brand"
+/>
 
 1. Open **Actions** > **Create project branch**.
 1. Enter a short lowercase kebab-case name, for example `update-workflows`.
@@ -211,6 +229,12 @@ When solution files under `solutions/` change on `main`, the release workflow:
 1. Adds all closed issues with label `release:{solution}-vX.Y.Z` to the release notes.
 
 Import the managed ZIP into a test environment and complete acceptance testing. When approved, open **Actions** > **Publish solution release**, enter the existing `{solution}-vX.Y.Z` tag, and approve the `production-release` environment when required. Publishing removes the pre-release status and marks the same release as stable and **Latest**. It doesn't change visibility, rebuild, or replace its assets.
+
+<VPButton
+	text="Publish solution release"
+	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/publish-release.yml"
+	theme="brand"
+/>
 
 Configure the `production-release` GitHub Environment with required reviewers to separate testing from production approval.
 
