@@ -191,31 +191,9 @@ The check evaluates both the current and previous paths of renamed files. Moving
 
 Engineers with repository write access can update existing sprint, documentation, and project branches and open pull requests. They don't create branches manually. Maintainers have ruleset bypass access for exceptional recovery work, so this policy deliberately has a controlled administrative escape hatch.
 
-Configure the following repository settings under **Settings** > **Rules** > **Rulesets**:
+For every pull request targeting `main`, the author must select a fellow developer as reviewer. At least one approval is required before the pull request can be merged.
 
-1. Create an active branch ruleset targeting all branches.
-1. Enable **Restrict creations**, **Restrict deletions**, and **Block force pushes**.
-1. Add a branch-name restriction that must match this regular expression:
-
-	```text
-	^(main|v[0-9]+\.[0-9]+\.[0-9]+|spr-[0-9]+|[a-z0-9]+(-[a-z0-9]+)*\/(v[0-9]+\.[0-9]+\.[0-9]+|spr-[0-9]+)|docs\/[a-z0-9]+(-[a-z0-9]+)*|project\/[a-z0-9]+(-[a-z0-9]+)*)$
-	```
-
-	The solution namespace accepts lowercase kebab-case tokens. Branch creation remains restricted by the workflow dropdown and repository permissions. The legacy `vX.Y.Z` and `spr-N` alternatives keep existing development cycles operable; the branch workflow no longer creates branches in those formats.
-
-1. Add the maintainer team to the bypass list with **Always allow**. Organization owners can also be added as an explicit break-glass bypass.
-1. Create additional rulesets for `main` and the solution release branches that require pull requests and block deletion and force pushes.
-1. Require the **Documentation changes only**, **Project files only**, and **Development changes only** status checks on pull requests to `main`. Require **Development changes only** on pull requests to solution release branches as well. Each check is skipped successfully when its corresponding branch type isn't used.
-1. Test new rulesets in **Evaluate** mode before changing them to **Active**.
-
-The branch workflows must authenticate as a bypass actor because the built-in Actions token doesn't inherit the permissions of the maintainer who starts a workflow. Create a fine-grained token owned by a maintainer or dedicated automation account in the bypass team and grant it **Contents: read and write** and **Issues: read and write** for this repository. Store the token and its expiration date in the team's restricted 1Password vault, and configure the same token value in GitHub as the repository secret `BRANCH_AUTOMATION_TOKEN`. Expiration notifications are managed from the 1Password record. The repository administrator is responsible for renewing the token before it expires.
-
-Renew the automation token shortly before it expires:
-
-1. Regenerate the existing fine-grained token in GitHub and select a new expiration date. Regeneration immediately invalidates the previous token value, so complete the remaining steps without delay.
-1. Replace the credential and expiration date in the existing 1Password item.
-1. Update the existing GitHub repository secret `BRANCH_AUTOMATION_TOKEN` with the regenerated token value.
-1. Verify the regenerated token by running one of the branch-creation workflows.
+The branch workflows use the repository secret `BRANCH_AUTOMATION_TOKEN`. The token and its expiration date are stored in the team's restricted 1Password vault. The repository administrator must renew the token before it expires.
 
 ## Release Process
 
