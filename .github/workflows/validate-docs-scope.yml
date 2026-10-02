@@ -1,0 +1,59 @@
+name: Validate documentation scope
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate:
+    name: Documentation changes only
+    if: startsWith(github.head_ref, 'docs/')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+
+    steps:
+      - name: Validate changed paths
+        shell: bash
+        run: |
+          mapfile -t paths < <(
+            gh api \
+              --paginate \
+              "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" \
+              --jq '.[] | .filename, (.previous_filename // empty)'
+          )
+
+          if [[ ${#paths[@]} -eq 0 ]]; then
+            echo "Pull request contains no changed files." >&2
+            exit 1
+          fi
+
+          invalid_paths=()
+          for path in "${paths[@]}"; do
+            case "$path" in
+              docs/*|package.json|package-lock.json|.gitignore)
+                ;;
+              *)
+                invalid_paths+=("$path")
+                ;;
+            esac
+          done
+
+          if [[ ${#invalid_paths[@]} -gt 0 ]]; then
+            echo "Documentation branches may only change docs/, package.json, package-lock.json, and .gitignore:" >&2
+            printf ' - %s\n' "${invalid_paths[@]}" >&2
+            exit 1
+          fi
+
+          echo "Validated ${#paths[@]} documentation path entries."

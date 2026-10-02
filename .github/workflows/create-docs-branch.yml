@@ -1,0 +1,69 @@
+name: Create documentation branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: Short kebab-case name (e.g. update-installation)
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: create-documentation-branch
+  cancel-in-progress: false
+
+jobs:
+  create-branch:
+    name: Create documentation branch
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.BRANCH_AUTOMATION_TOKEN }}
+      BRANCH_SLUG: ${{ inputs.name }}
+
+    steps:
+      - name: Validate branch name
+        shell: bash
+        run: |
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo "Repository secret BRANCH_AUTOMATION_TOKEN is required." >&2
+            exit 1
+          fi
+
+          if [[ ! "$BRANCH_SLUG" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+            echo "Name must be lowercase kebab-case, for example update-installation." >&2
+            exit 1
+          fi
+
+      - name: Create branch from main
+        id: branch
+        shell: bash
+        run: |
+          branch="docs/$BRANCH_SLUG"
+
+          if gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/$branch" >/dev/null 2>&1; then
+            echo "Branch $branch already exists." >&2
+            exit 1
+          fi
+
+          main_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+          gh api \
+            --method POST \
+            "repos/$GITHUB_REPOSITORY/git/refs" \
+            -f ref="refs/heads/$branch" \
+            -f sha="$main_sha" >/dev/null
+
+          echo "name=$branch" >> "$GITHUB_OUTPUT"
+          echo "sha=$main_sha" >> "$GITHUB_OUTPUT"
+
+      - name: Write summary
+        shell: bash
+        run: |
+          {
+            echo "## Documentation branch created"
+            echo "- Branch: \`${{ steps.branch.outputs.name }}\`"
+            echo "- Based on main commit: \`${{ steps.branch.outputs.sha }}\`"
+            echo "- Open a pull request to \`main\` when the documentation is ready."
+          } >> "$GITHUB_STEP_SUMMARY"

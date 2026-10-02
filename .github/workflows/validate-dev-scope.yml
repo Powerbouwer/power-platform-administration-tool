@@ -1,0 +1,127 @@
+name: Validate development scope
+
+on:
+  pull_request:
+    branches:
+      - main
+      - "*/v*"
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate:
+    name: Development changes only
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      HEAD_BRANCH: ${{ github.head_ref }}
+      BASE_BRANCH: ${{ github.base_ref }}
+
+    steps:
+      - name: Classify pull request branch
+        id: branch
+        shell: bash
+        run: |
+          if [[ "$HEAD_BRANCH" =~ ^[a-z0-9]+(-[a-z0-9]+)*/(spr-[0-9]+|v[0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            echo "is_solution=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_solution=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping development scope validation for $HEAD_BRANCH."
+          fi
+
+      - name: Checkout pull request head
+        if: steps.branch.outputs.is_solution == 'true'
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Validate branch route and changed paths
+        if: steps.branch.outputs.is_solution == 'true'
+        shell: bash
+        run: |
+          solution="${HEAD_BRANCH%%/*}"
+          if [[ ! "$solution" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+            echo "Invalid solution branch namespace: $solution" >&2
+            exit 1
+          fi
+
+          if [[ "$HEAD_BRANCH" =~ ^${solution}/spr-[0-9]+$ ]]; then
+            if [[ "$BASE_BRANCH" =~ ^${solution}/v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+              expected_version="${BASH_REMATCH[1]}.0"
+            else
+              echo "Sprint branch $HEAD_BRANCH must target a $solution/vX.Y.Z release branch." >&2
+              exit 1
+            fi
+          elif [[ "$HEAD_BRANCH" =~ ^${solution}/v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            expected_version="${BASH_REMATCH[1]}.0"
+            if [[ "$BASE_BRANCH" != "main" ]]; then
+              echo "Release branch $HEAD_BRANCH must target main." >&2
+              exit 1
+            fi
+          else
+            echo "Solution branches must use $solution/spr-N or $solution/vX.Y.Z." >&2
+            exit 1
+          fi
+
+          unique_name="ppat_${solution//-/_}"
+          solution_root="solutions/$unique_name/"
+          solution_file="${solution_root}solutions/$unique_name/solution.yml"
+
+          test -f "$solution_file" || {
+            echo "Solution metadata not found at $solution_file." >&2
+            exit 1
+          }
+
+          actual_name="$(ruby -ryaml -e 'puts YAML.load_file(ARGV[0]).dig("ImportExportXml", "SolutionManifest", "UniqueName")' "$solution_file")"
+          if [[ "$actual_name" != "$unique_name" ]]; then
+            echo "Expected solution $unique_name, found $actual_name." >&2
+            exit 1
+          fi
+
+          actual_version="$(ruby -ryaml -e 'puts YAML.load_file(ARGV[0]).dig("ImportExportXml", "SolutionManifest", "Version")' "$solution_file")"
+          if [[ "$actual_version" != "$expected_version" ]]; then
+            echo "Solution version must be $expected_version for this release branch; found $actual_version." >&2
+            exit 1
+          fi
+
+          if ! gh api \
+              --paginate \
+              "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" \
+              --jq '.[] | .filename, (.previous_filename // empty)' \
+              > /tmp/changed-paths.txt; then
+            echo "Failed to retrieve changed pull request files." >&2
+            exit 1
+          fi
+          mapfile -t paths < /tmp/changed-paths.txt
+
+          if [[ ${#paths[@]} -eq 0 ]]; then
+            echo "Pull request contains no changed files." >&2
+            exit 1
+          fi
+
+          invalid_paths=()
+          for path in "${paths[@]}"; do
+            case "$path" in
+              "$solution_root"*|docs/*|package.json|package-lock.json|.gitignore)
+                ;;
+              *)
+                invalid_paths+=("$path")
+                ;;
+            esac
+          done
+
+          if [[ ${#invalid_paths[@]} -gt 0 ]]; then
+            echo "$HEAD_BRANCH may only change $solution_root, docs/, package.json, package-lock.json, and .gitignore:" >&2
+            printf ' - %s\n' "${invalid_paths[@]}" >&2
+            exit 1
+          fi
+
+          echo "Validated ${#paths[@]} path entries for $unique_name."

@@ -1,0 +1,57 @@
+name: Validate project scope
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate:
+    name: Project files only
+    if: startsWith(github.head_ref, 'project/')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+
+    steps:
+      - name: Validate changed paths
+        shell: bash
+        run: |
+          mapfile -t paths < <(
+            gh api \
+              --paginate \
+              "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" \
+              --jq '.[] | .filename, (.previous_filename // empty)'
+          )
+
+          if [[ ${#paths[@]} -eq 0 ]]; then
+            echo "Pull request contains no changed files." >&2
+            exit 1
+          fi
+
+          invalid_paths=()
+          for path in "${paths[@]}"; do
+            case "$path" in
+              solutions/*)
+                invalid_paths+=("$path")
+                ;;
+            esac
+          done
+
+          if [[ ${#invalid_paths[@]} -gt 0 ]]; then
+            echo "Project branches may not change files under solutions/:" >&2
+            printf ' - %s\n' "${invalid_paths[@]}" >&2
+            exit 1
+          fi
+
+          echo "Validated ${#paths[@]} project path entries."

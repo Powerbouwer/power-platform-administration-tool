@@ -1,0 +1,212 @@
+name: Create development branches
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: Version without v prefix (for example, 1.2.0)
+        required: true
+        type: string
+      sprint_number:
+        description: Sprint number (for example, 70)
+        required: true
+        type: string
+      solution:
+        description: Solution you will work on
+        required: true
+        type: choice
+        options:
+          - core
+          - change-viewer
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: create-development-branches
+  cancel-in-progress: false
+
+jobs:
+  create-branches:
+    name: Create development branches
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.BRANCH_AUTOMATION_TOKEN }}
+      SOLUTION: ${{ inputs.solution }}
+      VERSION: ${{ inputs.release_version }}
+      SPRINT_NUMBER: ${{ inputs.sprint_number }}
+
+    steps:
+      - name: Validate inputs
+        shell: bash
+        run: |
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo "Repository secret BRANCH_AUTOMATION_TOKEN is required." >&2
+            exit 1
+          fi
+
+          if [[ ! "$SOLUTION" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+            echo "Solution must be a lowercase kebab-case token." >&2
+            exit 1
+          fi
+
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Version must use X.Y.Z without a v prefix." >&2
+            exit 1
+          fi
+
+          if [[ ! "$SPRINT_NUMBER" =~ ^[0-9]+$ ]]; then
+            echo "Sprint number must contain digits only." >&2
+            exit 1
+          fi
+
+      - name: Checkout main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.BRANCH_AUTOMATION_TOKEN }}
+
+      - name: Inspect repository state
+        id: state
+        shell: bash
+        run: |
+          unique_name="ppat_${SOLUTION//-/_}"
+          solution_file="solutions/$unique_name/solutions/$unique_name/solution.yml"
+          release_branch="$SOLUTION/v$VERSION"
+          sprint_branch="$SOLUTION/spr-$SPRINT_NUMBER"
+          release_tag="$SOLUTION-v$VERSION"
+
+          if [[ -f "$solution_file" ]]; then
+            echo "solution_initialized=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "solution_initialized=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if git ls-remote --exit-code --heads origin "$sprint_branch" >/dev/null 2>&1; then
+            echo "Branch $sprint_branch already exists." >&2
+            exit 1
+          fi
+
+          if git ls-remote --exit-code --tags origin "refs/tags/$release_tag" >/dev/null 2>&1; then
+            echo "Tag $release_tag already exists." >&2
+            exit 1
+          fi
+
+          if gh release view "$release_tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $release_tag already exists." >&2
+            exit 1
+          fi
+
+          if git ls-remote --exit-code --heads origin "$release_branch" >/dev/null 2>&1; then
+            echo "release_branch_exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "release_branch_exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          echo "release_branch=$release_branch" >> "$GITHUB_OUTPUT"
+          echo "sprint_branch=$sprint_branch" >> "$GITHUB_OUTPUT"
+          echo "release_tag=$release_tag" >> "$GITHUB_OUTPUT"
+          echo "unique_name=$unique_name" >> "$GITHUB_OUTPUT"
+          echo "solution_file=$solution_file" >> "$GITHUB_OUTPUT"
+
+      - name: Create release branch
+        if: steps.state.outputs.release_branch_exists == 'false'
+        shell: bash
+        run: |
+          git switch -c "${{ steps.state.outputs.release_branch }}"
+
+      - name: Update solution version
+        if: steps.state.outputs.release_branch_exists == 'false' && steps.state.outputs.solution_initialized == 'true'
+        shell: bash
+        env:
+          SOLUTION_FILE: ${{ steps.state.outputs.solution_file }}
+        run: |
+          ruby -ryaml -e '
+            path = ARGV.fetch(0)
+            document = YAML.load_file(path)
+            current = document.dig("ImportExportXml", "SolutionManifest", "Version")
+            abort "Solution version is missing" unless current
+
+            content = File.read(path)
+            pattern = /^(\s{4}Version:\s*).+$/
+            abort "Expected one solution Version field" unless content.scan(pattern).length == 1
+
+            updated = content.sub(pattern, "\\1#{ENV.fetch("VERSION")}.0")
+            File.write(path, updated)
+          ' "$SOLUTION_FILE"
+
+      - name: Commit and push release branch
+        if: steps.state.outputs.release_branch_exists == 'false' && steps.state.outputs.solution_initialized == 'true'
+        shell: bash
+        env:
+          SOLUTION_FILE: ${{ steps.state.outputs.solution_file }}
+        run: |
+          actual_version="$(ruby -ryaml -e 'puts YAML.load_file(ARGV[0]).dig("ImportExportXml", "SolutionManifest", "Version")' "$SOLUTION_FILE")"
+          expected_version="$VERSION.0"
+          if [[ "$actual_version" != "$expected_version" ]]; then
+            echo "Expected solution version $expected_version, found $actual_version." >&2
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$SOLUTION_FILE"
+          git commit -m "chore: start $SOLUTION release $VERSION"
+          git push origin "HEAD:${{ steps.state.outputs.release_branch }}"
+
+      - name: Push uninitialized release branch
+        if: steps.state.outputs.release_branch_exists == 'false' && steps.state.outputs.solution_initialized == 'false'
+        shell: bash
+        run: |
+          git push origin "HEAD:${{ steps.state.outputs.release_branch }}"
+
+      - name: Validate existing release branch
+        if: steps.state.outputs.release_branch_exists == 'true' && steps.state.outputs.solution_initialized == 'true'
+        shell: bash
+        env:
+          SOLUTION_FILE: ${{ steps.state.outputs.solution_file }}
+        run: |
+          git fetch origin "${{ steps.state.outputs.release_branch }}"
+          git show "FETCH_HEAD:$SOLUTION_FILE" > /tmp/solution.yml
+          existing_version="$(ruby -ryaml -e 'puts YAML.load_file(ARGV[0]).dig("ImportExportXml", "SolutionManifest", "Version")' /tmp/solution.yml)"
+          if [[ "$existing_version" != "$VERSION.0" ]]; then
+            echo "Existing branch has solution version $existing_version; expected $VERSION.0." >&2
+            exit 1
+          fi
+
+      - name: Create release issue label
+        shell: bash
+        run: |
+          label="release:${{ steps.state.outputs.release_tag }}"
+          gh label create "$label" \
+            --repo "$GITHUB_REPOSITORY" \
+            --color "1D76DB" \
+            --description "Included in release ${{ steps.state.outputs.release_tag }}" \
+            --force
+
+      - name: Create sprint branch
+        shell: bash
+        run: |
+          if git ls-remote --exit-code --heads origin "${{ steps.state.outputs.sprint_branch }}" >/dev/null 2>&1; then
+            echo "Branch ${{ steps.state.outputs.sprint_branch }} was created while this workflow was running." >&2
+            exit 1
+          fi
+
+          git fetch origin "${{ steps.state.outputs.release_branch }}"
+          git push origin "FETCH_HEAD:refs/heads/${{ steps.state.outputs.sprint_branch }}"
+
+      - name: Write summary
+        shell: bash
+        run: |
+          {
+            echo "## Development branches created"
+            echo "- Solution: \`${{ steps.state.outputs.unique_name }}\`"
+            echo "- Release branch: \`${{ steps.state.outputs.release_branch }}\`"
+            echo "- Sprint branch: \`${{ steps.state.outputs.sprint_branch }}\`"
+            echo "- Issue label: \`release:${{ steps.state.outputs.release_tag }}\`"
+            if [[ "${{ steps.state.outputs.solution_initialized }}" == "false" ]]; then
+              echo "- Initialization: connect Power Platform Git integration to the sprint branch to add the solution."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
