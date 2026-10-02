@@ -221,6 +221,8 @@ Renew the automation token shortly before it expires:
 
 Before merging a release branch to `main`, add `release:{solution}-vX.Y.Z` to every issue included in the release and close the completed issues.
 
+Reference related issues in pull requests with `Refs #123`, using one line per issue. A reference makes the relationship visible but doesn't close the issue or include it in release notes. Avoid `Closes #123` in sprint-to-release pull requests because GitHub only applies closing keywords when a pull request is merged into the default branch. Release notes include an issue only when it is closed and has the matching release label before the release branch is merged into `main`.
+
 When solution files under `solutions/` change on `main`, the release workflow:
 
 1. Confirms that exactly one registered solution changed and reads `X.Y.Z.0` from its metadata.
