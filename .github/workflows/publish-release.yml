@@ -85,6 +85,7 @@ jobs:
             echo "Expected solution version $VERSION.0 in tag $TAG, found $actual_version." >&2
             exit 1
           fi
+          export_version="${actual_version//./_}"
 
           release_json="$(gh release view "$TAG" \
             --repo "$GITHUB_REPOSITORY" \
@@ -96,8 +97,8 @@ jobs:
           fi
 
           required_assets=(
-            "${UNIQUE_NAME}_v${VERSION}_managed.zip"
-            "${UNIQUE_NAME}_v${VERSION}_unmanaged.zip"
+            "${UNIQUE_NAME}_${export_version}.zip"
+            "${UNIQUE_NAME}_${export_version}_managed.zip"
             "SHA256SUMS.txt"
           )
 

@@ -125,6 +125,7 @@ jobs:
           fi
 
           version="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${BASH_REMATCH[3]}"
+          export_version="${full_version//./_}"
           tag="$SOLUTION_TOKEN-v$version"
 
           if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
@@ -135,6 +136,7 @@ jobs:
           echo "unique_name=$unique_name" >> "$GITHUB_OUTPUT"
           echo "full_version=$full_version" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "export_version=$export_version" >> "$GITHUB_OUTPUT"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "label=release:$tag" >> "$GITHUB_OUTPUT"
 
@@ -168,7 +170,7 @@ jobs:
         run: |
           mkdir -p dist
           pac solution pack \
-            --zipfile "$PWD/dist/${{ steps.metadata.outputs.unique_name }}_v${{ steps.metadata.outputs.version }}_managed.zip" \
+            --zipfile "$PWD/dist/${{ steps.metadata.outputs.unique_name }}_${{ steps.metadata.outputs.export_version }}_managed.zip" \
             --folder "$PWD/$SOLUTION_ROOT" \
             --packagetype Managed
 
@@ -178,7 +180,7 @@ jobs:
           SOLUTION_ROOT: ${{ steps.solution.outputs.root }}
         run: |
           pac solution pack \
-            --zipfile "$PWD/dist/${{ steps.metadata.outputs.unique_name }}_v${{ steps.metadata.outputs.version }}_unmanaged.zip" \
+            --zipfile "$PWD/dist/${{ steps.metadata.outputs.unique_name }}_${{ steps.metadata.outputs.export_version }}.zip" \
             --folder "$PWD/$SOLUTION_ROOT" \
             --packagetype Unmanaged
 
@@ -187,7 +189,7 @@ jobs:
         env:
           EXPECTED_NAME: ${{ steps.metadata.outputs.unique_name }}
           EXPECTED_VERSION: ${{ steps.metadata.outputs.full_version }}
-          VERSION: ${{ steps.metadata.outputs.version }}
+          EXPORT_VERSION: ${{ steps.metadata.outputs.export_version }}
         run: |
           validate_package() {
             local zip_file="$1"
@@ -219,8 +221,8 @@ jobs:
             ' /tmp/solution.xml
           }
 
-          validate_package "dist/${EXPECTED_NAME}_v${VERSION}_managed.zip" 1
-          validate_package "dist/${EXPECTED_NAME}_v${VERSION}_unmanaged.zip" 0
+          validate_package "dist/${EXPECTED_NAME}_${EXPORT_VERSION}_managed.zip" 1
+          validate_package "dist/${EXPECTED_NAME}_${EXPORT_VERSION}.zip" 0
 
           (
             cd dist
@@ -230,7 +232,7 @@ jobs:
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v4.6.2
         with:
-          name: ${{ steps.metadata.outputs.unique_name }}-${{ steps.metadata.outputs.tag }}
+          name: ${{ steps.metadata.outputs.unique_name }}_${{ steps.metadata.outputs.export_version }}
           path: dist/
           if-no-files-found: error
           retention-days: 30
@@ -263,20 +265,18 @@ jobs:
           {
             echo
             echo "Built from commit \`$GITHUB_SHA\`."
-            echo
-            echo "This is a pre-release intended for testing."
           } >> release-notes.md
 
       - name: Create pre-release
         shell: bash
         env:
+          EXPORT_VERSION: ${{ steps.metadata.outputs.export_version }}
           TAG: ${{ steps.metadata.outputs.tag }}
           UNIQUE_NAME: ${{ steps.metadata.outputs.unique_name }}
-          VERSION: ${{ steps.metadata.outputs.version }}
         run: |
           gh release create "$TAG" \
-            "dist/${UNIQUE_NAME}_v${VERSION}_managed.zip#Managed solution" \
-            "dist/${UNIQUE_NAME}_v${VERSION}_unmanaged.zip#Unmanaged solution" \
+            "dist/${UNIQUE_NAME}_${EXPORT_VERSION}_managed.zip#Managed solution" \
+            "dist/${UNIQUE_NAME}_${EXPORT_VERSION}.zip#Unmanaged solution" \
             "dist/SHA256SUMS.txt#SHA-256 checksums" \
             --repo "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \

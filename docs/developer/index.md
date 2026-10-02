@@ -227,7 +227,7 @@ When solution files under `solutions/` change on `main`, the release workflow:
 1. Packs managed and unmanaged ZIP files from the repository with Power Platform CLI.
 1. Validates both packages and generates SHA-256 checksums.
 1. Creates tag `{solution}-vX.Y.Z` and a public GitHub pre-release that isn't marked as **Latest**.
-1. Names the solution assets `{unique name}_vX.Y.Z_managed.zip` and `{unique name}_vX.Y.Z_unmanaged.zip`.
+1. Names the solution assets like a platform export: `{unique name}_X_Y_Z_0.zip` for unmanaged and `{unique name}_X_Y_Z_0_managed.zip` for managed.
 1. Adds all closed issues with label `release:{solution}-vX.Y.Z` to the release notes.
 
 Import the managed ZIP into a test environment and complete acceptance testing. When approved, open **Actions** > **Publish solution release**, enter the existing `{solution}-vX.Y.Z` tag, and approve the `production-release` environment when required. Publishing removes the pre-release status and marks the same release as stable and **Latest**. It doesn't change visibility, rebuild, or replace its assets.
