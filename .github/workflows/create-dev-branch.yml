@@ -3,6 +3,13 @@ name: Create development branches
 on:
   workflow_dispatch:
     inputs:
+      solution:
+        description: Solution you will work on
+        required: true
+        type: choice
+        options:
+          - core
+          - change-viewer
       release_version:
         description: Version without v prefix (for example, 1.2.0)
         required: true
@@ -11,13 +18,6 @@ on:
         description: Sprint number (for example, 70)
         required: true
         type: string
-      solution:
-        description: Solution you will work on
-        required: true
-        type: choice
-        options:
-          - core
-          - change-viewer
 
 permissions:
   contents: write
@@ -129,11 +129,17 @@ jobs:
             current = document.dig("ImportExportXml", "SolutionManifest", "Version")
             abort "Solution version is missing" unless current
 
+            target_version = "#{ENV.fetch("VERSION")}.0"
             content = File.read(path)
             pattern = /^(\s{4}Version:\s*).+$/
             abort "Expected one solution Version field" unless content.scan(pattern).length == 1
 
-            updated = content.sub(pattern, "\\1#{ENV.fetch("VERSION")}.0")
+            if current.to_s == target_version
+              puts "Solution version is already #{target_version}; no update needed."
+              exit 0
+            end
+
+            updated = content.sub(pattern, "\\1#{target_version}")
             File.write(path, updated)
           ' "$SOLUTION_FILE"
 
@@ -148,6 +154,12 @@ jobs:
           if [[ "$actual_version" != "$expected_version" ]]; then
             echo "Expected solution version $expected_version, found $actual_version." >&2
             exit 1
+          fi
+
+          if git diff --quiet -- "$SOLUTION_FILE"; then
+            echo "Solution version is already $expected_version; pushing release branch without a new commit."
+            git push origin "HEAD:${{ steps.state.outputs.release_branch }}"
+            exit 0
           fi
 
           git config user.name "github-actions[bot]"
