@@ -18,6 +18,9 @@ permissions:
 jobs:
   validate:
     name: Development changes only
+    if: >-
+      !startsWith(github.head_ref, 'docs/') &&
+      !startsWith(github.head_ref, 'project/')
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ github.token }}
