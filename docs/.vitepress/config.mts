@@ -34,6 +34,10 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Powerbouwer/power-platform-administration-tool' }
-    ]
+    ],
+    search: {
+      provider: 'local'
+    }
+
   }
 })
