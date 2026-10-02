@@ -1,0 +1,58 @@
+name: Label pull request
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: label-pull-request-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  label:
+    name: Apply change type label
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      HEAD_BRANCH: ${{ github.head_ref }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+
+    steps:
+      - name: Determine and apply label
+        shell: bash
+        run: |
+          if [[ "$HEAD_BRANCH" =~ ^docs/[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+            label="docs"
+            color="0075CA"
+            description="Documentation change"
+          elif [[ "$HEAD_BRANCH" =~ ^project/[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+            label="project"
+            color="FBCA04"
+            description="Repository configuration or automation change"
+          elif [[ "$HEAD_BRANCH" =~ ^[a-z0-9]+(-[a-z0-9]+)*/(spr-[0-9]+|v[0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            label="dev"
+            color="0E8A16"
+            description="Power Platform solution development change"
+          else
+            echo "No change type label applies to $HEAD_BRANCH."
+            exit 0
+          fi
+
+          gh label create "$label" \
+            --repo "$GITHUB_REPOSITORY" \
+            --color "$color" \
+            --description "$description" \
+            --force
+
+          gh pr edit "$PR_NUMBER" \
+            --repo "$GITHUB_REPOSITORY" \
+            --add-label "$label"

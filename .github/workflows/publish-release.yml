@@ -1,0 +1,129 @@
+name: Publish solution release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing pre-release tag in {solution}-vX.Y.Z format
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-solution-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish release
+    runs-on: ubuntu-latest
+    environment: production-release
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ inputs.tag }}
+
+    steps:
+      - name: Validate tag input
+        id: tag
+        shell: bash
+        run: |
+          if [[ ! "$TAG" =~ ^(.+)-v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            echo "Tag must use {solution}-vX.Y.Z." >&2
+            exit 1
+          fi
+
+          solution="${BASH_REMATCH[1]}"
+          version="${BASH_REMATCH[2]}"
+          if [[ ! "$solution" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+            echo "Solution must be a lowercase kebab-case token; found $solution." >&2
+            exit 1
+          fi
+
+          unique_name="ppat_${solution//-/_}"
+          solution_file="solutions/$unique_name/solutions/$unique_name/solution.yml"
+          echo "solution=$solution" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "unique_name=$unique_name" >> "$GITHUB_OUTPUT"
+          echo "solution_file=$solution_file" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Validate release
+        shell: bash
+        env:
+          UNIQUE_NAME: ${{ steps.tag.outputs.unique_name }}
+          SOLUTION_FILE: ${{ steps.tag.outputs.solution_file }}
+          VERSION: ${{ steps.tag.outputs.version }}
+        run: |
+          git fetch origin main "refs/tags/$TAG:refs/tags/$TAG"
+          tag_commit="$(git rev-list -n 1 "$TAG")"
+
+          if ! git merge-base --is-ancestor "$tag_commit" origin/main; then
+            echo "Tag $TAG does not point to a commit on main." >&2
+            exit 1
+          fi
+
+          if ! git show "$TAG:$SOLUTION_FILE" > /tmp/solution.yml; then
+            echo "Solution metadata not found at $SOLUTION_FILE in tag $TAG." >&2
+            exit 1
+          fi
+
+          actual_name="$(ruby -ryaml -e 'puts YAML.load_file(ARGV[0]).dig("ImportExportXml", "SolutionManifest", "UniqueName")' /tmp/solution.yml)"
+          if [[ "$actual_name" != "$UNIQUE_NAME" ]]; then
+            echo "Expected solution $UNIQUE_NAME in tag $TAG, found $actual_name." >&2
+            exit 1
+          fi
+
+          actual_version="$(ruby -ryaml -e 'puts YAML.load_file(ARGV[0]).dig("ImportExportXml", "SolutionManifest", "Version")' /tmp/solution.yml)"
+          if [[ "$actual_version" != "$VERSION.0" ]]; then
+            echo "Expected solution version $VERSION.0 in tag $TAG, found $actual_version." >&2
+            exit 1
+          fi
+
+          release_json="$(gh release view "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --json isPrerelease,assets)"
+
+          if ! jq -e '.isPrerelease == true' <<< "$release_json" >/dev/null; then
+            echo "Release $TAG is not a pre-release." >&2
+            exit 1
+          fi
+
+          required_assets=(
+            "${UNIQUE_NAME}_v${VERSION}_managed.zip"
+            "${UNIQUE_NAME}_v${VERSION}_unmanaged.zip"
+            "SHA256SUMS.txt"
+          )
+
+          for asset in "${required_assets[@]}"; do
+            if ! jq -e --arg name "$asset" '.assets[] | select(.name == $name)' \
+              <<< "$release_json" >/dev/null; then
+              echo "Required release asset is missing: $asset" >&2
+              exit 1
+            fi
+          done
+
+      - name: Publish release
+        shell: bash
+        run: |
+          gh release edit "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "$TAG" \
+            --prerelease=false \
+            --latest
+
+      - name: Write summary
+        shell: bash
+        run: |
+          {
+            echo "## Release published"
+            echo "- Release: \`$TAG\`"
+            echo "- Status: stable and Latest"
+            echo "- Assets were not rebuilt or replaced."
+          } >> "$GITHUB_STEP_SUMMARY"

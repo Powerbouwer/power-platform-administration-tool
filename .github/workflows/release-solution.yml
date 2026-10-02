@@ -1,0 +1,298 @@
+name: Create solution pre-release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "solutions/**"
+  workflow_dispatch:
+    inputs:
+      solution:
+        description: Lowercase kebab-case solution token to release
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  issues: read
+
+concurrency:
+  group: solution-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Package and create pre-release
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SELECTED_SOLUTION: ${{ inputs.solution }}
+
+    steps:
+      - name: Require main branch
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
+            echo "Releases can only be built from main." >&2
+            exit 1
+          fi
+
+      - name: Checkout release commit
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Resolve solution
+        id: solution
+        shell: bash
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+            solution="$SELECTED_SOLUTION"
+          else
+            before_sha="$BEFORE_SHA"
+            if [[ -z "$before_sha" || "$before_sha" =~ ^0+$ ]]; then
+              if git rev-parse "$GITHUB_SHA^" >/dev/null 2>&1; then
+                changed_files="$(git diff --name-only "$GITHUB_SHA^" "$GITHUB_SHA")"
+              else
+                changed_files="$(git show --name-only --pretty=format: "$GITHUB_SHA")"
+              fi
+            else
+              changed_files="$(git diff --name-only "$before_sha" "$GITHUB_SHA")"
+            fi
+
+            mapfile -t solutions < <(
+              printf '%s\n' "$changed_files" \
+                | sed -nE 's#^solutions/ppat_([^/]+)/.*#\1#p' \
+                | tr '_' '-' \
+                | sort -u
+            )
+
+            if [[ ${#solutions[@]} -ne 1 ]]; then
+              echo "Expected changes for exactly one solution, found ${#solutions[@]}." >&2
+              printf ' - %s\n' "${solutions[@]}" >&2
+              exit 1
+            fi
+            solution="${solutions[0]}"
+          fi
+
+          if [[ ! "$solution" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+            echo "Invalid solution token: $solution." >&2
+            exit 1
+          fi
+
+          unique_name="ppat_${solution//-/_}"
+          solution_root="solutions/$unique_name"
+          solution_file="$solution_root/solutions/$unique_name/solution.yml"
+
+          test -f "$solution_file" || {
+            echo "Solution metadata not found at $solution_file. Initialize the solution through Power Platform Git integration first." >&2
+            exit 1
+          }
+
+          echo "token=$solution" >> "$GITHUB_OUTPUT"
+          echo "unique_name=$unique_name" >> "$GITHUB_OUTPUT"
+          echo "root=$solution_root" >> "$GITHUB_OUTPUT"
+          echo "file=$solution_file" >> "$GITHUB_OUTPUT"
+
+      - name: Read solution metadata
+        id: metadata
+        shell: bash
+        env:
+          EXPECTED_NAME: ${{ steps.solution.outputs.unique_name }}
+          SOLUTION_FILE: ${{ steps.solution.outputs.file }}
+          SOLUTION_TOKEN: ${{ steps.solution.outputs.token }}
+        run: |
+          test -f "$SOLUTION_FILE" || {
+            echo "Solution metadata not found at $SOLUTION_FILE." >&2
+            exit 1
+          }
+
+          unique_name="$(ruby -ryaml -e 'puts YAML.load_file(ARGV[0]).dig("ImportExportXml", "SolutionManifest", "UniqueName")' "$SOLUTION_FILE")"
+          full_version="$(ruby -ryaml -e 'puts YAML.load_file(ARGV[0]).dig("ImportExportXml", "SolutionManifest", "Version")' "$SOLUTION_FILE")"
+
+          if [[ "$unique_name" != "$EXPECTED_NAME" ]]; then
+            echo "Expected solution $EXPECTED_NAME, found $unique_name." >&2
+            exit 1
+          fi
+
+          if [[ ! "$full_version" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)\.0$ ]]; then
+            echo "Solution version must use X.Y.Z.0, found $full_version." >&2
+            exit 1
+          fi
+
+          version="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${BASH_REMATCH[3]}"
+          tag="$SOLUTION_TOKEN-v$version"
+
+          if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+            echo "Tag $tag already exists; release assets will not be replaced." >&2
+            exit 1
+          fi
+
+          echo "unique_name=$unique_name" >> "$GITHUB_OUTPUT"
+          echo "full_version=$full_version" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "label=release:$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Install Power Platform tools
+        uses: microsoft/powerplatform-actions/actions-install@v1.9.2
+        with:
+          pac-version-override: 2.7.4
+          add-tools-to-path: true
+
+      - name: Verify Power Platform CLI
+        shell: bash
+        run: |
+          pac_output="$(pac help)"
+          printf '%s\n' "$pac_output" | sed -n '1,6p'
+          pac_version="$(printf '%s\n' "$pac_output" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' | sed -n '1p')"
+          minimum_version="2.4.1"
+          if [[ -z "$pac_version" ]]; then
+            echo "Unable to determine the PAC CLI version." >&2
+            exit 1
+          fi
+
+          if [[ "$(printf '%s\n' "$minimum_version" "$pac_version" | sort -V | head -1)" != "$minimum_version" ]]; then
+            echo "PAC CLI $minimum_version or later is required; found $pac_version." >&2
+            exit 1
+          fi
+
+      - name: Pack managed solution
+        shell: bash
+        env:
+          SOLUTION_ROOT: ${{ steps.solution.outputs.root }}
+        run: |
+          mkdir -p dist
+          pac solution pack \
+            --zipfile "$PWD/dist/${{ steps.metadata.outputs.unique_name }}_v${{ steps.metadata.outputs.version }}_managed.zip" \
+            --folder "$PWD/$SOLUTION_ROOT" \
+            --packagetype Managed
+
+      - name: Pack unmanaged solution
+        shell: bash
+        env:
+          SOLUTION_ROOT: ${{ steps.solution.outputs.root }}
+        run: |
+          pac solution pack \
+            --zipfile "$PWD/dist/${{ steps.metadata.outputs.unique_name }}_v${{ steps.metadata.outputs.version }}_unmanaged.zip" \
+            --folder "$PWD/$SOLUTION_ROOT" \
+            --packagetype Unmanaged
+
+      - name: Validate solution packages
+        shell: bash
+        env:
+          EXPECTED_NAME: ${{ steps.metadata.outputs.unique_name }}
+          EXPECTED_VERSION: ${{ steps.metadata.outputs.full_version }}
+          VERSION: ${{ steps.metadata.outputs.version }}
+        run: |
+          validate_package() {
+            local zip_file="$1"
+            local expected_managed="$2"
+            local metadata_file
+
+            test -s "$zip_file" || {
+              echo "Package is missing or empty: $zip_file" >&2
+              exit 1
+            }
+
+            metadata_file="$(unzip -Z1 "$zip_file" | grep -iE '(^|/)solution.xml$' | sed -n '1p')"
+            if [[ -z "$metadata_file" ]]; then
+              echo "solution.xml not found in $zip_file." >&2
+              exit 1
+            fi
+
+            unzip -p "$zip_file" "$metadata_file" > /tmp/solution.xml
+            EXPECTED_MANAGED="$expected_managed" ruby -rrexml/document -e '
+              document = REXML::Document.new(File.read(ARGV[0]))
+              manifest = document.elements["ImportExportXml/SolutionManifest"]
+              abort "SolutionManifest is missing" unless manifest
+              name = manifest.elements["UniqueName"]&.text
+              version = manifest.elements["Version"]&.text
+              managed = manifest.elements["Managed"]&.text
+              abort "Unexpected solution name: #{name}" unless name == ENV.fetch("EXPECTED_NAME")
+              abort "Unexpected solution version: #{version}" unless version == ENV.fetch("EXPECTED_VERSION")
+              abort "Unexpected managed value: #{managed}" unless managed == ENV.fetch("EXPECTED_MANAGED")
+            ' /tmp/solution.xml
+          }
+
+          validate_package "dist/${EXPECTED_NAME}_v${VERSION}_managed.zip" 1
+          validate_package "dist/${EXPECTED_NAME}_v${VERSION}_unmanaged.zip" 0
+
+          (
+            cd dist
+            sha256sum *.zip > SHA256SUMS.txt
+          )
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: ${{ steps.metadata.outputs.unique_name }}-${{ steps.metadata.outputs.tag }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Generate release notes
+        shell: bash
+        env:
+          RELEASE_LABEL: ${{ steps.metadata.outputs.label }}
+          TAG: ${{ steps.metadata.outputs.tag }}
+        run: |
+          {
+            echo "## Included issues"
+            echo
+          } > release-notes.md
+
+          issues="$(gh issue list \
+            --repo "$GITHUB_REPOSITORY" \
+            --state closed \
+            --label "$RELEASE_LABEL" \
+            --limit 1000 \
+            --json number,title,url \
+            --jq 'sort_by(.number)[] | "- [#\(.number)](\(.url)) \(.title)"')"
+
+          if [[ -n "$issues" ]]; then
+            printf '%s\n' "$issues" >> release-notes.md
+          else
+            echo "No closed issues were assigned to \`$RELEASE_LABEL\`." >> release-notes.md
+          fi
+
+          {
+            echo
+            echo "Built from commit \`$GITHUB_SHA\`."
+            echo
+            echo "This is a pre-release intended for testing."
+          } >> release-notes.md
+
+      - name: Create pre-release
+        shell: bash
+        env:
+          TAG: ${{ steps.metadata.outputs.tag }}
+          UNIQUE_NAME: ${{ steps.metadata.outputs.unique_name }}
+          VERSION: ${{ steps.metadata.outputs.version }}
+        run: |
+          gh release create "$TAG" \
+            "dist/${UNIQUE_NAME}_v${VERSION}_managed.zip#Managed solution" \
+            "dist/${UNIQUE_NAME}_v${VERSION}_unmanaged.zip#Unmanaged solution" \
+            "dist/SHA256SUMS.txt#SHA-256 checksums" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "$TAG (pre-release)" \
+            --notes-file release-notes.md \
+            --prerelease \
+            --latest=false
+
+      - name: Write summary
+        shell: bash
+        env:
+          TAG: ${{ steps.metadata.outputs.tag }}
+        run: |
+          {
+            echo "## Pre-release created"
+            echo "- Pre-release: \`$TAG\`"
+            echo "- Status: pre-release and not Latest"
+            echo "- Next: complete acceptance testing, then run the \`Publish solution release\` workflow."
+          } >> "$GITHUB_STEP_SUMMARY"

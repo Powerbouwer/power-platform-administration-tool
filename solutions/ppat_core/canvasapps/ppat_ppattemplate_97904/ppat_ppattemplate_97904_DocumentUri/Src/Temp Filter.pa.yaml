@@ -1,0 +1,267 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Temp Filter:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+    Children:
+      - Gallery1:
+          Control: Gallery@2.15.0
+          Variant: VariableHeight
+          Properties:
+            BorderColor: =RGBA(166, 166, 166, 1)
+            FocusedBorderColor: =RGBA(0, 120, 212, 1)
+            FocusedBorderThickness: =2
+            Height: =474
+            Items: =colFilterSettings
+            TemplatePadding: =4
+            TemplateSize: =100
+            Width: =700
+            X: =300
+            Y: =50
+          Children:
+            - Container1_1:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  Height: =100
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =8
+                  PaddingBottom: =8
+                  PaddingLeft: =8
+                  PaddingRight: =8
+                  PaddingTop: =8
+                  Width: =692
+                Children:
+                  - Container3_5:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        Width: =32
+                  - Container3_6:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                      Children:
+                        - cmbField_1:
+                            Control: ModernCombobox@1.1.2
+                            Properties:
+                              DefaultSelectedItems: =LookUp(colResourceFields, FieldId = ThisItem.fieldid)
+                              FillPortions: =1
+                              ItemDisplayText: =ThisItem.FieldName
+                              Items: =colResourceFields
+                              LayoutMinWidth: =64
+                              SelectMultiple: =false
+                              Width: =198
+                              Y: =18
+                  - Container3_7:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        Width: =120
+                      Children:
+                        - cmbOperator_1:
+                            Control: ModernCombobox@1.1.2
+                            Properties:
+                              FillPortions: =1
+                              ItemDisplayText: =ThisItem.Value
+                              Items: =Split( cmbField_1.Selected.Operators, ",")
+                              LayoutMinWidth: =64
+                              SelectMultiple: =false
+                              Width: =100
+                              Y: =18
+                  - Container3_8:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingTop: =8
+                      Children:
+                        - txtValue_1:
+                            Control: ModernTextInput@1.1.2
+                            Properties:
+                              FillPortions: =1
+                              LayoutMinWidth: =64
+                              Width: =248
+                              Y: =18
+                  - Container3_9:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingTop: =8
+                        Width: =32
+                      Children:
+                        - Button6:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Subtle
+                              FillPortions: =1
+                              Icon: ="Delete"
+                              Layout: =ButtonLayout.IconOnly
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+      - Container1:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Height: =48
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Horizontal
+            LayoutGap: =8
+            PaddingBottom: =8
+            PaddingLeft: =8
+            PaddingRight: =8
+            PaddingTop: =8
+            Width: =700
+            X: =300
+            Y: =555
+          Children:
+            - Container3:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  FillPortions: =0
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+                  PaddingBottom: =8
+                  PaddingLeft: =8
+                  PaddingRight: =8
+                  PaddingTop: =8
+                  Width: =32
+            - Container3_1:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+                Children:
+                  - cmbField:
+                      Control: ModernCombobox@1.1.2
+                      Properties:
+                        FillPortions: =1
+                        ItemDisplayText: =ThisItem.FieldName
+                        Items: =colResourceFields
+                        LayoutMinWidth: =64
+                        SelectMultiple: =false
+                        Width: =198
+                        Y: =18
+            - Container3_2:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+                Children:
+                  - cmbOperator:
+                      Control: ModernCombobox@1.1.2
+                      Properties:
+                        FillPortions: =1
+                        ItemDisplayText: =ThisItem.Value
+                        Items: =Split( cmbField.Selected.Operators, ",")
+                        LayoutMinWidth: =64
+                        SelectMultiple: =false
+                        Width: =100
+                        Y: =18
+            - Container3_3:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+                  PaddingBottom: =8
+                  PaddingTop: =8
+                Children:
+                  - txtValue:
+                      Control: ModernTextInput@1.1.2
+                      Properties:
+                        FillPortions: =1
+                        LayoutMinWidth: =64
+                        Width: =248
+                        Y: =18
+            - Container3_4:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  FillPortions: =0
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+                  PaddingBottom: =8
+                  PaddingLeft: =8
+                  PaddingRight: =8
+                  PaddingTop: =8
+                  Width: =32
+      - btnApply:
+          Control: ModernButton@1.0.0
+          Properties:
+            OnSelect: |-
+              =Collect(
+                  colFilterSettings, 
+                  { 
+                      row: 1, 
+                      fieldid: cmbField.Selected.FieldId,
+                      fieldname: cmbField.Selected.FieldName,
+                      operator: cmbOperator.Selected.Value,
+                      value: txtValue.Text
+                  }
+              )
+            Text: ="Apply"
+            X: =300
+            Y: =675

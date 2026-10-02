@@ -1,0 +1,1229 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Screen View:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+    Children:
+      - conPane_temp:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.Semibold
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =false
+            Width: =Parent.Width / 3
+            X: =Parent.Width - Self.Width
+          Children:
+            - conPaneWrapper:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  Height: =Parent.Height
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =8
+                  PaddingBottom: =8
+                  PaddingTop: =16
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - conPaneHead:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =32
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                      Children:
+                        - Text2:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              AutoHeight: =true
+                              FillPortions: =1
+                              FontWeight: =FontWeight.Semibold
+                              LayoutMaxHeight: =32
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =20
+                              Text: |-
+                                =$"Details: {varSelectedItem.properties.displayName}"
+                              VerticalAlign: =VerticalAlign.Bottom
+                        - Button4:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Subtle
+                              Icon: ="Dismiss"
+                              Layout: =ButtonLayout.IconOnly
+                              LayoutMaxHeight: =32
+                              LayoutMinWidth: =16
+                              OnSelect: =Set(varSidePane, false)
+                              Width: =32
+                  - Container4_1:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =32
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =8
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                      Children:
+                        - Button2:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Subtle
+                              Color: =ColorValue("#242424")
+                              FontWeight: =FontWeight.Normal
+                              Icon: ="Copy"
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              RadiusBottomLeft: =4
+                              RadiusBottomRight: =4
+                              RadiusTopLeft: =4
+                              RadiusTopRight: =4
+                              Size: =13
+                              Text: ="Copy"
+                              Width: =64
+                        - Button2_1:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Subtle
+                              Color: =ColorValue("#242424")
+                              FontWeight: =FontWeight.Normal
+                              Icon: ="ArrowDownload"
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Text: ="Download"
+                              Width: =92
+                  - Rectangle2:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - Container2:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingTop: =8
+                      Children:
+                        - Gallery2:
+                            Control: Gallery@2.15.0
+                            Variant: Vertical
+                            Properties:
+                              BorderColor: =RGBA(166, 166, 166, 1)
+                              FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                              FocusedBorderThickness: =2
+                              Items: =colSelectedItemDetails
+                              TemplatePadding: =0
+                              TemplateSize: =64
+                            Children:
+                              - Text6_1:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =28
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Text: =ThisItem.Value
+                                    Visible: =!ThisItem.isLink
+                                    Width: =Parent.TemplateWidth
+                                    Y: =24
+                              - Link1:
+                                  Control: ModernLink@1.0.1
+                                  Properties:
+                                    Height: =24
+                                    PaddingBottom: =0
+                                    PaddingLeft: =28
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Text: =ThisItem.Value
+                                    URL: =ThisItem.link
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Visible: =ThisItem.isLink
+                                    Width: =Parent.TemplateWidth
+                                    Y: =32
+                              - Text6:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =16
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Text: =ThisItem.displayName
+                                    Width: =Parent.TemplateWidth
+                  - Rectangle2_1:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - Container2_1:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =32
+                        LayoutAlignItems: =LayoutAlignItems.End
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingRight: =16
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - Button5:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: =Set(varSidePane, false)
+                              Text: ="Cancel"
+      - conWrapper_View:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Horizontal
+            Width: =Parent.Width
+          Children:
+            - conView:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =ColorValue("#fafafa")
+                  FillPortions: =3
+                  Height: =Parent.Height
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =8
+                  PaddingBottom: =16
+                  PaddingLeft: =8
+                  PaddingRight: =16
+                  PaddingTop: =8
+                  Width: =Parent.Width
+                Children:
+                  - conRibbonView:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =48
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                      Children:
+                        - conRibbonButtons_View:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              Width: =330
+                            Children:
+                              - btnRibbonBack:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    AccessibleLabel: ="Back"
+                                    Appearance: =ButtonAppearance.Subtle
+                                    DisplayMode: =DisplayMode.Disabled
+                                    Icon: ="ArrowLeft"
+                                    Layout: =ButtonLayout.IconOnly
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingBottom: =2
+                                    PaddingLeft: =2
+                                    PaddingRight: =2
+                                    PaddingTop: =2
+                                    Size: =14
+                                    Text: ="New"
+                                    Tooltip: =varAppRibbon.view.back.tooltip
+                                    Width: =40
+                              - recRibbonDivider:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(166, 166, 166, 1)
+                                    BorderStyle: =BorderStyle.None
+                                    BorderThickness: =2
+                                    DisabledFill: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorValue("#d1d1d1")
+                                    FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                                    Height: =24
+                                    HoverFill: =RGBA(0, 120, 212, 1)
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PressedFill: =RGBA(0, 120, 212, 1)
+                                    Width: =1
+                              - btnRibbonNew:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    AccessibleLabel: ="New entry"
+                                    Appearance: =ButtonAppearance.Subtle
+                                    Icon: ="Add"
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    Size: =14
+                                    Text: ="New"
+                                    Tooltip: =varAppRibbon.view.new.tooltip
+                                    Visible: =varAppRibbon.view.new.visible
+                                    Width: =80
+                              - btnRibbonRemove:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    AccessibleLabel: ="Remove"
+                                    Appearance: =ButtonAppearance.Subtle
+                                    Icon: ="Delete"
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    Text: ="Delete"
+                                    Tooltip: =varAppRibbon.view.delete.tooltip
+                                    Visible: =varAppRibbon.view.delete.visible
+                                    Width: =92
+                              - btnRibbonRefresh:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    AccessibleLabel: ="Refresh"
+                                    Appearance: =ButtonAppearance.Subtle
+                                    Icon: ="ArrowClockwise"
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    Text: ="Refresh"
+                                    Tooltip: =varAppRibbon.view.refresh.tooltip
+                                    Visible: =varAppRibbon.view.refresh.visible
+                                    Width: =100
+                              - recRibbonDividerCustom_1:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(166, 166, 166, 1)
+                                    BorderStyle: =BorderStyle.None
+                                    BorderThickness: =2
+                                    DisabledFill: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorValue("#d1d1d1")
+                                    FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                                    Height: =24
+                                    HoverFill: =RGBA(0, 120, 212, 1)
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PressedFill: =RGBA(0, 120, 212, 1)
+                                    Width: =1
+                              - btnRibbonDetails:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    AccessibleLabel: ="Details"
+                                    Appearance: =ButtonAppearance.Subtle
+                                    Icon: ="ErrorCircle"
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    OnSelect: |-
+                                      =Set(varSelectedItem, dgrDatagrid.Selected);
+                                      Navigate('Screen Form');
+                                    Text: ="Details"
+                                    Tooltip: =varAppRibbon.view.details.tooltip
+                                    Visible: =varAppRibbon.view.details.visible
+                                    Width: =100
+                              - btnRibbonCustomAction1_1:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    Appearance: =ButtonAppearance.Subtle
+                                    Icon: ="ArrowCircleRight"
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    OnSelect: =Set(varViewPaneDetails, true);
+                                    Text: ="Quick View"
+                                    Width: =124
+                  - conViewData:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =RGBA(255, 255, 255, 1)
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =8
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =24
+                        PaddingRight: =24
+                        PaddingTop: =8
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                      Children:
+                        - conViewHeader:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =48
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                            Children:
+                              - Combobox1:
+                                  Control: ModernCombobox@1.1.2
+                                  Properties:
+                                    Appearance: =Appearance.FilledLighter
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =48
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingLeft: =0
+                                    Size: =20
+                              - conViewHeaderOptions:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =8
+                                    LayoutJustifyContent: =LayoutJustifyContent.End
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                  Children:
+                                    - btnViewEditColumns:
+                                        Control: ModernButton@1.0.0
+                                        Properties:
+                                          Appearance: =ButtonAppearance.Subtle
+                                          FontWeight: =FontWeight.Normal
+                                          Icon: ="Settings"
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          OnSelect: |-
+                                            =Set(varViewOverlay, true);
+                                            Set(varViewPaneColumns, true);
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          Size: =14
+                                          Text: ="Edit columns"
+                                          Width: =120
+                                    - btnViewEditFilters:
+                                        Control: ModernButton@1.0.0
+                                        Properties:
+                                          Appearance: =ButtonAppearance.Subtle
+                                          FontWeight: =FontWeight.Normal
+                                          Icon: ="Filter"
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          OnSelect: |-
+                                            =Set(varViewOverlay, true);
+                                            Set(varViewPaneFilter, true);
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          Size: =14
+                                          Text: ="Edit filters"
+                                          Width: =110
+                                    - conViewSearch:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          FillPortions: =0
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          Width: =220
+                                        Children:
+                                          - txtViewSearch:
+                                              Control: ModernTextInput@1.1.2
+                                              Properties:
+                                                Appearance: =Appearance.Outline
+                                                BorderColor: =ColorValue("#616161")
+                                                PaddingLeft: =24
+                                                Placeholder: ="Filter by keyword"
+                                                Width: =Parent.Width
+                                                Y: =8
+                                          - icoViewSearch:
+                                              Control: ModernIcon@1.1.1
+                                              Properties:
+                                                Height: =24
+                                                Icon: ="Search"
+                                                IconColor: =ColorValue("#616161")
+                                                Width: =24
+                                                X: =8
+                                                Y: =12
+                        - conViewDatagrid:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                            Children:
+                              - dgrDatagrid:
+                                  Control: ModernDataGrid@1.5.2
+                                  Properties:
+                                    Height: =Parent.Height
+                                    Items: =colCloudFlows
+                                    OnChange: |-
+                                      =Set(varViewPaneDetails, true);
+                                      Set(varSelectedItem, dgrDatagrid.Selected);
+
+                                      ClearCollect( 
+                                          colSelectedItemDetails,
+                                          {
+                                              type: "env",
+                                              displayName: "Environment Name",
+                                              Value: varSelectedItem.environmentName,
+                                              isLink: true, 
+                                              link: "https://environmentlink"
+                                          },
+                                          {
+                                              type: "env",
+                                              displayName: "Environment Region",
+                                              Value: varSelectedItem.environmentRegion,
+                                              isLink: false
+                                          },
+                                          {
+                                              type: "flow",
+                                              displayName: "Display Name",
+                                              Value: varSelectedItem.properties.displayName, 
+                                              isLink: false
+                                          },
+                                          {
+                                              type: "flow",
+                                              displayName: "State",
+                                              Value: varSelectedItem.properties.state, 
+                                              isLink: false
+                                          },  
+                                          {
+                                              type: "flow",
+                                              displayName: "Trigger Type",
+                                              Value: varSelectedItem.properties.triggerType,
+                                              isLink: false
+                                          }  
+
+                                      );
+                                    SelectMultiple: =false
+                                    Width: =Parent.Width
+                                  Children:
+                                    - location_Column1:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: ="location"
+                                          FieldName: ="location"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.location
+                                          Width: =Parent.Width / 7
+                                    - kind_Column1:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: ="kind"
+                                          FieldName: ="kind"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.kind
+                                          Width: =Parent.Width / 7
+                                    - isManagedEnvironment_Column1:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Boolean
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: ="isManagedEnvironment"
+                                          FieldName: ="isManagedEnvironment"
+                                          FieldVariantName: ="booleanColumn"
+                                          Text: =ThisItem.isManagedEnvironment
+                                          Value: =ThisItem.isManagedEnvironment
+                                          Width: =Parent.Width / 7
+                                    - id_Column1:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: ="id"
+                                          FieldName: ="id"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.id
+                                          Width: =Parent.Width / 7
+                                    - environmentType_Column1:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: ="environmentType"
+                                          FieldName: ="environmentType"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.environmentType
+                                          Width: =Parent.Width / 7
+                                    - environmentRegion_Column1:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: ="environmentRegion"
+                                          FieldName: ="environmentRegion"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.environmentRegion
+                                          Width: =Parent.Width / 7
+                                    - environmentName_Column1:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: ="environmentName"
+                                          FieldName: ="environmentName"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.environmentName
+                                          Width: =Parent.Width / 7
+                        - conViewFooterDivider:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              BorderColor: =RGBA(166, 166, 166, 1)
+                              BorderStyle: =BorderStyle.None
+                              DisabledFill: =RGBA(166, 166, 166, 1)
+                              Fill: =ColorValue("#e0e0e0")
+                              FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                              Height: =1
+                              HoverFill: =RGBA(0, 120, 212, 1)
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PressedFill: =RGBA(0, 120, 212, 1)
+                        - conViewFooter:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =32
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                            Children:
+                              - lblViewFooter:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    FillPortions: =1
+                                    LayoutMaxWidth: =300
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: |
+                                      ="Rows: 1000 / 1233"
+                              - conViewFooterMsg:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                  Children:
+                                    - Icon2:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          Icon: ="Warning"
+                                          IconColor: =RGBA(240, 98, 15, 1)
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          PaddingBottom: =6
+                                          PaddingLeft: =6
+                                          PaddingRight: =6
+                                          PaddingTop: =6
+                                    - lblViewFooter_1:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =RGBA(240, 98, 15, 1)
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Semibold
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: |
+                                            ="Not all results are shown. Please refine your search."
+            - conPaneDetails:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =4
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+                  PaddingBottom: =16
+                  PaddingLeft: =16
+                  PaddingRight: =16
+                  PaddingTop: =8
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =varViewPaneDetails
+                Children:
+                  - Container6:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - Text1:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              FillPortions: =1
+                              FontWeight: =FontWeight.Semibold
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =20
+                              Text: |-
+                                =$"Details: {varSelectedItem.properties.displayName}"
+                        - Button1:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              Appearance: =ButtonAppearance.Subtle
+                              Icon: ="Dismiss"
+                              Layout: =ButtonLayout.IconOnly
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: =Set(varSidePane, false)
+                              Width: =24
+                  - Rectangle2_2:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - Container6_1:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        LayoutOverflowY: =LayoutOverflow.Scroll
+                        PaddingLeft: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - Gallery2_1:
+                            Control: Gallery@2.15.0
+                            Variant: Vertical
+                            Properties:
+                              BorderColor: =RGBA(166, 166, 166, 1)
+                              FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                              FocusedBorderThickness: =2
+                              Items: =colSelectedItemDetails
+                              TemplatePadding: =0
+                              TemplateSize: =64
+                            Children:
+                              - Text6_2:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =16
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =ThisItem.Value
+                                    Visible: =!ThisItem.isLink
+                                    Width: =Parent.TemplateWidth
+                                    Y: =24
+                              - Link1_1:
+                                  Control: ModernLink@1.0.1
+                                  Properties:
+                                    Height: =24
+                                    PaddingBottom: =0
+                                    PaddingLeft: =16
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =ThisItem.Value
+                                    URL: =ThisItem.link
+                                    VerticalAlign: =VerticalAlign.Top
+                                    Visible: =ThisItem.isLink
+                                    Width: =Parent.TemplateWidth
+                                    Y: =32
+                              - Text6_3:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    FontWeight: =FontWeight.Semibold
+                                    OnSelect: =Select(Parent)
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: =ThisItem.displayName
+                                    Width: =Parent.TemplateWidth
+                  - Rectangle2_3:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - Container6_2:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =40
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+      - conOverlay:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(255, 255, 255, 0.5)
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =varViewOverlay
+            Width: =Parent.Width
+          Children:
+            - conPane_Filter:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.ExtraBold
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =4
+                  PaddingBottom: =8
+                  PaddingTop: =8
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =varViewPaneFilter
+                  X: =Parent.Width - Self.Width
+                Children:
+                  - conPaneHead_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - txtPaneHead_Filter:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              FillPortions: =1
+                              FontWeight: =FontWeight.Semibold
+                              Height: =40
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =20
+                              Text: |-
+                                ="Filter: Cloudflows"
+                        - btnPaneHead_Filter:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Subtle
+                              Icon: ="Dismiss"
+                              Layout: =ButtonLayout.IconOnly
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =Set(varViewOverlay, false);
+                                Set(varViewPaneFilter, false);
+                              Width: =24
+                  - recPaneHead_Filter:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - conPainList_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                  - recPaneFooter_Filter:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - conPaneFooter_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =8
+                        LayoutJustifyContent: =LayoutJustifyContent.End
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - btnPaneFooterApply_Filter:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              Text: ="Apply"
+                        - btnPaneFooterCancel_Filter:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Secondary
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =Set(varViewOverlay, false);
+                                Set(varViewPaneFilter, false);
+                              Text: ="Cancel"
+            - conPane_Columns:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.ExtraBold
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =4
+                  PaddingBottom: =8
+                  PaddingTop: =8
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =varViewPaneColumns
+                  X: =Parent.Width - Self.Width
+                Children:
+                  - conPaneHead_Columns:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - txtPaneHead_Columns:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              FillPortions: =1
+                              FontWeight: =FontWeight.Semibold
+                              Height: =40
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =20
+                              Text: |-
+                                ="Edit Columns: Cloudflows"
+                        - btnPaneHead_Columns:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Subtle
+                              Icon: ="Dismiss"
+                              Layout: =ButtonLayout.IconOnly
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =Set(varViewOverlay, false);
+                                Set(varViewPaneColumns, false);
+                              Width: =24
+                  - recPaneHead_Columns:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - conPainList_Columns:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                  - recPaneFooter_Columns:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - conPaneFooter_Columns:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =8
+                        LayoutJustifyContent: =LayoutJustifyContent.End
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - btnPaneFooterApply_Columns:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              Text: ="Apply"
+                        - btnPaneFooterCancel_Columns:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Secondary
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =Set(varViewOverlay, false);
+                                Set(varViewPaneColumns, false);
+                              Text: ="Cancel"
