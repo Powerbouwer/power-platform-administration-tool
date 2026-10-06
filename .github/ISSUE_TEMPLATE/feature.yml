@@ -1,7 +1,7 @@
 name: 💡 Feature request
 description: Suggest a new feature or improvement for PPAT.
 title: "💡 [FEATURE] "
-labels: ["enhancement"]
+type: feature
 
 body:
   - type: markdown
@@ -13,7 +13,7 @@ body:
         At this stage, implementation is handled by the PPAT maintainers to ensure consistency and quality across the project.
 
   - type: checkboxes
-    id: existing-request-check
+    id: existing-issue-check
     attributes:
       label: Existing request check
       description: Have you checked that this feature has not already been requested in the [backlog](https://github.com/Powerbouwer/power-platform-administration-tool/issues)?
@@ -21,21 +21,12 @@ body:
         - label: I have searched the existing issues and confirm that this feature has not already been requested.
           required: true
 
-  - type: dropdown
-    id: module
+  - type: textarea
+    id: audience
     attributes:
-      label: Module
-      description: Select the PPAT module where you would like this functionality to be available.
-      options:
-        - Inventory
-        - Governance Processes
-        - Maker Hub
-        - Environment Settings Configurator
-        - Tenant Monitor
-        - Message Center Triage
-        - Maker Enablement
-        - Change Viewer
-        - Other / Not sure
+      label: Who is this for?
+      description: Describe the people or roles that would benefit from this capability.
+      placeholder: Describe who has this need and in what context they use PPAT.
     validations:
       required: true
 
@@ -43,29 +34,29 @@ body:
     id: problem
     attributes:
       label: Problem or use case
-      description: Describe the problem you are trying to solve or the use case that is currently not supported.
+      description: Describe what the user is trying to achieve and what currently prevents or complicates it.
       placeholder: |
-        Describe what you are trying to achieve and why the current functionality does not meet this need.
+        Explain the current situation, the goal, and why the existing functionality does not meet this need.
     validations:
       required: true
 
   - type: textarea
-    id: desired-behavior
+    id: desired-outcome
     attributes:
-      label: Desired functionality
-      description: Describe what you would like PPAT to do.
+      label: Desired outcome
+      description: Describe what the user should be able to achieve, without prescribing a specific implementation.
       placeholder: |
-        Describe the functionality or behavior you would like to see.
+        Describe the improved outcome from the user's perspective.
     validations:
       required: true
 
   - type: textarea
-    id: proposed-solution
+    id: ideas-examples
     attributes:
-      label: Proposed solution
-      description: If you already have an idea for how this could work, describe it here.
+      label: Ideas or examples
+      description: Share examples, comparable functionality, or ideas that may help explore the request.
       placeholder: |
-        This is optional. You do not need to provide a technical solution.
+        This is optional. You do not need to propose a technical solution.
     validations:
       required: false
 

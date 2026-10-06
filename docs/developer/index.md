@@ -103,18 +103,25 @@ The identity is created asynchronously. If it is not available yet, wait briefly
 
 PPAT uses shared release and sprint branches:
 
+<VPButton
+	text="Create development branches"
+	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/create-dev-branch.yml"
+	theme="brand"
+/>
+
 1. Open **Actions** > **Create development branches** in GitHub.
 1. Select the `solution` you are going to work on, enter the three-part release version without a `v` prefix, for example `1.0.0`, and enter the numeric sprint number.
-1. The workflow creates `{solution}/v{major}.{minor}.{build}` from `main`, updates that solution to `{major}.{minor}.{build}.0`, and creates the `release:{solution}-v{major}.{minor}.{build}` issue label.
-1. The workflow creates `{solution}/spr-{sprint number}` from the release branch. If the release branch already exists with the expected solution version, only the new sprint branch is created.
+1. The workflow creates `{solution}/v{major}.{minor}.{build}` from `main`, updates that solution to `{major}.{minor}.{build}.0`, and creates an open `{solution}-v{major}.{minor}.{build}` milestone.
+1. The workflow creates `{solution}/v{major}.{minor}.{build}-spr-{sprint number}` from the release branch. For example, sprint 70 targeting core release `1.0.0` uses `core/v1.0.0-spr-70`. If the release branch already exists with the expected solution version, only the new sprint branch is created.
+1. Additional sprint branches for the same release reuse the existing open milestone.
 1. Connect each participating developer environment to the shared sprint branch.
 1. Collaborate by pulling from and pushing to that sprint branch.
-1. Merge completed sprint work into the release branch. The sprint and release branches must use the same solution namespace.
+1. Merge completed sprint work into the release branch. The solution and version in the sprint branch must exactly match the target release branch.
 1. When the release is ready, merge the release branch into `main`.
 
 Branch tokens use kebab-case, while Dataverse solution names use underscores. Workflows add the fixed `ppat_` prefix and replace hyphens with underscores. For example, `core` maps to `ppat_core`, and `change-viewer` maps to `ppat_change_viewer`.
 
-The **Development changes only** check permits a solution pull request to change only its corresponding `solutions/ppat_*/` folder, files below `docs/`, and the root files `package.json`, `package-lock.json`, and `.gitignore`. It checks both current and previous paths for renamed files. A sprint branch may only target its solution's release branch, and a release branch may only target `main`.
+The **Development changes only** check permits a solution pull request to change only its corresponding `solutions/ppat_*/` folder, files below `docs/`, and the root files `package.json`, `package-lock.json`, and `.gitignore`. It checks both current and previous paths for renamed files. A sprint branch may only target the release branch whose solution and version appear in its name, and a release branch may only target `main`.
 
 Pull requests are automatically labeled by change type. Solution sprint and release pull requests receive `dev`, pull requests from `docs/*` receive `docs`, and pull requests from `project/*` receive `project`. These labels make the expected review scope visible; the branch-route and changed-file checks remain the enforcement mechanism.
 
@@ -145,7 +152,7 @@ MAJOR.MINOR.BUILD.REVISION
 | `BUILD`    | The patch number. Increment it for a bug fix or small, nonbreaking change.                         |
 | `REVISION` | An automatically incremented deployment iteration within the same major, minor, and build version. |
 
-Release branch names use the first three components of the solution version in `{solution}/vX.Y.Z`. The deployment-generated revision is not included in the branch name. For example, core solution version `1.0.1.4` belongs to release branch `core/v1.0.1`. Solutions are versioned independently.
+Release branch names use the first three components of the solution version in `{solution}/vX.Y.Z`. Sprint branches add the sprint number as `{solution}/vX.Y.Z-spr-N`. A slash cannot separate the release and sprint portions because Git cannot store both `core/v1.0.1` and a branch below that same ref. The deployment-generated revision is not included in either branch name. For example, core solution version `1.0.1.4` belongs to release branch `core/v1.0.1`, with sprint 70 on `core/v1.0.1-spr-70`. Solutions are versioned independently.
 
 Solution metadata is stored in `solutions/{unique name}/solutions/{unique name}/solution.yml`. Release packaging uses `solutions/{unique name}` as the native Dataverse Git YAML root.
 
@@ -161,11 +168,15 @@ A repository maintainer prepares a solution before its first development cycle:
 
 The scope, release, and publishing workflows derive solution names from branches, changed paths, or tags. They validate the derived technical name against the solution metadata, so they don't maintain separate solution lists.
 
-Existing branches and tags that predate the solution namespaces are not renamed. New development cycles use only the namespaced format.
-
 ## Documentation Changes
 
 Documentation work does not require a solution release cycle:
+
+<VPButton
+	text="Create documentation branch"
+	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/create-docs-branch.yml"
+	theme="brand"
+/>
 
 1. Open **Actions** > **Create documentation branch**.
 1. Enter a short lowercase kebab-case name, for example `update-installation`.
@@ -177,6 +188,12 @@ A pull request from `docs/*` may modify files below `docs/`, plus the root files
 ## Project Changes
 
 Repository-wide changes that don't modify Power Platform solutions use a separate project branch:
+
+<VPButton
+	text="Create project branch"
+	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/create-project-branch.yml"
+	theme="brand"
+/>
 
 1. Open **Actions** > **Create project branch**.
 1. Enter a short lowercase kebab-case name, for example `update-workflows`.
@@ -191,37 +208,15 @@ The check evaluates both the current and previous paths of renamed files. Moving
 
 Engineers with repository write access can update existing sprint, documentation, and project branches and open pull requests. They don't create branches manually. Maintainers have ruleset bypass access for exceptional recovery work, so this policy deliberately has a controlled administrative escape hatch.
 
-Configure the following repository settings under **Settings** > **Rules** > **Rulesets**:
+For every pull request targeting `main`, the author must select a fellow developer as reviewer. At least one approval is required before the pull request can be merged.
 
-1. Create an active branch ruleset targeting all branches.
-1. Enable **Restrict creations**, **Restrict deletions**, and **Block force pushes**.
-1. Add a branch-name restriction that must match this regular expression:
-
-	```text
-	^(main|v[0-9]+\.[0-9]+\.[0-9]+|spr-[0-9]+|[a-z0-9]+(-[a-z0-9]+)*\/(v[0-9]+\.[0-9]+\.[0-9]+|spr-[0-9]+)|docs\/[a-z0-9]+(-[a-z0-9]+)*|project\/[a-z0-9]+(-[a-z0-9]+)*)$
-	```
-
-	The solution namespace accepts lowercase kebab-case tokens. Branch creation remains restricted by the workflow dropdown and repository permissions. The legacy `vX.Y.Z` and `spr-N` alternatives keep existing development cycles operable; the branch workflow no longer creates branches in those formats.
-
-1. Add the maintainer team to the bypass list with **Always allow**. Organization owners can also be added as an explicit break-glass bypass.
-1. Create additional rulesets for `main` and the solution release branches that require pull requests and block deletion and force pushes.
-1. Require the **Documentation changes only**, **Project files only**, and **Development changes only** status checks on pull requests to `main`. Require **Development changes only** on pull requests to solution release branches as well. Each check is skipped successfully when its corresponding branch type isn't used.
-1. Test new rulesets in **Evaluate** mode before changing them to **Active**.
-
-The branch workflows must authenticate as a bypass actor because the built-in Actions token doesn't inherit the permissions of the maintainer who starts a workflow. Create a fine-grained token owned by a maintainer or dedicated automation account in the bypass team and grant it **Contents: read and write** and **Issues: read and write** for this repository. Store the token and its expiration date in the team's restricted 1Password vault, and configure the same token value in GitHub as the repository secret `BRANCH_AUTOMATION_TOKEN`. Expiration notifications are managed from the 1Password record. The repository administrator is responsible for renewing the token before it expires.
-
-Renew the automation token shortly before it expires:
-
-1. Regenerate the existing fine-grained token in GitHub and select a new expiration date. Regeneration immediately invalidates the previous token value, so complete the remaining steps without delay.
-1. Replace the credential and expiration date in the existing 1Password item.
-1. Update the existing GitHub repository secret `BRANCH_AUTOMATION_TOKEN` with the regenerated token value.
-1. Verify the regenerated token by running one of the branch-creation workflows.
+The branch workflows use the repository secret `BRANCH_AUTOMATION_TOKEN`. The token and its expiration date are stored in the team's restricted 1Password vault. The repository administrator must renew the token before it expires.
 
 ## Release Process
 
-Before merging a release branch to `main`, add `release:{solution}-vX.Y.Z` to every issue included in the release and close the completed issues.
+Before merging a release branch to `main`, assign every completed issue included in the release to the `{solution}-vX.Y.Z` milestone and close it.
 
-Reference related issues in pull requests with `Refs #123`, using one line per issue. A reference makes the relationship visible but doesn't close the issue or include it in release notes. Avoid `Closes #123` in sprint-to-release pull requests because GitHub only applies closing keywords when a pull request is merged into the default branch. Release notes include an issue only when it is closed and has the matching release label before the release branch is merged into `main`.
+Reference related issues in pull requests with `Refs #123`, using one line per issue. A reference makes the relationship visible but doesn't close the issue or include it in release notes. Avoid `Closes #123` in sprint-to-release pull requests because GitHub only applies closing keywords when a pull request is merged into the default branch. Release notes include an issue only when it is closed and assigned to the matching milestone before the release branch is merged into `main`.
 
 When solution files under `solutions/` change on `main`, the release workflow:
 
@@ -230,9 +225,15 @@ When solution files under `solutions/` change on `main`, the release workflow:
 1. Validates both packages and generates SHA-256 checksums.
 1. Creates tag `{solution}-vX.Y.Z` and a public GitHub pre-release that isn't marked as **Latest**.
 1. Names the solution assets like a platform export: `{unique name}_X_Y_Z_0.zip` for unmanaged and `{unique name}_X_Y_Z_0_managed.zip` for managed.
-1. Adds all closed issues with label `release:{solution}-vX.Y.Z` to the release notes.
+1. Adds all closed issues assigned to milestone `{solution}-vX.Y.Z` to the release notes. Pull requests assigned to the milestone are excluded.
 
-Import the managed ZIP into a test environment and complete acceptance testing. When approved, open **Actions** > **Publish solution release**, enter the existing `{solution}-vX.Y.Z` tag, and approve the `production-release` environment when required. Publishing removes the pre-release status and marks the same release as stable and **Latest**. It doesn't change visibility, rebuild, or replace its assets.
+Import the managed ZIP into a test environment and complete acceptance testing. When approved, open **Actions** > **Publish solution release**, enter the existing `{solution}-vX.Y.Z` tag, and approve the `production-release` environment when required. Publishing removes the pre-release status, marks the same release as stable and **Latest**, and closes the matching milestone. It doesn't change visibility, rebuild, or replace its assets.
+
+<VPButton
+	text="Publish solution release"
+	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/publish-release.yml"
+	theme="brand"
+/>
 
 Configure the `production-release` GitHub Environment with required reviewers to separate testing from production approval.
 

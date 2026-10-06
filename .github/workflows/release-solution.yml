@@ -138,7 +138,38 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "export_version=$export_version" >> "$GITHUB_OUTPUT"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
-          echo "label=release:$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Resolve release milestone
+        id: milestone
+        shell: bash
+        env:
+          MILESTONE_TITLE: ${{ steps.metadata.outputs.tag }}
+        run: |
+          milestones="$(gh api \
+            --paginate \
+            "repos/$GITHUB_REPOSITORY/milestones?state=all&per_page=100" \
+            --jq ".[] | select(.title == \"$MILESTONE_TITLE\") | [.number, .state] | @tsv")"
+
+          milestone_count="$(printf '%s\n' "$milestones" | sed '/^$/d' | wc -l)"
+          if [[ "$milestone_count" -eq 0 ]]; then
+            echo "Milestone $MILESTONE_TITLE does not exist." >&2
+            exit 1
+          fi
+
+          if [[ "$milestone_count" -gt 1 ]]; then
+            echo "Multiple milestones named $MILESTONE_TITLE exist." >&2
+            exit 1
+          fi
+
+          milestone_number="$(printf '%s\n' "$milestones" | cut -f1)"
+          milestone_state="$(printf '%s\n' "$milestones" | cut -f2)"
+          if [[ "$milestone_state" != "open" ]]; then
+            echo "Milestone $MILESTONE_TITLE is closed." >&2
+            exit 1
+          fi
+
+          echo "number=$milestone_number" >> "$GITHUB_OUTPUT"
+          echo "title=$MILESTONE_TITLE" >> "$GITHUB_OUTPUT"
 
       - name: Install Power Platform tools
         uses: microsoft/powerplatform-actions/actions-install@v1.9.2
@@ -240,7 +271,8 @@ jobs:
       - name: Generate release notes
         shell: bash
         env:
-          RELEASE_LABEL: ${{ steps.metadata.outputs.label }}
+          MILESTONE_NUMBER: ${{ steps.milestone.outputs.number }}
+          MILESTONE_TITLE: ${{ steps.milestone.outputs.title }}
           TAG: ${{ steps.metadata.outputs.tag }}
         run: |
           {
@@ -248,18 +280,16 @@ jobs:
             echo
           } > release-notes.md
 
-          issues="$(gh issue list \
-            --repo "$GITHUB_REPOSITORY" \
-            --state closed \
-            --label "$RELEASE_LABEL" \
-            --limit 1000 \
-            --json number,title,url \
-            --jq 'sort_by(.number)[] | "- [#\(.number)](\(.url)) \(.title)"')"
+          issues="$(gh api \
+            --paginate \
+            --slurp \
+            "repos/$GITHUB_REPOSITORY/issues?state=closed&milestone=$MILESTONE_NUMBER&per_page=100" \
+            --jq 'flatten | map(select(has("pull_request") | not) | select((.type.name? // "" | ascii_downcase) as $type | ["bug", "feature", "task"] | index($type))) | sort_by(.number)[] | "- [#\(.number)](\(.html_url)) \(.title)"')"
 
           if [[ -n "$issues" ]]; then
             printf '%s\n' "$issues" >> release-notes.md
           else
-            echo "No closed issues were assigned to \`$RELEASE_LABEL\`." >> release-notes.md
+            echo "No closed development issues were assigned to milestone \`$MILESTONE_TITLE\`." >> release-notes.md
           fi
 
           {

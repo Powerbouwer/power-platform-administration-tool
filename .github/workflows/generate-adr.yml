@@ -1,0 +1,101 @@
+name: Generate ADR documentation
+
+on:
+  issues:
+    types:
+      - closed
+
+permissions:
+  contents: write
+  issues: read
+  pull-requests: write
+
+concurrency:
+  group: generate-adr-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    name: Generate ADR pull request
+    if: >-
+      github.event.issue.state_reason == 'completed' &&
+      github.event.issue.type.name == 'ADR'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.BRANCH_AUTOMATION_TOKEN }}
+      ADR_BRANCH: docs/adr-${{ github.event.issue.number }}
+
+    steps:
+      - name: Validate automation token
+        shell: bash
+        run: |
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo "Repository secret BRANCH_AUTOMATION_TOKEN is required." >&2
+            exit 1
+          fi
+
+      - name: Checkout main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.BRANCH_AUTOMATION_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Create documentation branch
+        shell: bash
+        run: git switch -C "$ADR_BRANCH"
+
+      - name: Generate ADR
+        run: node .github/scripts/generate-adr.mjs
+
+      - name: Commit and push documentation
+        id: changes
+        shell: bash
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          if [[ -z "$(git status --porcelain -- docs/architecture/)" ]]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "The ADR is already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/architecture/
+          git commit -m "docs: publish ADR from issue #$ISSUE_NUMBER"
+          git push --force-with-lease origin "$ADR_BRANCH"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Open pull request
+        if: steps.changes.outputs.changed == 'true'
+        shell: bash
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          existing_pr="$(gh pr list \
+            --repo "$GITHUB_REPOSITORY" \
+            --head "$ADR_BRANCH" \
+            --base main \
+            --state open \
+            --json number \
+            --jq '.[0].number // empty')"
+
+          if [[ -n "$existing_pr" ]]; then
+            echo "Updated existing pull request #$existing_pr."
+            exit 0
+          fi
+
+          gh pr create \
+            --repo "$GITHUB_REPOSITORY" \
+            --base main \
+            --head "$ADR_BRANCH" \
+            --title "docs: publish ADR from issue #$ISSUE_NUMBER" \
+            --body "Generated from #$ISSUE_NUMBER: $ISSUE_TITLE"

@@ -33,7 +33,7 @@ jobs:
         id: branch
         shell: bash
         run: |
-          if [[ "$HEAD_BRANCH" =~ ^[a-z0-9]+(-[a-z0-9]+)*/(spr-[0-9]+|v[0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+          if [[ "$HEAD_BRANCH" =~ ^[a-z0-9]+(-[a-z0-9]+)*/(spr-[0-9]+|v[0-9]+\.[0-9]+\.[0-9]+(-spr-[0-9]+)?)$ ]]; then
             echo "is_solution=true" >> "$GITHUB_OUTPUT"
           else
             echo "is_solution=false" >> "$GITHUB_OUTPUT"
@@ -56,11 +56,18 @@ jobs:
             exit 1
           fi
 
-          if [[ "$HEAD_BRANCH" =~ ^${solution}/spr-[0-9]+$ ]]; then
+          if [[ "$HEAD_BRANCH" =~ ^${solution}/v([0-9]+\.[0-9]+\.[0-9]+)-spr-[0-9]+$ ]]; then
+            sprint_version="${BASH_REMATCH[1]}"
+            expected_version="$sprint_version.0"
+            if [[ "$BASE_BRANCH" != "$solution/v$sprint_version" ]]; then
+              echo "Sprint branch $HEAD_BRANCH must target its matching $solution/v$sprint_version release branch." >&2
+              exit 1
+            fi
+          elif [[ "$HEAD_BRANCH" =~ ^${solution}/spr-[0-9]+$ ]]; then
             if [[ "$BASE_BRANCH" =~ ^${solution}/v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
               expected_version="${BASH_REMATCH[1]}.0"
             else
-              echo "Sprint branch $HEAD_BRANCH must target a $solution/vX.Y.Z release branch." >&2
+              echo "Legacy sprint branch $HEAD_BRANCH must target a $solution/vX.Y.Z release branch." >&2
               exit 1
             fi
           elif [[ "$HEAD_BRANCH" =~ ^${solution}/v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
@@ -70,7 +77,7 @@ jobs:
               exit 1
             fi
           else
-            echo "Solution branches must use $solution/spr-N or $solution/vX.Y.Z." >&2
+            echo "Solution branches must use $solution/vX.Y.Z-spr-N or $solution/vX.Y.Z. Legacy $solution/spr-N branches remain temporarily supported." >&2
             exit 1
           fi
 

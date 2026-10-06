@@ -1,0 +1,107 @@
+name: Validate ADR
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+      - reopened
+      - typed
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: validate-adr-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: ADR structure
+    if: github.event.issue.type.name == 'ADR'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Validate ADR issue
+        id: validation
+        shell: bash
+        run: |
+          set +e
+          output="$(node .github/scripts/generate-adr.mjs --validate 2>&1)"
+          exit_code=$?
+          set -e
+
+          if [[ $exit_code -eq 0 ]]; then
+            echo "valid=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          delimiter="ADR_VALIDATION_$(date +%s%N)"
+          {
+            echo "output<<$delimiter"
+            echo "$output"
+            echo "$delimiter"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Update validation result
+        shell: bash
+        env:
+          VALID: ${{ steps.validation.outputs.valid }}
+          VALIDATION_OUTPUT: ${{ steps.validation.outputs.output }}
+        run: |
+          if [[ "$VALID" == "true" ]]; then
+            result="✅ The ADR structure is valid and can be published when closed as completed."
+          else
+            result="❌ The ADR structure is not valid yet. Update the issue fields before closing it as completed."
+          fi
+
+          {
+            echo "<!-- ppat-adr-validation -->"
+            echo "### ADR validation"
+            echo
+            echo "$result"
+            echo
+            echo '```text'
+            echo "$VALIDATION_OUTPUT"
+            echo '```'
+          } > /tmp/adr-validation-comment.md
+
+          comment_id="$(gh api \
+            --paginate \
+            "repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER/comments" \
+            --jq '.[] | select(.body | contains("<!-- ppat-adr-validation -->")) | .id' \
+            | head -n 1)"
+
+          if [[ -n "$comment_id" ]]; then
+            gh api \
+              --method PATCH \
+              "repos/$GITHUB_REPOSITORY/issues/comments/$comment_id" \
+              -F body=@/tmp/adr-validation-comment.md >/dev/null
+          else
+            gh api \
+              --method POST \
+              "repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER/comments" \
+              -F body=@/tmp/adr-validation-comment.md >/dev/null
+          fi
+
+      - name: Fail invalid ADR
+        if: steps.validation.outputs.valid != 'true'
+        shell: bash
+        env:
+          VALIDATION_OUTPUT: ${{ steps.validation.outputs.output }}
+        run: |
+          echo "$VALIDATION_OUTPUT" >&2
+          exit 1

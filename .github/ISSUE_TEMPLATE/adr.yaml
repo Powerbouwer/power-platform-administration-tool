@@ -1,0 +1,99 @@
+name: 🧭 Architecture decision record
+description: Propose, discuss, and record an architecture decision for PPAT.
+title: "🧭 [ADR] "
+type: adr
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this issue to propose and discuss one important architecture decision. Capture the problem, the forces that shape the choice, the options, the outcome, and its consequences.
+
+        Discussion can take place in the comments. Before closing the issue, update the fields below so they contain the final decision. Closing as **completed** generates an ADR documentation pull request. Closing as **not planned** does not publish an ADR.
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: Select whether the decision applies to PPAT as a whole or to one solution.
+      options:
+        - Repository-wide
+        - Core
+        - Change Viewer
+    validations:
+      required: true
+
+  - type: textarea
+    id: context-and-problem-statement
+    attributes:
+      label: Context and problem statement
+      description: Describe the situation, the problem to solve, and why an architecture decision is needed.
+      placeholder: What problem are we seeing, and in what context does it occur?
+    validations:
+      required: true
+
+  - type: textarea
+    id: decision-drivers
+    attributes:
+      label: Decision drivers
+      description: List the requirements, constraints, risks, or priorities that matter most for this decision.
+      placeholder: |
+        - Maintainability
+        - Security and compliance
+        - Team knowledge
+    validations:
+      required: true
+
+  - type: textarea
+    id: considered-options
+    attributes:
+      label: Considered options
+      description: List the meaningful options and summarize their relevant advantages and disadvantages.
+      placeholder: |
+        - Option A: Good because ..., but ...
+        - Option B: Good because ..., but ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: decision-outcome
+    attributes:
+      label: Decision outcome
+      description: State the selected option and why it best satisfies the decision drivers. Update this field with the final outcome before closing the issue.
+      placeholder: We will choose ... because ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: consequences
+    attributes:
+      label: Consequences
+      description: Describe what becomes easier or harder, including positive effects, trade-offs, risks, and follow-up decisions.
+      placeholder: |
+        Positive:
+        - ...
+
+        Negative or trade-offs:
+        - ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: participants
+    attributes:
+      label: Participants
+      description: Optionally list the people involved in discussing the decision.
+      placeholder: "@username, Name"
+    validations:
+      required: false
+
+  - type: textarea
+    id: links
+    attributes:
+      label: Links
+      description: Optionally link related issues, pull requests, ADRs, diagrams, or external documentation.
+      placeholder: |
+        - #123
+        - https://example.com
+    validations:
+      required: false

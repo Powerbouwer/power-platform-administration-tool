@@ -1,0 +1,61 @@
+name: 🛠️ Project work
+description: Track repository, automation, tooling, or process work for PPAT.
+title: "🛠️ [PROJECT] "
+type: project
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for work on the repository, automation, tooling, or contribution process.
+
+  - type: checkboxes
+    id: existing-issue-check
+    attributes:
+      label: Existing issue check
+      description: Have you checked that this work is not already tracked in the [backlog](https://github.com/Powerbouwer/power-platform-administration-tool/issues)?
+      options:
+        - label: I have searched the existing issues and confirm that this work is not already tracked.
+          required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Select the area this project work relates to.
+      options:
+        - GitHub Actions / Automation
+        - Repository configuration
+        - Issue / Pull request process
+        - Release process
+        - Dependencies / Tooling
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-situation
+    attributes:
+      label: Current situation
+      description: Describe how the repository, automation, tooling, or process works today and why it needs to change.
+      placeholder: Explain the current state and the problem it creates.
+    validations:
+      required: true
+
+  - type: textarea
+    id: desired-outcome
+    attributes:
+      label: Desired outcome
+      description: Describe the repository or process state that should exist after this work is completed.
+      placeholder: Explain what should be different and why that outcome is useful.
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints-context
+    attributes:
+      label: Constraints and context
+      description: Add risks, compatibility requirements, technical constraints, references, or other relevant information.
+      placeholder: Add any constraints or context that should inform the change.
+    validations:
+      required: false
