@@ -50,6 +50,21 @@ jobs:
         if: steps.branch.outputs.is_solution == 'true'
         shell: bash
         run: |
+          if ! gh api \
+              --paginate \
+              "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" \
+              --jq '.[] | .filename, (.previous_filename // empty)' \
+              > /tmp/changed-paths.txt; then
+            echo "Failed to retrieve changed pull request files." >&2
+            exit 1
+          fi
+          mapfile -t paths < /tmp/changed-paths.txt
+
+          if [[ ${#paths[@]} -eq 0 ]]; then
+            echo "Pull request contains no changed files; skipping development scope validation."
+            exit 0
+          fi
+
           solution="${HEAD_BRANCH%%/*}"
           if [[ ! "$solution" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
             echo "Invalid solution branch namespace: $solution" >&2
@@ -99,21 +114,6 @@ jobs:
           actual_version="$(ruby -ryaml -e 'puts YAML.load_file(ARGV[0]).dig("ImportExportXml", "SolutionManifest", "Version")' "$solution_file")"
           if [[ "$actual_version" != "$expected_version" ]]; then
             echo "Solution version must be $expected_version for this release branch; found $actual_version." >&2
-            exit 1
-          fi
-
-          if ! gh api \
-              --paginate \
-              "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" \
-              --jq '.[] | .filename, (.previous_filename // empty)' \
-              > /tmp/changed-paths.txt; then
-            echo "Failed to retrieve changed pull request files." >&2
-            exit 1
-          fi
-          mapfile -t paths < /tmp/changed-paths.txt
-
-          if [[ ${#paths[@]} -eq 0 ]]; then
-            echo "Pull request contains no changed files." >&2
             exit 1
           fi
 

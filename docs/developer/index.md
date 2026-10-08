@@ -168,6 +168,8 @@ A repository maintainer prepares a solution before its first development cycle:
 
 The scope, release, and publishing workflows derive solution names from branches, changed paths, or tags. They validate the derived technical name against the solution metadata, so they don't maintain separate solution lists.
 
+The development, documentation, and project scope checks succeed without further validation when GitHub returns no changed files, for example for a newly created branch that doesn't differ from its target yet. Failure to retrieve the changed files is still an error. Pull requests with changes remain subject to all path, branch-route, and solution metadata checks.
+
 ## Documentation Changes
 
 Documentation work does not require a solution release cycle:
