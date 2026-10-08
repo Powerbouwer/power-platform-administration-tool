@@ -1,7 +1,6 @@
 {
   "scripts": {
     "test:adr": "node --test .github/scripts/generate-adr.test.mjs",
-    "test:scope": "node --test .github/scripts/validate-scope.test.mjs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
