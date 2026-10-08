@@ -75,7 +75,7 @@ jobs:
           unique_name="ppat_${SOLUTION//-/_}"
           solution_file="solutions/$unique_name/solutions/$unique_name/solution.yml"
           release_branch="$SOLUTION/v$VERSION"
-          sprint_branch="$SOLUTION/spr-$SPRINT_NUMBER"
+          sprint_branch="$release_branch-spr-$SPRINT_NUMBER"
           release_tag="$SOLUTION-v$VERSION"
 
           if [[ -f "$solution_file" ]]; then
@@ -188,15 +188,39 @@ jobs:
             exit 1
           fi
 
-      - name: Create release issue label
+      - name: Ensure release milestone exists
         shell: bash
+        env:
+          MILESTONE_TITLE: ${{ steps.state.outputs.release_tag }}
         run: |
-          label="release:${{ steps.state.outputs.release_tag }}"
-          gh label create "$label" \
-            --repo "$GITHUB_REPOSITORY" \
-            --color "1D76DB" \
-            --description "Included in release ${{ steps.state.outputs.release_tag }}" \
-            --force
+          milestones="$(gh api \
+            --paginate \
+            "repos/$GITHUB_REPOSITORY/milestones?state=all&per_page=100" \
+            --jq ".[] | select(.title == \"$MILESTONE_TITLE\") | [.number, .state] | @tsv")"
+
+          milestone_count="$(printf '%s\n' "$milestones" | sed '/^$/d' | wc -l)"
+          if [[ "$milestone_count" -gt 1 ]]; then
+            echo "Multiple milestones named $MILESTONE_TITLE exist." >&2
+            exit 1
+          fi
+
+          if [[ "$milestone_count" -eq 1 ]]; then
+            milestone_state="$(printf '%s\n' "$milestones" | cut -f2)"
+            if [[ "$milestone_state" != "open" ]]; then
+              echo "Milestone $MILESTONE_TITLE is closed and cannot be reused." >&2
+              exit 1
+            fi
+
+            echo "Milestone $MILESTONE_TITLE already exists."
+            exit 0
+          fi
+
+          gh api \
+            --method POST \
+            "repos/$GITHUB_REPOSITORY/milestones" \
+            -f title="$MILESTONE_TITLE" \
+            -f description="Issues included in release $MILESTONE_TITLE" \
+            >/dev/null
 
       - name: Create sprint branch
         shell: bash
@@ -217,7 +241,7 @@ jobs:
             echo "- Solution: \`${{ steps.state.outputs.unique_name }}\`"
             echo "- Release branch: \`${{ steps.state.outputs.release_branch }}\`"
             echo "- Sprint branch: \`${{ steps.state.outputs.sprint_branch }}\`"
-            echo "- Issue label: \`release:${{ steps.state.outputs.release_tag }}\`"
+            echo "- Milestone: \`${{ steps.state.outputs.release_tag }}\`"
             if [[ "${{ steps.state.outputs.solution_initialized }}" == "false" ]]; then
               echo "- Initialization: connect Power Platform Git integration to the sprint branch to add the solution."
             fi

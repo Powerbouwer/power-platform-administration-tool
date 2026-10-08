@@ -1,7 +1,7 @@
 name: 🐞 Bug report
 description: Report a reproducible problem with PPAT.
 title: "🐞 [BUG] "
-labels: ["bug"]
+type: bug
 
 body:
   - type: checkboxes
@@ -14,18 +14,12 @@ body:
           required: true
 
   - type: dropdown
-    id: module
+    id: solution
     attributes:
-      label: Affected module
-      description: Select the module where the bug occurs.
+      label: Affected solution
+      description: Select the solution where the problem occurs.
       options:
-        - Inventory
-        - Governance Processes
-        - Maker Hub
-        - Environment Settings Configurator
-        - Tenant Monitor
-        - Message Center Triage
-        - Maker Enablement
+        - Core
         - Change Viewer
         - Other / Not sure
     validations:
@@ -34,18 +28,18 @@ body:
   - type: input
     id: version
     attributes:
-      label: Version
-      description: Specify the PPAT solution version you are using.
+      label: Installed version
+      description: Enter the full four-part version of the affected solution.
       placeholder: "e.g. 1.0.0.0"
     validations:
       required: true
 
   - type: textarea
-    id: bug-description
+    id: observed-behavior
     attributes:
-      label: Describe the bug
-      description: Provide a clear and concise description of what is happening.
-      placeholder: Describe what went wrong.
+      label: Observed behavior
+      description: Describe what happens, including any visible errors or unexpected results.
+      placeholder: Describe what you observe when the problem occurs.
     validations:
       required: true
 
@@ -71,6 +65,19 @@ body:
     validations:
       required: true
 
+  - type: dropdown
+    id: occurrence
+    attributes:
+      label: How often does this occur?
+      description: Select the option that best describes how reproducible the problem is.
+      options:
+        - Every time
+        - Intermittently
+        - Once
+        - Not sure
+    validations:
+      required: true
+
   - type: upload
     id: attachments
     attributes:
@@ -83,7 +90,7 @@ body:
     id: additional-information
     attributes:
       label: Additional information
-      description: Add any other information that may help diagnose the problem.
-      placeholder: Include relevant configuration, environment details, error messages, or other context.
+      description: Add configuration, environment details, or other context that may help diagnose the problem. Do not include credentials or other sensitive data.
+      placeholder: Include relevant configuration, environment details, or other context.
     validations:
       required: false

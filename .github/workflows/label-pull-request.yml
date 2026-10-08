@@ -38,7 +38,7 @@ jobs:
             label="project"
             color="FBCA04"
             description="Repository configuration or automation change"
-          elif [[ "$HEAD_BRANCH" =~ ^[a-z0-9]+(-[a-z0-9]+)*/(spr-[0-9]+|v[0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+          elif [[ "$HEAD_BRANCH" =~ ^[a-z0-9]+(-[a-z0-9]+)*/(spr-[0-9]+|v[0-9]+\.[0-9]+\.[0-9]+(-spr-[0-9]+)?)$ ]]; then
             label="dev"
             color="0E8A16"
             description="Power Platform solution development change"

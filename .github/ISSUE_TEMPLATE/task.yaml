@@ -1,0 +1,59 @@
+name: 🔧 Development task
+description: Track a concrete, actionable piece of PPAT development work.
+title: "🔧 [TASK] "
+type: task
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for a defined development step with a clear outcome.
+
+        If you are proposing new functionality that still needs to be explored, use the feature request form instead.
+
+  - type: checkboxes
+    id: existing-issue-check
+    attributes:
+      label: Existing issue check
+      description: Have you checked that this task is not already tracked in the [backlog](https://github.com/Powerbouwer/power-platform-administration-tool/issues)?
+      options:
+        - label: I have searched the existing issues and confirm that this task is not already tracked.
+          required: true
+
+  - type: dropdown
+    id: solution
+    attributes:
+      label: Target solution
+      description: Select a solution if this task targets one. Leave blank for cross-solution work or when not yet determined.
+      options:
+        - Core
+        - Change Viewer
+    validations:
+      required: false
+
+  - type: textarea
+    id: work-to-be-done
+    attributes:
+      label: Work to be done
+      description: Describe the concrete work, why it is needed, and any important boundaries.
+      placeholder: Explain what needs to change and what is included in this task.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-result
+    attributes:
+      label: Expected result
+      description: Describe what should be observably changed or delivered when this task is complete.
+      placeholder: Describe the resulting behavior, artifact, or state.
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical-context
+    attributes:
+      label: Technical context
+      description: Add design notes, constraints, screenshots, links, or other relevant technical details.
+      placeholder: Add any technical context that may help complete the work.
+    validations:
+      required: false

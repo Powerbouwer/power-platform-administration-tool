@@ -1,0 +1,84 @@
+name: 📚 Documentation
+description: Request new documentation or an improvement to existing PPAT documentation.
+title: "📚 [DOCS] "
+type: documentation
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us improve the PPAT documentation.
+
+        Use this form to request new content or to report documentation that is missing, incorrect, outdated, or unclear.
+
+  - type: checkboxes
+    id: existing-issue-check
+    attributes:
+      label: Existing issue check
+      description: Have you checked that this documentation issue has not already been reported in the [backlog](https://github.com/Powerbouwer/power-platform-administration-tool/issues)?
+      options:
+        - label: I have searched the existing issues and confirm that this has not already been reported.
+          required: true
+
+  - type: dropdown
+    id: feedback-type
+    attributes:
+      label: Type of feedback
+      description: What kind of documentation feedback are you providing?
+      options:
+        - New documentation
+        - Missing topic or guidance
+        - Incorrect information
+        - Outdated information
+        - Unclear explanation
+        - Example or screenshot
+        - Navigation or structure
+        - Broken link
+        - Formatting or accessibility
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: page-url
+    attributes:
+      label: Documentation page
+      description: Provide the URL when this request concerns an existing documentation page.
+      placeholder: "https://..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: documentation-need
+    attributes:
+      label: Documentation need
+      description: Describe what should be added, corrected, or clarified and why the current documentation is insufficient.
+      placeholder: Explain the documentation gap or problem that should be addressed.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-documentation
+    attributes:
+      label: Expected documentation
+      description: Describe the information, steps, examples, or corrected content the documentation should contain.
+      placeholder: Outline what a useful documentation page or improvement should cover.
+    validations:
+      required: true
+
+  - type: upload
+    id: attachments
+    attributes:
+      label: Attachments
+      description: Upload screenshots or other files that help explain the documentation issue.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add official sources, reference material, or other information that may help create or improve the documentation.
+      placeholder: Add relevant links, sources, or other context here.
+    validations:
+      required: false
