@@ -1,5 +1,8 @@
 RootComponents:
   RootComponent:
+  - '@type': 29
+    '@id': '{ca27d5d6-2bc3-f111-a05c-70a8a507ac5b}'
+    '@behavior': 0
   - '@type': 62
     '@schemaName': ppat_PowerPlatformAdministrationTool
     '@behavior': 0

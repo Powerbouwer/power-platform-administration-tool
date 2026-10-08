@@ -20,8 +20,8 @@ MissingDependencies:
       '@id.uniquename': AppChannel
       package:
         '@appName': PowerAppsAppFramework Package
-        '@version': 1.0.0.25
-        '#text': PowerAppsAppFramework_Anchor (1.0.0.25)
+        '@version': 1.0.0.26
+        '#text': PowerAppsAppFramework_Anchor (1.0.0.26)
     Dependent:
       '@type': AppSetting
       '@displayName': parentappmoduleid.uniquename=ppat_PowerPlatformAdministrationTool,settingdefinitionid.uniquename=AppChannel

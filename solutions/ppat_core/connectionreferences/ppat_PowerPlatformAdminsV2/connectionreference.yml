@@ -1,0 +1,9 @@
+connectionreference:
+  '@connectionreferencelogicalname': ppat_PowerPlatformAdminsV2
+  connectionreferencedisplayname: PPAT - Admins V2 (Power Platform Administrator required)
+  connectorid: /providers/Microsoft.PowerApps/apis/shared_powerplatformadminv2
+  description: Power Platform for Admins V2 connection reference for PPAT inventory queries. MUST be bound to an identity with active Power Platform Administrator rights in the target tenant at every execution. The reference does not grant roles or activate PIM assignments. Restrict flow run-only access to trusted administration app users. Use the embedded administrator connection, not a connection supplied by the run-only user.
+  iscustomizable: 1
+  promptingbehavior: 0
+  statecode: 0
+  statuscode: 1

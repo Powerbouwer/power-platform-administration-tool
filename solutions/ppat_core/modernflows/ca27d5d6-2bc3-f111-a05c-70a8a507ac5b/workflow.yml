@@ -1,0 +1,28 @@
+Workflow:
+  '@WorkflowId': '{ca27d5d6-2bc3-f111-a05c-70a8a507ac5b}'
+  '@Name': PPAT - Search Inventory
+  JsonFileName: /modernflows/ca27d5d6-2bc3-f111-a05c-70a8a507ac5b/PPAT-SearchInventory-CA27D5D6-2BC3-F111-A05C-70A8A507AC5B.json
+  Type: 1
+  Subprocess: 0
+  Category: 5
+  Mode: 0
+  Scope: 4
+  OnDemand: 0
+  TriggerOnCreate: 0
+  TriggerOnDelete: 0
+  AsyncAutodelete: 0
+  SyncWorkflowLogOnFailure: 0
+  StateCode: 1
+  StatusCode: 2
+  RunAs: 1
+  IsTransacted: 1
+  IntroducedVersion: 1.0
+  IsCustomizable: 1
+  BusinessProcessType: 0
+  IsCustomProcessingStepAllowedForOtherPublishers: 1
+  ModernFlowType: 0
+  PrimaryEntity: none
+  LocalizedNames:
+    LocalizedName:
+      '@languagecode': 1033
+      '@description': PPAT - Search Inventory

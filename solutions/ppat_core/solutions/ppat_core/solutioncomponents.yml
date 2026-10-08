@@ -3,4 +3,6 @@ SolutionComponents:
   - '@path': /appmodules/ppat_PowerPlatformAdministrationTool
   - '@path': /appmodulesitemaps/ppat_PowerPlatformAdministrationTool
   - '@path': /canvasapps/ppat_ppattemplate_97904
+  - '@path': /connectionreferences/ppat_PowerPlatformAdminsV2
+  - '@path': /modernflows/ca27d5d6-2bc3-f111-a05c-70a8a507ac5b
   - '@path': /publishers/ppat
