@@ -27,16 +27,19 @@ jobs:
       - name: Validate changed paths
         shell: bash
         run: |
-          mapfile -t paths < <(
-            gh api \
+          if ! gh api \
               --paginate \
               "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" \
-              --jq '.[] | .filename, (.previous_filename // empty)'
-          )
+              --jq '.[] | .filename, (.previous_filename // empty)' \
+              > /tmp/changed-paths.txt; then
+            echo "Failed to retrieve changed pull request files." >&2
+            exit 1
+          fi
+          mapfile -t paths < /tmp/changed-paths.txt
 
           if [[ ${#paths[@]} -eq 0 ]]; then
-            echo "Pull request contains no changed files." >&2
-            exit 1
+            echo "Pull request contains no changed files; skipping project scope validation."
+            exit 0
           fi
 
           invalid_paths=()
