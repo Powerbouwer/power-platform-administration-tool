@@ -74,8 +74,8 @@ jobs:
         run: |
           unique_name="ppat_${SOLUTION//-/_}"
           solution_file="solutions/$unique_name/solutions/$unique_name/solution.yml"
-          release_branch="$SOLUTION/v$VERSION"
-          sprint_branch="$release_branch-spr-$SPRINT_NUMBER"
+          release_branch="$SOLUTION/v$VERSION/release"
+          sprint_branch="$SOLUTION/v$VERSION/spr-$SPRINT_NUMBER"
           release_tag="$SOLUTION-v$VERSION"
 
           if [[ -f "$solution_file" ]]; then
@@ -86,6 +86,12 @@ jobs:
 
           if git ls-remote --exit-code --heads origin "$sprint_branch" >/dev/null 2>&1; then
             echo "Branch $sprint_branch already exists." >&2
+            exit 1
+          fi
+
+          legacy_release_branch="$SOLUTION/v$VERSION"
+          if git ls-remote --exit-code --heads origin "$legacy_release_branch" >/dev/null 2>&1; then
+            echo "Legacy release branch $legacy_release_branch blocks nested release and sprint branches. Rename it to $release_branch before rerunning this workflow." >&2
             exit 1
           fi
 

@@ -111,8 +111,8 @@ PPAT uses shared release and sprint branches:
 
 1. Open **Actions** > **Create development branches** in GitHub.
 1. Select the `solution` you are going to work on, enter the three-part release version without a `v` prefix, for example `1.0.0`, and enter the numeric sprint number.
-1. The workflow creates `{solution}/v{major}.{minor}.{build}` from `main`, updates that solution to `{major}.{minor}.{build}.0`, and creates an open `{solution}-v{major}.{minor}.{build}` milestone.
-1. The workflow creates `{solution}/v{major}.{minor}.{build}-spr-{sprint number}` from the release branch. For example, sprint 70 targeting core release `1.0.0` uses `core/v1.0.0-spr-70`. If the release branch already exists with the expected solution version, only the new sprint branch is created.
+1. The workflow creates `{solution}/v{major}.{minor}.{build}/release` from `main`, updates that solution to `{major}.{minor}.{build}.0`, and creates an open `{solution}-v{major}.{minor}.{build}` milestone.
+1. The workflow creates `{solution}/v{major}.{minor}.{build}/spr-{sprint number}` from the release branch. For example, sprint 70 targeting core release `1.0.0` uses `core/v1.0.0/spr-70`. If the release branch already exists with the expected solution version, only the new sprint branch is created.
 1. Additional sprint branches for the same release reuse the existing open milestone.
 1. Connect each participating developer environment to the shared sprint branch.
 1. Collaborate by pulling from and pushing to that sprint branch.
@@ -131,7 +131,7 @@ We deliberately use a shared sprint branch instead of separate feature branches 
 
 Production patches follow a separate path:
 
-1. Start a release cycle with an incremented build number. For example, a core patch for `core-v1.0.0` uses version `1.0.1` and branch `core/v1.0.1`.
+1. Start a release cycle with an incremented build number. For example, a core patch for `core-v1.0.0` uses version `1.0.1` and release branch `core/v1.0.1/release`.
 1. Complete and verify the fix on the patch branch.
 1. Merge the patch into `main`.
 1. Apply the same patch to the active release branch so that the fix is retained in the next release.
@@ -152,7 +152,7 @@ MAJOR.MINOR.BUILD.REVISION
 | `BUILD`    | The patch number. Increment it for a bug fix or small, nonbreaking change.                         |
 | `REVISION` | An automatically incremented deployment iteration within the same major, minor, and build version. |
 
-Release branch names use the first three components of the solution version in `{solution}/vX.Y.Z`. Sprint branches add the sprint number as `{solution}/vX.Y.Z-spr-N`. A slash cannot separate the release and sprint portions because Git cannot store both `core/v1.0.1` and a branch below that same ref. The deployment-generated revision is not included in either branch name. For example, core solution version `1.0.1.4` belongs to release branch `core/v1.0.1`, with sprint 70 on `core/v1.0.1-spr-70`. Solutions are versioned independently.
+Release branch names use the first three components of the solution version in `{solution}/vX.Y.Z/release`. Sprint branches use `{solution}/vX.Y.Z/spr-N`. Both branch names share the `{solution}/vX.Y.Z` namespace, so Git can store them as sibling refs. The deployment-generated revision is not included in either branch name. For example, core solution version `1.0.1.4` belongs to release branch `core/v1.0.1/release`, with sprint 70 on `core/v1.0.1/spr-70`. Solutions are versioned independently. Before using the new names for an existing release, rename its old `{solution}/vX.Y.Z` release branch to `{solution}/vX.Y.Z/release`; the old ref blocks creating either nested branch.
 
 Solution metadata is stored in `solutions/{unique name}/solutions/{unique name}/solution.yml`. Release packaging uses `solutions/{unique name}` as the native Dataverse Git YAML root.
 
