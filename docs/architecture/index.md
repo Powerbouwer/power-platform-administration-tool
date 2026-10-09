@@ -22,6 +22,7 @@ The records use a lightweight combination of the [Michael Nygard and MADR templa
 <!-- ADR-LIST:START -->
 | ADR | Decision | Scope | Decision date |
 | ---: | --- | --- | --- |
+| 21 | [🧭 Test met Felix & Thomas](./decisions/issue-21-test-met-felix-thomas) | ppat_core | 2026-10-09 |
 <!-- ADR-LIST:END -->
 
 ## Integrations
