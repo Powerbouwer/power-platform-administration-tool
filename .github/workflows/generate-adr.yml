@@ -41,18 +41,39 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.BRANCH_AUTOMATION_TOKEN }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: npm
-
       - name: Create documentation branch
         shell: bash
         run: git switch -C "$ADR_BRANCH"
 
-      - name: Generate ADR
-        run: node .github/scripts/generate-adr.mjs
+      - name: Write ADR from issue body
+        shell: bash
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          CLOSED_AT: ${{ github.event.issue.closed_at }}
+        run: |
+          title="${ISSUE_TITLE#*\[ADR\] }"
+          slug="$(tr 'A-Z' 'a-z' <<< "$title" | sed -E 's/[^a-z0-9]+/-/g; s/^-+|-+$//g' | cut -c1-80)"
+          scope="$(awk '/^### Scope/{f=1;next} f&&NF{print;exit}' <<< "$ISSUE_BODY" | tr -d '\r')"
+          dir="docs/architecture/decisions/${ISSUE_NUMBER}-${slug:-decision}"
+          mkdir -p "$dir"
+          {
+            echo "---"
+            echo "title: \"${title//\"/\\\"}\""
+            echo "issue: $ISSUE_NUMBER"
+            echo "issueUrl: $ISSUE_URL"
+            echo "scope: \"$scope\""
+            echo "decisionDate: ${CLOSED_AT%%T*}"
+            echo "---"
+            echo
+            echo "# $title"
+            echo
+            echo "Source: [Issue #$ISSUE_NUMBER]($ISSUE_URL)"
+            echo
+            printf '%s\n' "$ISSUE_BODY"
+          } > "$dir/index.md"
 
       - name: Commit and push documentation
         id: changes

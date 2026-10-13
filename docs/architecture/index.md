@@ -3,6 +3,10 @@ title: "Architecture"
 layout: doc
 ---
 
+<script setup>
+import { data as decisions } from './decisions/decisions.data.mjs'
+</script>
+
 # Architecture
 
 This section describes the architecture of the Power Platform Administration Tool.
@@ -13,16 +17,25 @@ The system context, major components, and their responsibilities are not yet doc
 
 ## Architecture decisions
 
-Architecture decisions are proposed and discussed in GitHub issues of type `ADR`. Comments can be used for discussion, but the issue fields must contain the final decision before the issue is closed.
+Architecture decisions are tracked as GitHub issues of type `ADR`.
 
-Closing an ADR as completed creates a documentation pull request. Closing it as not planned does not publish a decision.
+When an ADR issue is closed as completed, a documentation pull request is generated. Issues closed as not planned are not documented.
 
-The records use a lightweight combination of the [Michael Nygard and MADR templates](https://github.com/architecture-decision-record/architecture-decision-record): context and problem statement, decision drivers, considered options, decision outcome, and consequences.
+See the architecture decisions below.
 
-<!-- ADR-LIST:START -->
-| ADR | Decision | Scope | Decision date |
-| ---: | --- | --- | --- |
-<!-- ADR-LIST:END -->
+<table>
+  <thead>
+    <tr><th>Decision</th><th>Scope</th><th>Decision date</th><th>Issue</th></tr>
+  </thead>
+  <tbody>
+    <tr v-for="d in decisions" :key="d.issue">
+      <td><a :href="d.url">{{ d.title }}</a></td>
+      <td>{{ d.scope }}</td>
+      <td>{{ new Date(d.decisionDate).toISOString().slice(0, 10) }}</td>
+      <td><a :href="d.issueUrl">#{{ d.issue }}</a></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Integrations
 
