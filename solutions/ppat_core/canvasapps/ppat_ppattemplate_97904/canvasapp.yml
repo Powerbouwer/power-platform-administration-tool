@@ -1,3 +1,4 @@
+# Temporary PR validation probe; no resource behavior changes. DO NOT MERGE.
 CanvasApp:
   Name: ppat_ppattemplate_97904
   AppVersion: 2026-10-01T13:16:43.0000000Z
