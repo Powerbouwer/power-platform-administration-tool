@@ -7,20 +7,6 @@ require 'cgi'
 module Standards
   class InputError < StandardError; end
 
-  # Older native JSON parsers can bypass []= on Hash subclasses.
-  class UniqueObject
-    attr_reader :values
-
-    def initialize
-      @values = {}
-    end
-
-    def []=(key, value)
-      raise InputError, 'Duplicate JSON property' if @values.key?(key)
-      @values[key] = value
-    end
-  end
-
   DOCS = {
     'FLOW-NAME' => 'naming#flow-name',
     'APP-NAME' => 'naming#app-name',
@@ -45,46 +31,44 @@ module Standards
     raise InputError, 'Source file exceeds the 8 MiB inspection limit' if File.size(path) > 8 * 1024 * 1024
     text = File.read(path, encoding: 'UTF-8')
     if File.extname(path).downcase == '.json'
-      plain_json(JSON.parse(text, object_class: UniqueObject))
+      data = JSON.parse(text)
+      # Native JSON parsers may deduplicate before object callbacks. Inspect the AST instead,
+      # decoding JSON string escapes so surrogate pairs remain valid YAML scalars.
+      normalized = text.gsub(/"(?:[^"\\]|\\.)*"/m) { |literal| JSON.generate(JSON.parse(literal)) }
+      check_structure(normalized, json: true)
+      data
     else
-      tree = Psych.parse_stream(text)
-      raise InputError, 'Expected exactly one YAML document' unless tree.children.length == 1
-      pending = [[tree, 0]]
-      until pending.empty?
-        node, depth = pending.pop
-        raise InputError, 'YAML nesting exceeds the inspection limit' if depth > 100
-        if node.respond_to?(:tag) && node.tag &&
-           !%w[str int float bool null timestamp map seq].any? { |type| node.tag == "tag:yaml.org,2002:#{type}" }
-          raise InputError, 'YAML object/custom tags are not supported'
-        end
-        if node.is_a?(Psych::Nodes::Mapping)
-          keys = node.children.each_slice(2).map do |key, _value|
-            raise InputError, 'Complex YAML keys are not supported' unless key.is_a?(Psych::Nodes::Scalar)
-            raise InputError, 'YAML merge keys are not supported' if key.value == '<<'
-            if (key.tag && key.tag != 'tag:yaml.org,2002:str') ||
-               (!key.quoted && !key.tag && !YAML.safe_load(key.value).is_a?(String))
-              raise InputError, 'YAML mapping keys must be text; quote implicitly typed keys'
-            end
-            key.value
-          end
-          raise InputError, 'Duplicate YAML property' unless keys.uniq.length == keys.length
-        end
-        pending.concat((node.children || []).map { |child| [child, depth + 1] })
-      end
+      check_structure(text)
       YAML.safe_load(text, permitted_classes: [Time, Date], aliases: false)
     end
   rescue Psych::Exception, JSON::ParserError, EncodingError, ArgumentError => e
     raise InputError, "Invalid or unsupported source data (#{e.class})"
   end
 
-  def self.plain_json(value)
-    case value
-    when UniqueObject
-      value.values.to_h { |key, child| [key, plain_json(child)] }
-    when Array
-      value.map { |child| plain_json(child) }
-    else
-      value
+  def self.check_structure(text, json: false)
+    tree = Psych.parse_stream(text)
+    raise InputError, 'Expected exactly one source document' unless tree.children.length == 1
+    pending = [[tree, 0]]
+    until pending.empty?
+      node, depth = pending.pop
+      raise InputError, 'Source nesting exceeds the inspection limit' if depth > 100
+      if node.respond_to?(:tag) && node.tag &&
+         !%w[str int float bool null timestamp map seq].any? { |type| node.tag == "tag:yaml.org,2002:#{type}" }
+        raise InputError, 'YAML object/custom tags are not supported'
+      end
+      if node.is_a?(Psych::Nodes::Mapping)
+        keys = node.children.each_slice(2).map do |key, _value|
+          raise InputError, 'Complex source keys are not supported' unless key.is_a?(Psych::Nodes::Scalar)
+          raise InputError, 'YAML merge keys are not supported' if !json && key.value == '<<'
+          if (key.tag && key.tag != 'tag:yaml.org,2002:str') ||
+             (!key.quoted && !key.tag && !YAML.safe_load(key.value).is_a?(String))
+            raise InputError, 'Source mapping keys must be text; quote implicitly typed keys'
+          end
+          key.value
+        end
+        raise InputError, 'Duplicate source property' unless keys.uniq.length == keys.length
+      end
+      pending.concat((node.children || []).map { |child| [child, depth + 1] })
     end
   end
 

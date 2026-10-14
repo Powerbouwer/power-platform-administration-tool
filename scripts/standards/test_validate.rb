@@ -275,6 +275,16 @@ check('source paths cannot traverse or follow symlinks out of the solution') do 
   end
 end
 
+check('JSON string escapes, surrogate pairs and literal merge-like property names are preserved') do |root|
+  path = File.join(root, 'unicode.json')
+  File.write(path, '{"\\uD83D\\uDE00":"\\uD83D\\uDE00","<<":"literal","escaped":"quote: \\" and slash: \\\\","zero":"\\u0000"}')
+  data = Standards.read_data(path)
+  assert(data["\u{1F600}"] == "\u{1F600}")
+  assert(data['<<'] == 'literal')
+  assert(data['escaped'] == "quote: \" and slash: \\")
+  assert(data['zero'] == "\0")
+end
+
 check('configuration failure is execution failure even on warning branches') do |root|
   policy = File.join(root, 'policy.yml')
   write_data(policy, { 'control_prefixes' => {}, 'variable_prefixes' => {} })
