@@ -1,0 +1,7 @@
+AppModule:
+  UniqueName: ppat_PowerPlatformAdministrationTool
+  IntroducedVersion: 1.0.0.0
+  LocalizedNames:
+    LocalizedName:
+      '@description': Power Platform Administration Tool
+      '@languagecode': 1033

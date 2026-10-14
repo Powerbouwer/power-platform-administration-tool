@@ -1,0 +1,28 @@
+name: Standards tooling tests
+
+'on':
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: standards-tests-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Standards tooling
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out proposed tooling
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Run dependency-free fixture tests
+        shell: bash
+        run: |
+          ruby -ryaml -rjson -rdate -e 'abort "Ruby 3.1+ required" if (RUBY_VERSION.split(".").map(&:to_i) <=> [3, 1, 0]) == -1'
+          ruby scripts/standards/test_validate.rb
