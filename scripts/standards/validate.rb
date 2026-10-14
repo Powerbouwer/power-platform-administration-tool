@@ -7,10 +7,17 @@ require 'cgi'
 module Standards
   class InputError < StandardError; end
 
-  class UniqueHash < Hash
+  # Older native JSON parsers can bypass []= on Hash subclasses.
+  class UniqueObject
+    attr_reader :values
+
+    def initialize
+      @values = {}
+    end
+
     def []=(key, value)
-      raise InputError, 'Duplicate JSON property' if key?(key)
-      super
+      raise InputError, 'Duplicate JSON property' if @values.key?(key)
+      @values[key] = value
     end
   end
 
@@ -38,7 +45,7 @@ module Standards
     raise InputError, 'Source file exceeds the 8 MiB inspection limit' if File.size(path) > 8 * 1024 * 1024
     text = File.read(path, encoding: 'UTF-8')
     if File.extname(path).downcase == '.json'
-      JSON.parse(text, object_class: UniqueHash)
+      plain_json(JSON.parse(text, object_class: UniqueObject))
     else
       tree = Psych.parse_stream(text)
       raise InputError, 'Expected exactly one YAML document' unless tree.children.length == 1
@@ -68,6 +75,17 @@ module Standards
     end
   rescue Psych::Exception, JSON::ParserError, EncodingError, ArgumentError => e
     raise InputError, "Invalid or unsupported source data (#{e.class})"
+  end
+
+  def self.plain_json(value)
+    case value
+    when UniqueObject
+      value.values.to_h { |key, child| [key, plain_json(child)] }
+    when Array
+      value.map { |child| plain_json(child) }
+    else
+      value
+    end
   end
 
   def self.object(value, property)

@@ -228,6 +228,8 @@ end
 check('parser rejects duplicate properties, object tags, aliases and multiple YAML documents') do |root|
   samples = {
     'duplicate.yml' => "A: 1\nA: 2\n", 'duplicate.json' => '{"A":1,"A":2}',
+    'nested-duplicate.json' => '{"root":[{"A":1,"A":2}]}',
+    'escaped-duplicate.json' => '{"A":1,"\\u0041":2}',
     'tag.yml' => "--- !ruby/object:Object {}\n",
     'date-tag.yml' => "--- !ruby/object:Date {}\n",
     'merge.yml' => "A:\n  <<: {B: 1}\n  B: 2\n",
