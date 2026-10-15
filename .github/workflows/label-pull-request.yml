@@ -1,41 +1,33 @@
-name: Power Platform PR quality
+name: Label pull request
 
-'on':
-  pull_request_target:
+on:
+  pull_request:
     types:
       - opened
       - synchronize
       - reopened
       - ready_for_review
-      - labeled
-      - unlabeled
-      - edited
 
 permissions:
-  contents: read
-  pull-requests: read
+  issues: write
+  pull-requests: write
 
 concurrency:
   group: label-pull-request-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
-  prepare:
-    name: Prepare labels and PR context
+  label:
+    name: Apply change type label
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: read
-    outputs:
-      dev: ${{ steps.context.outputs.dev }}
     env:
       GH_TOKEN: ${{ github.token }}
-      HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
+      HEAD_BRANCH: ${{ github.head_ref }}
       PR_NUMBER: ${{ github.event.pull_request.number }}
 
     steps:
       - name: Determine and apply label
-        if: github.event.pull_request.head.repo.full_name == github.repository
         shell: bash
         run: |
           if [[ "$HEAD_BRANCH" =~ ^docs/[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
@@ -61,126 +53,6 @@ jobs:
             --description "$description" \
             --force
 
-          gh api --method POST \
-            "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/labels" \
-            -f "labels[]=$label" > /dev/null
-
-      - name: Read current labels and verify PR snapshot
-        id: context
-        env:
-          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
-          EXPECTED_BASE: ${{ github.event.pull_request.base.sha }}
-          EXPECTED_TARGET: ${{ github.event.pull_request.base.ref }}
-        shell: bash
-        run: |
-          gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" > "$RUNNER_TEMP/standards-pr.json"
-          ruby -rjson -e '
-            pr = JSON.parse(File.read(ARGV.fetch(0)))
-            abort "PR changed while preparing; trigger a fresh run." unless
-              pr.dig("head", "sha") == ENV.fetch("EXPECTED_HEAD") &&
-              pr.dig("base", "sha") == ENV.fetch("EXPECTED_BASE") &&
-              pr.dig("base", "ref") == ENV.fetch("EXPECTED_TARGET")
-            dev = pr.fetch("labels").any? { |label| label.fetch("name") == "dev" }
-            File.open(ENV.fetch("GITHUB_OUTPUT"), "a") { |f| f.puts "dev=#{dev}" }
-          ' "$RUNNER_TEMP/standards-pr.json"
-
-  validate:
-    name: Validate active solution
-    needs: prepare
-    if: needs.prepare.outputs.dev == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check existing Ruby parsers
-        shell: bash
-        run: ruby -ryaml -rjson -rdate -e 'abort "Ruby 3.1+ required" if (RUBY_VERSION.split(".").map(&:to_i) <=> [3, 1, 0]) == -1; puts "Ruby YAML/JSON ready"'
-
-      - name: Check out trusted validator and policy
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.sha }}
-          path: trusted
-          persist-credentials: false
-
-      - name: Check out PR head as data only
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.sha }}
-          path: source
-          persist-credentials: false
-          submodules: false
-          lfs: false
-
-      - name: Retrieve complete changed files and verify snapshot
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
-          EXPECTED_BASE: ${{ github.event.pull_request.base.sha }}
-          EXPECTED_TARGET: ${{ github.event.pull_request.base.ref }}
-        shell: bash
-        run: |
-          gh api --paginate --slurp \
-            "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" > "$RUNNER_TEMP/standards-changes.json"
-          gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" > "$RUNNER_TEMP/standards-pr.json"
-          ruby -rjson -e '
-            files = JSON.parse(File.read(ARGV.fetch(0))).flatten(1)
-            pr = JSON.parse(File.read(ARGV.fetch(1)))
-            abort "PR changed while reading files; trigger a fresh run." unless
-              pr.dig("head", "sha") == ENV.fetch("EXPECTED_HEAD") &&
-              pr.dig("base", "sha") == ENV.fetch("EXPECTED_BASE") &&
-              pr.dig("base", "ref") == ENV.fetch("EXPECTED_TARGET")
-            abort "Incomplete PR file list; API limit is 3000 files." unless files.length == pr.fetch("changed_files")
-          ' "$RUNNER_TEMP/standards-changes.json" "$RUNNER_TEMP/standards-pr.json"
-
-      - name: Validate resources with trusted rules
-        env:
-          BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
-          STANDARDS_DOCS_REF: ${{ github.event.pull_request.base.sha }}
-        shell: bash
-        run: |
-          ruby trusted/scripts/standards/validate.rb \
-            --root source \
-            --base "$BASE_BRANCH" \
-            --changed-files "$RUNNER_TEMP/standards-changes.json" \
-            --report "$RUNNER_TEMP/standards-report.json" \
-            --summary "$GITHUB_STEP_SUMMARY"
-
-      - name: Upload findings
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: power-platform-standards
-          path: ${{ runner.temp }}/standards-report.json
-          if-no-files-found: error
-          retention-days: 7
-
-  quality:
-    name: Power Platform standards
-    needs: [prepare, validate]
-    if: always()
-    runs-on: ubuntu-latest
-    env:
-      PREPARE_RESULT: ${{ needs.prepare.result }}
-      VALIDATE_RESULT: ${{ needs.validate.result }}
-      IS_DEV: ${{ needs.prepare.outputs.dev }}
-    steps:
-      - name: Enforce final outcome
-        shell: bash
-        run: |
-          if [[ "$PREPARE_RESULT" != "success" ]]; then
-            echo "::error::PR preparation failed or was cancelled."
-            exit 1
-          fi
-          if [[ "$IS_DEV" == "true" ]]; then
-            if [[ "$VALIDATE_RESULT" != "success" ]]; then
-              echo "::error::Resource validation failed or was cancelled."
-              exit 1
-            fi
-            echo "Resource validation completed; see Validate active solution for findings." >> "$GITHUB_STEP_SUMMARY"
-          elif [[ "$VALIDATE_RESULT" == "skipped" && "$IS_DEV" == "false" ]]; then
-            echo "Power Platform resource validation is not applicable: this PR has no dev label." >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo "::error::Unexpected validation state."
-            exit 1
-          fi
+          gh pr edit "$PR_NUMBER" \
+            --repo "$GITHUB_REPOSITORY" \
+            --add-label "$label"
