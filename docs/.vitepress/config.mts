@@ -32,24 +32,6 @@ export default defineConfig({
       { text: 'Team', link: '/team' }
     ],
 
-    sidebar: {
-      '/developer/standards/': [
-        {
-          text: 'Power Platform standards',
-          items: [
-            { text: 'Overview', link: '/developer/standards/' },
-            { text: 'Naming', link: '/developer/standards/naming' },
-            { text: 'Cloud flows', link: '/developer/standards/cloud-flows' },
-            { text: 'Canvas apps', link: '/developer/standards/canvas-apps' },
-            { text: 'Model-driven apps', link: '/developer/standards/model-driven-apps' },
-            { text: 'Dataverse', link: '/developer/standards/dataverse' },
-            { text: 'CI validation', link: '/developer/standards/ci-validation' },
-            { text: 'Contributor Guide', link: '/developer' }
-          ]
-        }
-      ]
-    },
-
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Powerbouwer/power-platform-administration-tool' }
     ],
