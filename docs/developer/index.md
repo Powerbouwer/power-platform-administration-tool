@@ -240,6 +240,4 @@ Configure the `production-release` GitHub Environment with required reviewers to
 
 ## Naming Conventions
 
-Follow the [Power Platform standards](./standards/) for cloud flows, Canvas apps, model-driven apps and Dataverse. The [shared naming reference](./standards/naming) distinguishes display names, technical identities and resource-specific prefixes.
-
-Pull requests labeled `dev` run [resource validation](./standards/ci-validation) for the single solution selected from the changed solution paths. All supported resources in that solution are checked, including unchanged ones. Rule violations are errors when targeting `main` and warnings for other targets; execution failures remain errors. This supplements the existing branch-route and scope checks.
+Naming conventions will be added in a later revision of this guide.
