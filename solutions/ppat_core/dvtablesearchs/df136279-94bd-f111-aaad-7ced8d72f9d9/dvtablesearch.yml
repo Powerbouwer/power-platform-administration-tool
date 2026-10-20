@@ -1,0 +1,10 @@
+dvtablesearch:
+  '@dvtablesearchid': df136279-94bd-f111-aaad-7ced8d72f9d9
+  appmoduleuniquename: ppat_PowerPlatformAdministrationTool
+  iscustomizable: 1
+  m365appmoduleid:
+    uniquename: ppat_PowerPlatformAdministrationTool
+  name: M365_Primary_model_ppat_PowerPlatformAdministrationTool
+  searchtype: 0
+  statecode: 1
+  statuscode: 2

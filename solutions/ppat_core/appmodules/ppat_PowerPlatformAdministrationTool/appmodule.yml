@@ -20,15 +20,27 @@ AppModule:
     LocalizedName:
       '@description': Power Platform Administration Tool
       '@languagecode': 1033
+  Descriptions:
+    Description:
+      '@description': Streamline administrative tasks and centralize management functions with Power Platform Administration Tool. This solution is currently in initial development to support efficient oversight of your Power Platform environment.
+      '@languagecode': 1033
   appelements:
     appelement:
-      '@uniquename': ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_ppattemplate_97904
+    - '@uniquename': ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_invcloudflows_9fc3d
+      canvasappid:
+        name: ppat_invcloudflows_9fc3d
+      iscustomizable: 1
+      name: ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_invcloudflows_9fc3d
+    - '@uniquename': ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_ppattemplate_97904
       canvasappid:
         name: ppat_ppattemplate_97904
       iscustomizable: 1
       name: ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_ppattemplate_97904
   appsettings:
     appsetting:
-      '@settingdefinitionid.uniquename': AppChannel
+    - '@settingdefinitionid.uniquename': AppChannel
       iscustomizable: 1
       value: 1
+    - '@settingdefinitionid.uniquename': HeaderAndNavigationRefresh
+      iscustomizable: 1
+      value: 2

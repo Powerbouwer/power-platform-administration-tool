@@ -1,0 +1,748 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Screen Form:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+    Children:
+      - conMain_Form:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =ColorValue("#fafafa")
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - conHeader_Form:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorValue("#fafafa")
+                  FillPortions: =0
+                  Height: =206
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =16
+                  PaddingBottom: =16
+                  PaddingLeft: =8
+                  PaddingRight: =8
+                  PaddingTop: =16
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =Parent.Width
+                Children:
+                  - conRibbon_Form:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.Semilight
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =48
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                      Children:
+                        - conRibbonButtons_Form:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              Width: =330
+                            Children:
+                              - btnRibbonBack_Form:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    AccessibleLabel: ="Back"
+                                    Appearance: =ButtonAppearance.Subtle
+                                    Icon: ="ArrowLeft"
+                                    Layout: =ButtonLayout.IconOnly
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    OnSelect: =Back()
+                                    PaddingBottom: =2
+                                    PaddingLeft: =2
+                                    PaddingRight: =2
+                                    PaddingTop: =2
+                                    Size: =14
+                                    Text: ="New"
+                                    Tooltip: =AppSettings.pageRibbon.Form.back.tooltip
+                                    Visible: =AppSettings.pageRibbon.Form.back.enabled
+                                    Width: =40
+                              - recRibbonDivider_Form:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(166, 166, 166, 1)
+                                    BorderStyle: =BorderStyle.None
+                                    BorderThickness: =2
+                                    DisabledFill: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorValue("#d1d1d1")
+                                    FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                                    Height: =24
+                                    HoverFill: =RGBA(0, 120, 212, 1)
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PressedFill: =RGBA(0, 120, 212, 1)
+                                    Width: =1
+                              - btnRibbonEnviroment_Form:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    AccessibleLabel: ="New entry"
+                                    Appearance: =ButtonAppearance.Subtle
+                                    Icon: ="Globe"
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    OnSelect: =Notify("This button will navigate you to the environment section",NotificationType.Information)
+                                    Size: =14
+                                    Text: ="Environment"
+                                    Tooltip: =AppSettings.pageRibbon.Form.environment.tooltip
+                                    Visible: =AppSettings.pageRibbon.Form.environment.enabled
+                                    Width: =140
+                  - conHead_Form:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.Semilight
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FillPortions: =0
+                        Height: =120
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                      Children:
+                        - conHeadTitle_Form:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =64
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                            Children:
+                              - conHeadIcon_Form:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    FillPortions: =0
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    Width: =64
+                                  Children:
+                                    - icoHeadIcon_Form:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          Fill: =RGBA(214, 221, 224, 1)
+                                          Height: =40
+                                          Icon: ="BookContacts"
+                                          IconColor: =RGBA(79, 90, 94, 1)
+                                          PaddingBottom: =6
+                                          PaddingLeft: =6
+                                          PaddingRight: =6
+                                          PaddingTop: =6
+                                          RadiusBottomLeft: =999
+                                          RadiusBottomRight: =999
+                                          RadiusTopLeft: =999
+                                          RadiusTopRight: =999
+                                          Width: =40
+                                          X: =12
+                                          Y: =8
+                              - conHeadText_Form:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingLeft: =8
+                                    PaddingRight: =8
+                                    PaddingTop: =4
+                                  Children:
+                                    - lblHeadTextTitle_Form:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          FontWeight: =FontWeight.Semibold
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =20
+                                          Text: =varSelectedItem.propDisplayName
+                                    - lblHeadTextSubtitle_Form:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Height: =24
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =14
+                                          Text: =AppSettings.pageName
+                              - conHeadInfo_Form:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    FillPortions: =0
+                                    LayoutAlignItems: =LayoutAlignItems.End
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutJustifyContent: =LayoutJustifyContent.Center
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingBottom: =8
+                                    PaddingLeft: =8
+                                    PaddingRight: =8
+                                    PaddingTop: =8
+                                    Width: =300
+                        - conHeadTabs_Form:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =44
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                            Children:
+                              - tabHeadTabs_Form:
+                                  Control: ModernTabList@1.0.2
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FillPortions: =1
+                                    Items: |-
+                                      =Table({Value: "General"})
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    TabSize: =TabSize.Medium
+            - conSections_Form:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =16
+                  LayoutMinWidth: =16
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - conSectionsColumn1_Form:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =16
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - conSection_General:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.Semilight
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =500
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =8
+                              LayoutMaxHeight: |
+                                =( CountRows(
+                                    Filter(
+                                        colInventoryColumns,
+                                        visible,
+                                        section = "General"
+                                    )
+                                ) * 40) + 32 + Self.LayoutGap + (Self.PaddingLeft + Self.PaddingRight)
+                              LayoutMinHeight: =200
+                              LayoutMinWidth: =16
+                              PaddingBottom: =8
+                              PaddingLeft: =8
+                              PaddingRight: =16
+                              PaddingTop: =8
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - lblSection_General:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FontWeight: =FontWeight.Semibold
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    Size: =14
+                                    Text: ="GENERAL"
+                              - galSection_General:
+                                  Control: Gallery@2.15.0
+                                  Variant: Vertical
+                                  Properties:
+                                    BorderColor: =RGBA(166, 166, 166, 1)
+                                    FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                                    FocusedBorderThickness: =2
+                                    Items: |-
+                                      =Sort(
+                                          Filter(
+                                              colInventoryColumns,
+                                              visible,
+                                              section = "General"
+                                          ),
+                                          order,
+                                          SortOrder.Ascending
+                                      )
+                                    LoadingSpinner: =LoadingSpinner.None
+                                    TemplatePadding: =0
+                                    TemplateSize: =40
+                                  Children:
+                                    - conSectionRow_General:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Height: =40
+                                          LayoutAlignItems: =LayoutAlignItems.Center
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Width: =Parent.TemplateWidth
+                                        Children:
+                                          - lblSectionRowDisplayname_General:
+                                              Control: ModernText@1.0.0
+                                              Properties:
+                                                AccessibleLabel: =ThisItem.displayname
+                                                FillPortions: =1
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                Size: =14
+                                                Text: =ThisItem.displayname
+                                          - txtSectionRowValue_General:
+                                              Control: ModernTextInput@1.1.2
+                                              Properties:
+                                                AccessibleLabel: =ThisItem.tooltip
+                                                Default: |-
+                                                  =If(
+                                                      IsBlank(varInventoryDynamic),
+                                                      Blank(),
+                                                      Text(
+                                                          Column(
+                                                              varInventoryDynamic,
+                                                              ThisItem.column
+                                                          )
+                                                      )
+                                                  )
+                                                DisplayMode: =DisplayMode.View
+                                                FillPortions: =2
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                          - infSectionRowTooltip_General:
+                                              Control: ModernInformationButton@1.0.1
+                                              Properties:
+                                                Content: =ThisItem.tooltip
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                PaddingBottom: =8
+                                                PaddingTop: =8
+                                                Width: =24
+                  - conSectionsColumn2_Form:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =16
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - conSection_Resources:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.Semilight
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =500
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =8
+                              LayoutMaxHeight: |
+                                =( CountRows(
+                                    Filter(
+                                        colInventoryColumns,
+                                        visible,
+                                        section = "Resource"
+                                    )
+                                ) * 40) + 32 + Self.LayoutGap + (Self.PaddingLeft + Self.PaddingRight)
+                              LayoutMinHeight: =200
+                              LayoutMinWidth: =16
+                              PaddingBottom: =8
+                              PaddingLeft: =8
+                              PaddingRight: =16
+                              PaddingTop: =8
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - lblSection_Resources:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FontWeight: =FontWeight.Semibold
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    Size: =14
+                                    Text: ="RESOURCE"
+                              - galSection_Resources:
+                                  Control: Gallery@2.15.0
+                                  Variant: Vertical
+                                  Properties:
+                                    BorderColor: =RGBA(166, 166, 166, 1)
+                                    FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                                    FocusedBorderThickness: =2
+                                    Items: |-
+                                      =Sort(
+                                          Filter(
+                                              colInventoryColumns,
+                                              visible,
+                                              section = "Resource"
+                                          ),
+                                          order,
+                                          SortOrder.Ascending
+                                      )
+                                    LoadingSpinner: =LoadingSpinner.None
+                                    TemplatePadding: =0
+                                    TemplateSize: =40
+                                  Children:
+                                    - conSectionRow_Resources:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Height: =40
+                                          LayoutAlignItems: =LayoutAlignItems.Center
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Width: =Parent.TemplateWidth
+                                        Children:
+                                          - lblSectionRowDisplayname_Resources:
+                                              Control: ModernText@1.0.0
+                                              Properties:
+                                                AccessibleLabel: =ThisItem.displayname
+                                                FillPortions: =1
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                Size: =14
+                                                Text: =ThisItem.displayname
+                                          - txtSectionRowValue_Resources:
+                                              Control: ModernTextInput@1.1.2
+                                              Properties:
+                                                AccessibleLabel: =ThisItem.tooltip
+                                                Default: |-
+                                                  =If(
+                                                      IsBlank(varInventoryDynamic),
+                                                      Blank(),
+                                                      Text(
+                                                          Column(
+                                                              varInventoryDynamic,
+                                                              ThisItem.column
+                                                          )
+                                                      )
+                                                  )
+                                                DisplayMode: =DisplayMode.View
+                                                FillPortions: =2
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                          - infSectionRowTooltip_Resources:
+                                              Control: ModernInformationButton@1.0.1
+                                              Properties:
+                                                Content: =ThisItem.tooltip
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                PaddingBottom: =8
+                                                PaddingTop: =8
+                                                Width: =24
+                  - conSectionsColumn3_Form:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =16
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - conSection_Connectors:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =500
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =8
+                              LayoutMaxHeight: |
+                                =( varSelectedItem.connectorCount * 32) + 32 + Self.LayoutGap + (Self.PaddingLeft + Self.PaddingRight)
+                              LayoutMinHeight: =64
+                              LayoutMinWidth: =16
+                              PaddingBottom: =8
+                              PaddingLeft: =8
+                              PaddingRight: =16
+                              PaddingTop: =8
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - lblSection_Connectors:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FontWeight: =FontWeight.Semibold
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    Size: =14
+                                    Text: =$"CONNECTORS ({varSelectedItem.connectorCount})"
+                              - galSection_Connectors:
+                                  Control: Gallery@2.15.0
+                                  Variant: Vertical
+                                  Properties:
+                                    BorderColor: =RGBA(166, 166, 166, 1)
+                                    FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                                    FocusedBorderThickness: =2
+                                    Items: |
+                                      =/*
+                                      Sort(
+                                          Filter(
+                                              colInventoryColumns,
+                                              visible,
+                                              section = "General"
+                                          ),
+                                          order,
+                                          SortOrder.Ascending
+                                      )
+                                      */
+
+                                      Table(varSelectedItem.connectors)
+                                    LayoutMinHeight: =32
+                                    LoadingSpinner: =LoadingSpinner.None
+                                    TemplatePadding: =0
+                                    TemplateSize: =32
+                                  Children:
+                                    - conSectionRow_Connectors:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Height: =32
+                                          LayoutAlignItems: =LayoutAlignItems.Center
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Width: =Parent.TemplateWidth
+                                        Children:
+                                          - lnkSectionRowDisplayname_Connectors:
+                                              Control: ModernLink@1.0.1
+                                              Properties:
+                                                FillPortions: =1
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                Size: =14
+                                                Text: =$"{ThisItem.connectorId}"
+                                                Underline: =true
+                        - conSection_Triggers:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =500
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =8
+                              LayoutMaxHeight: |
+                                =( CountRows(
+                                    Filter(
+                                        colInventoryColumns,
+                                        visible,
+                                        section = "Triggers"
+                                    )
+                                ) * 40) + 32 + Self.LayoutGap + (Self.PaddingLeft + Self.PaddingRight)
+                              LayoutMinHeight: =200
+                              LayoutMinWidth: =16
+                              PaddingBottom: =8
+                              PaddingLeft: =8
+                              PaddingRight: =16
+                              PaddingTop: =8
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - lblSection_Triggers:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FontWeight: =FontWeight.Semibold
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    Size: =14
+                                    Text: ="TRIGGER"
+                              - galSection_Triggers:
+                                  Control: Gallery@2.15.0
+                                  Variant: Vertical
+                                  Properties:
+                                    BorderColor: =RGBA(166, 166, 166, 1)
+                                    FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                                    FocusedBorderThickness: =2
+                                    Items: |-
+                                      =Sort(
+                                          Filter(
+                                              colInventoryColumns,
+                                              visible,
+                                              section = "Triggers"
+                                          ),
+                                          order,
+                                          SortOrder.Ascending
+                                      )
+                                    LayoutMinHeight: =120
+                                    LoadingSpinner: =LoadingSpinner.None
+                                    TemplatePadding: =0
+                                    TemplateSize: =40
+                                  Children:
+                                    - conSectionRow_Triggers:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Height: =40
+                                          LayoutAlignItems: =LayoutAlignItems.Center
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Width: =Parent.TemplateWidth
+                                        Children:
+                                          - lblSectionRowDisplayname_Triggers:
+                                              Control: ModernText@1.0.0
+                                              Properties:
+                                                AccessibleLabel: =ThisItem.tooltip
+                                                FillPortions: =1
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                Size: =14
+                                                Text: =ThisItem.displayname
+                                                Wrap: =false
+                                          - txtSectionRowValue_Triggers:
+                                              Control: ModernTextInput@1.1.2
+                                              Properties:
+                                                AccessibleLabel: =ThisItem.tooltip
+                                                Default: |-
+                                                  =If(
+                                                      IsBlank(varInventoryDynamic),
+                                                      Blank(),
+                                                      Text(
+                                                          Column(
+                                                              varInventoryDynamic,
+                                                              ThisItem.column
+                                                          )
+                                                      )
+                                                  )
+                                                DisplayMode: =DisplayMode.View
+                                                FillPortions: =2
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                          - infSectionRowTooltip_Triggers:
+                                              Control: ModernInformationButton@1.0.1
+                                              Properties:
+                                                Content: =ThisItem.tooltip
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                PaddingBottom: =8
+                                                PaddingTop: =8
+                                                Width: =24

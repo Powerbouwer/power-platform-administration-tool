@@ -10,5 +10,8 @@ RootComponents:
     '@schemaName': ppat_PowerPlatformAdministrationTool
     '@behavior': 0
   - '@type': 300
+    '@schemaName': ppat_invcloudflows_9fc3d
+    '@behavior': 0
+  - '@type': 300
     '@schemaName': ppat_ppattemplate_97904
     '@behavior': 0

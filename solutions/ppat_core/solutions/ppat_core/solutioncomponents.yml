@@ -2,7 +2,10 @@ SolutionComponents:
   Component:
   - '@path': /appmodules/ppat_PowerPlatformAdministrationTool
   - '@path': /appmodulesitemaps/ppat_PowerPlatformAdministrationTool
+  - '@path': /canvasapps/ppat_invcloudflows_9fc3d
   - '@path': /canvasapps/ppat_ppattemplate_97904
   - '@path': /connectionreferences/ppat_PowerPlatformAdminsV2
+  - '@path': /connectionreferences/ppat_sharedpowerplatformadminv2_6219e
+  - '@path': /dvtablesearchs/df136279-94bd-f111-aaad-7ced8d72f9d9
   - '@path': /modernflows/ca27d5d6-2bc3-f111-a05c-70a8a507ac5b
   - '@path': /publishers/ppat

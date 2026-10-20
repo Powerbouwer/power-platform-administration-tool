@@ -17,24 +17,28 @@ AppModuleSiteMap:
           '@LCID': 1033
           '@Title': Area1
       Group:
-        '@Id': group_37204909
+        '@Id': group_inventory
         '@ResourceId': SitemapDesigner.NewGroup
         '@DescriptionResourceId': SitemapDesigner.NewGroup
         '@IntroducedVersion': 7.0.0.0
         '@IsProfile': false
         '@ToolTipResourseId': SitemapDesigner.Unknown
+        Titles:
+          Title:
+            '@LCID': 1033
+            '@Title': Inventory
         SubArea:
-          '@Id': subarea_52403fe7
+          '@Id': subarea_7e18599c
           '@Icon': /_imgs/imagestrips/transparent_spacer.gif
           '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
           '@AvailableOffline': true
           '@PassParams': false
           '@Sku': All,OnPremise,Live,SPLA
-          '@Page': ppat_ppattemplate_97904
+          '@Page': ppat_invcloudflows_9fc3d
           Titles:
             Title:
               '@LCID': 1033
-              '@Title': PPAT - Template
+              '@Title': Cloud Flows
   LocalizedNames:
     LocalizedName:
       '@description': Power Platform Administration Tool
