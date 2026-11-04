@@ -6,6 +6,7 @@ SolutionComponents:
   - '@path': /canvasapps/ppat_ppattemplate_97904
   - '@path': /connectionreferences/ppat_PowerPlatformAdminsV2
   - '@path': /connectionreferences/ppat_sharedpowerplatformadminv2_6219e
+  - '@path': /connectionreferences/ppat_sharedpowerplatformadminv2_f4707
   - '@path': /dvtablesearchs/df136279-94bd-f111-aaad-7ced8d72f9d9
   - '@path': /modernflows/ca27d5d6-2bc3-f111-a05c-70a8a507ac5b
   - '@path': /publishers/ppat

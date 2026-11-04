@@ -16,12 +16,12 @@ MissingDependencies:
   - Required:
       '@type': SettingDefinition
       '@displayName': AppChannel
-      '@solution': msdyn_AppFrameworkInfraExtensions (1.0.0.20)
+      '@solution': msdyn_AppFrameworkInfraExtensions (1.0.0.27)
       '@id.uniquename': AppChannel
       package:
         '@appName': PowerAppsAppFramework Package
-        '@version': 1.0.0.26
-        '#text': PowerAppsAppFramework_Anchor (1.0.0.26)
+        '@version': 1.0.0.27
+        '#text': PowerAppsAppFramework_Anchor (1.0.0.27)
     Dependent:
       '@type': AppSetting
       '@displayName': parentappmoduleid.uniquename=ppat_PowerPlatformAdministrationTool,settingdefinitionid.uniquename=AppChannel
@@ -30,12 +30,12 @@ MissingDependencies:
   - Required:
       '@type': SettingDefinition
       '@displayName': HeaderAndNavigationRefresh
-      '@solution': msdyn_AppFrameworkInfraExtensions (1.0.0.20)
+      '@solution': msdyn_AppFrameworkInfraExtensions (1.0.0.27)
       '@id.uniquename': HeaderAndNavigationRefresh
       package:
         '@appName': PowerAppsAppFramework Package
-        '@version': 1.0.0.26
-        '#text': PowerAppsAppFramework_Anchor (1.0.0.26)
+        '@version': 1.0.0.27
+        '#text': PowerAppsAppFramework_Anchor (1.0.0.27)
     Dependent:
       '@type': AppSetting
       '@displayName': parentappmoduleid.uniquename=ppat_PowerPlatformAdministrationTool,settingdefinitionid.uniquename=HeaderAndNavigationRefresh

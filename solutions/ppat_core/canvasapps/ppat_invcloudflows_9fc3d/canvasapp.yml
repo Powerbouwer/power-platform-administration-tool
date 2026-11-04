@@ -1,10 +1,10 @@
 CanvasApp:
   Name: ppat_invcloudflows_9fc3d
-  AppVersion: 2026-10-18T17:52:03.0000000Z
+  AppVersion: 2026-11-03T12:27:34.0000000Z
   Status: Ready
-  CreatedByClientVersion: 3.26101.10.0
-  MinClientVersion: 3.26101.10.0
-  Tags: '{"primaryDeviceWidth":"2027","primaryDeviceHeight":"1165","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.26101.10","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false","m365CopilotSettingValue":"0","sienaVersion":"20261016T090958Z-3.26101.10.0"}'
+  CreatedByClientVersion: 3.26102.13.0
+  MinClientVersion: 3.26102.13.0
+  Tags: '{"primaryDeviceWidth":"1526","primaryDeviceHeight":"1146","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.26102.13","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false","m365CopilotSettingValue":"0","sienaVersion":"20261016T090958Z-3.26101.10.0"}'
   IsCdsUpgraded: 0
   GalleryItemId:
     '@xsi:nil': true
@@ -21,8 +21,8 @@ CanvasApp:
     '@xsi:nil': true
     '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
   AuthorizationReferences: '[]'
-  ConnectionReferences: '{"02c1c781-2f42-401c-af81-31457fd53731":{"id":"/providers/microsoft.powerapps/apis/shared_logicflows","displayName":"Logic flows","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1827/1.0.1827.4908/logicflows/icon.png","dataSources":["PPAT-SearchInventory"],"dependencies":["3200a325-9c3e-474c-9b9c-0c0f7e4042f9"],"dependents":[],"parameterHints":{"workflowName":{"value":"cb2eb393-819e-436d-9ca3-be1ae5acc7c8"},"workflowEntityId":{"value":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b"},"workflowDisplayName":{"value":"PPAT - Search Inventory"},"3200a325-9c3e-474c-9b9c-0c0f7e4042f9":{"value":"shared_powerplatformadminv2_1"}},"parameterHintsV2":{"workflowName":{"value":"cb2eb393-819e-436d-9ca3-be1ae5acc7c8"},"workflowEntityId":{"value":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b"},"workflowDisplayName":{"value":"PPAT - Search Inventory"},"shared_powerplatformadminv2_1":{"value":"3200a325-9c3e-474c-9b9c-0c0f7e4042f9"}},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard","actions":["Run"]},"3200a325-9c3e-474c-9b9c-0c0f7e4042f9":{"id":"/providers/microsoft.powerapps/apis/shared_powerplatformadminv2","displayName":"Power Platform for Admins V2","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1833/1.0.1833.5092/powerplatformadminv2/icon.png","dataSources":[],"dependencies":[],"dependents":["02c1c781-2f42-401c-af81-31457fd53731"],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard"},"5238e892-6a45-4c01-ab20-e6058994a2ce":{"id":"/providers/microsoft.powerapps/apis/shared_azuread","displayName":"Microsoft Entra ID","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1828/1.0.1828.4964/azuread/icon.png","dataSources":["MicrosoftEntraID"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard","authenticationType":"EntraOAuth"}}'
-  DatabaseReferences: '{}'
+  ConnectionReferences: '{"02c1c781-2f42-401c-af81-31457fd53731":{"id":"/providers/microsoft.powerapps/apis/shared_logicflows","displayName":"Logic flows","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1827/1.0.1827.4908/logicflows/icon.png","dataSources":["PPAT-SearchInventory"],"dependencies":["3200a325-9c3e-474c-9b9c-0c0f7e4042f9"],"dependents":[],"parameterHints":{"workflowName":{"value":"faeb0ec0-8954-42d8-b2af-9649520c52ef"},"workflowEntityId":{"value":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b"},"workflowDisplayName":{"value":"PPAT - Search Inventory"},"3200a325-9c3e-474c-9b9c-0c0f7e4042f9":{"value":"shared_powerplatformadminv2_1"}},"parameterHintsV2":{"workflowName":{"value":"faeb0ec0-8954-42d8-b2af-9649520c52ef"},"workflowEntityId":{"value":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b"},"workflowDisplayName":{"value":"PPAT - Search Inventory"},"shared_powerplatformadminv2_1":{"value":"3200a325-9c3e-474c-9b9c-0c0f7e4042f9"}},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard","actions":["Run"]},"3200a325-9c3e-474c-9b9c-0c0f7e4042f9":{"id":"/providers/microsoft.powerapps/apis/shared_powerplatformadminv2","displayName":"Power Platform for Admins V2","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1835/1.0.1835.5096/powerplatformadminv2/icon.png","dataSources":[],"dependencies":[],"dependents":["02c1c781-2f42-401c-af81-31457fd53731"],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard"},"5238e892-6a45-4c01-ab20-e6058994a2ce":{"id":"/providers/microsoft.powerapps/apis/shared_azuread","displayName":"Microsoft Entra ID","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1828/1.0.1828.4964/azuread/icon.png","dataSources":["MicrosoftEntraID"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard","authenticationType":"EntraOAuth"}}'
+  DatabaseReferences: '{"default.cds":{"databaseDetails":{"referenceType":"Environmental","environmentName":"default.cds","overrideValues":{"status":"NotSpecified","environmentVariableName":""}},"dataSources":{"Users":{"entitySetName":"systemusers","logicalName":"systemuser"}}}}'
   AppComponents: '[]'
   AppComponentDependencies: '[]'
   CanConsumeAppPass: 1
@@ -33,7 +33,7 @@ CanvasApp:
     '@xsi:nil': true
     '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
   IntroducedVersion: 1.0
-  CdsDependencies: '{"cdsdependencies":[{"dependencyid":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b","componenttype":29,"componenttypeplatformname":"Workflow"}]}'
+  CdsDependencies: '{"cdsdependencies":[{"dependencyid":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b","componenttype":29,"componenttypeplatformname":"Workflow"},{"logicalname":"systemuser","componenttype":1}]}'
   IsCustomizable: 1
   BackgroundImageUri: /canvasapps/ppat_invcloudflows_9fc3d/ppat_invcloudflows_9fc3d_BackgroundImageUri
   DocumentUri: /canvasapps/ppat_invcloudflows_9fc3d/ppat_invcloudflows_9fc3d_DocumentUri.msapp

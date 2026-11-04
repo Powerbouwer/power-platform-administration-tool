@@ -1,10 +1,10 @@
 {
   "properties": {
     "connectionReferences": {
-      "shared_powerplatformadminv2": {
-        "runtimeSource": "embedded",
+      "shared_powerplatformadminv2_1": {
+        "runtimeSource": "invoker",
         "connection": {
-          "connectionReferenceLogicalName": "ppat_PowerPlatformAdminsV2"
+          "connectionReferenceLogicalName": "ppat_sharedpowerplatformadminv2_f4707"
         },
         "api": {
           "name": "shared_powerplatformadminv2"
@@ -59,7 +59,7 @@
           "type": "OpenApiConnection",
           "inputs": {
             "host": {
-              "connectionName": "shared_powerplatformadminv2",
+              "connectionName": "shared_powerplatformadminv2_1",
               "operationId": "QueryResources",
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_powerplatformadminv2"
             },
