@@ -1031,7 +1031,7 @@ Screens:
                                 =Set(varViewOverlay, false);
                                 Set(varViewPaneFilter, false);
                               Width: =24
-                  - recPaneHead_Filter:
+                  - recPaneHead_Filter_1:
                       Control: Rectangle@2.3.0
                       Properties:
                         AlignInContainer: =AlignInContainer.Stretch
@@ -1046,7 +1046,93 @@ Screens:
                         LayoutMinHeight: =16
                         LayoutMinWidth: =16
                         PressedFill: =RGBA(0, 120, 212, 1)
-                  - conPainList_Filter:
+                  - conPaneTabs_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =32
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - Button2:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Transparent
+                              FontWeight: =FontWeight.Normal
+                              Height: =24
+                              Icon: ="Filter"
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: =Set(varViewPaneFilterTab, "Filter");
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =14
+                              Text: ="Filter"
+                              Width: =90
+                        - Button2_1:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Transparent
+                              FontWeight: =FontWeight.Normal
+                              Height: =24
+                              Icon: ="AppsListDetail"
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: =Set(varViewPaneFilterTab, "JSON");
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =14
+                              Text: ="JSON"
+                              Width: =86
+                        - Button2_2:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Transparent
+                              FontWeight: =FontWeight.Normal
+                              Height: =24
+                              Icon: ="BoxMultiple"
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: =Set(varViewPaneFilterTab, "KQL");
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =14
+                              Text: ="KQL"
+                              Width: =86
+                  - recPaneTabs_Filter:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - conPaneList_Filter:
                       Control: GroupContainer@1.5.0
                       Variant: AutoLayout
                       Properties:
@@ -1063,6 +1149,7 @@ Screens:
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Visible: =varViewPaneFilterTab = "Filter"
                       Children:
                         - Container2:
                             Control: GroupContainer@1.5.0
@@ -1415,26 +1502,128 @@ Screens:
                                           colInventoryFilter, 
                                           {
                                               id: GUID(),
-                                              enabled: false
+                                              enabled: true
                                           }
                                       )
                                     Text: ="Add"
-                        - Text2:
-                            Control: ModernText@1.0.0
+                  - conPaneJSON_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =24
+                        PaddingLeft: =24
+                        PaddingRight: =24
+                        PaddingTop: =24
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: =varViewPaneFilterTab = "JSON"
+                      Children:
+                        - conPaneJSONContent_Filter:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
-                              Height: =90
+                              Fill: =RGBA(13, 50, 61, 1)
                               LayoutMinHeight: =16
                               LayoutMinWidth: =16
-                              Text: =varQbKql
-                        - Text2_4:
-                            Control: ModernText@1.0.0
+                              PaddingBottom: =16
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PaddingTop: =16
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - lblPaneJSONContent_Filter:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    AutoHeight: =true
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Text: |-
+                                      =JSON(
+                                          ParseJSON(varQbClausesJson),
+                                          JSONFormat.IndentFour
+                                      )
+                                    Width: =Parent.Width - (Self.X * 2)
+                                    X: =24
+                                    Y: =24
+                              - icoPaneJSONCopy_Filter:
+                                  Control: ModernIcon@1.1.1
+                                  Properties:
+                                    Height: =24
+                                    Icon: ="Copy"
+                                    IconColor: =RGBA(255, 255, 255, 1)
+                                    OnSelect: |-
+                                      =Copy(
+                                          JSON(
+                                              ParseJSON(varQbClausesJson),
+                                              JSONFormat.IndentFour
+                                          )
+                                      )
+                                    Width: =24
+                                    X: =Parent.Width - (Parent.PaddingRight + Self.Width)
+                                    Y: =16
+                  - conPaneKQL_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =24
+                        PaddingLeft: =24
+                        PaddingRight: =24
+                        PaddingTop: =24
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: =varViewPaneFilterTab = "KQL"
+                      Children:
+                        - conPaneKQLContent_Filter:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
-                              Height: =90
+                              Fill: =RGBA(13, 50, 61, 1)
                               LayoutMinHeight: =16
                               LayoutMinWidth: =16
-                              Text: =varQbClausesJson
+                              PaddingBottom: =16
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PaddingTop: =16
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - lblPaneKQLContent_Filter:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    AutoHeight: =true
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Text: =varQbKql
+                                    Width: =Parent.Width - (Self.X * 2)
+                                    X: =24
+                                    Y: =24
+                              - icoPaneKQLCopy_Filter:
+                                  Control: ModernIcon@1.1.1
+                                  Properties:
+                                    Height: =24
+                                    Icon: ="Copy"
+                                    IconColor: =RGBA(255, 255, 255, 1)
+                                    OnSelect: =Copy(varQbKql)
+                                    Width: =24
+                                    X: =Parent.Width - (Parent.PaddingRight + Self.Width)
+                                    Y: =16
                   - recPaneFooter_Filter:
                       Control: Rectangle@2.3.0
                       Properties:
@@ -1477,297 +1666,7 @@ Screens:
                             Properties:
                               LayoutMinHeight: =16
                               LayoutMinWidth: =16
-                              OnSelect: |+
-                                =Set(varQbReady, false);
-                                Set(varQbKql, Blank());
-                                Set(varQbClausesJson, Blank());
-                                Set(varQbTransportJson, Blank());
-                                Set(varQbSnapshot, Blank());
-                                Set(varQbToday, Today());
-
-                                Set(
-                                    varQbRules,
-                                    IfError(
-                                        ForAll(
-                                            Filter(colInventoryFilter, enabled) As f,
-                                            With(
-                                                {
-                                                    fld: LookUp(colInventoryColumns As c, c.FieldName = f.field.FieldName),
-                                                    op: LookUp(colInventoryOperators As o, o.Operator = f.operator.Operator),
-                                                    parsedDate: IfError(DateValue(f.value, "en-US"), Blank())
-                                                },
-                                                {
-                                                    Id: f.id,
-                                                    FieldName: fld.FieldName,
-                                                    FieldType: fld.FieldType,
-                                                    Operator: op.Operator,
-                                                    QueryOperator: op.QueryOperator,
-                                                    RawValue: f.value,
-                                                    Day: If(
-                                                        fld.FieldType = "DateTime",
-                                                        Switch(
-                                                            op.Operator,
-                                                            "Yesterday", DateAdd(varQbToday, -1, TimeUnit.Days),
-                                                            "Today", varQbToday,
-                                                            "Tomorrow", DateAdd(varQbToday, 1, TimeUnit.Days),
-                                                            parsedDate
-                                                        ),
-                                                        Blank()
-                                                    ),
-                                                    Valid:
-                                                        !IsBlank(fld.FieldName) &&
-                                                        !IsBlank(op.Operator) &&
-                                                        (fld.FieldType in op.FieldTypes) &&
-                                                        If(
-                                                            fld.FieldType = "DateTime",
-                                                            (op.Operator in ["On", "OnOrAfter", "OnOrBefore", "Yesterday", "Today", "Tomorrow"]) &&
-                                                            (
-                                                                (op.Operator in ["Yesterday", "Today", "Tomorrow"]) ||
-                                                                (
-                                                                    !IsBlank(parsedDate) &&
-                                                                    Text(parsedDate, "yyyy-mm-dd", "en-US") = f.value
-                                                                )
-                                                            ),
-                                                            (fld.FieldType in ["String", "LookUp"]) &&
-                                                            !IsBlank(Trim(f.value)) &&
-                                                            !IsMatch(f.value, "[\x00-\x08\x0B\x0C\x0E-\x1F]", MatchOptions.Contains) &&
-                                                            (op.QueryOperator in ["==", "!=", "contains", "!contains", "startswith", "!startswith", "endswith", "!endswith"])
-                                                        )
-                                                }
-                                            )
-                                        ),
-                                        Notify("Filterregels verwerken mislukt: " & FirstError.Message, NotificationType.Error);
-                                        Blank()
-                                    )
-                                );
-
-                                If(
-                                    IsBlank(varQbRules),
-                                    false,
-                                    IsEmpty(varQbRules),
-                                    Notify("Voeg ten minste één actief filter toe.", NotificationType.Error);
-                                    false,
-                                    !IsEmpty(Filter(varQbRules, !Valid)),
-                                    Notify("Controleer veld, operator en waarde van de actieve filters.", NotificationType.Error);
-                                    false,
-
-                                    Set(
-                                        varQbExtends,
-                                        IfError(
-                                            ForAll(
-                                                Filter(
-                                                    colInventoryColumns As column,
-                                                    !IsBlank(column.ExtendExpression) &&
-                                                    !IsBlank(LookUp(varQbRules As r, r.FieldName = column.FieldName))
-                                                ) As selectedColumn,
-                                                {
-                                                    FieldName: selectedColumn.FieldName,
-                                                    Expression: selectedColumn.ExtendExpression
-                                                }
-                                            ),
-                                            Notify("Veldexpressies verwerken mislukt: " & FirstError.Message, NotificationType.Error);
-                                            Blank()
-                                        )
-                                    );
-                                    If(
-                                        !IsBlank(varQbExtends),
-                                        Set(
-                                            varQbInitOk,
-                                            IfError(
-                                                ClearCollect(
-                                                    colQbTerms,
-                                                    Filter(
-                                                        Table({ FieldName: "", QueryOperator: "", ValueType: "", RawValue: "", KqlLiteral: "" }),
-                                                        false
-                                                    )
-                                                ),
-                                                Notify("Queryvoorwaarden initialiseren mislukt: " & FirstError.Message, NotificationType.Error);
-                                                false,
-                                                true
-                                            )
-                                        );
-                                        If(
-                                            varQbInitOk,
-                                            Set(
-                                                varQbTermsOk,
-                                                IfError(
-                                                    ForAll(
-                                                        varQbRules As r,
-                                                        If(
-                                                            r.FieldType = "DateTime",
-                                                            With(
-                                                                {
-                                                                    d0: r.Day,
-                                                                    d1: DateAdd(r.Day, 1, TimeUnit.Days)
-                                                                },
-                                                                With(
-                                                                    {
-                                                                        t0: Text(d0, DateTimeFormat.UTC),
-                                                                        t1: Text(d1, DateTimeFormat.UTC)
-                                                                    },
-                                                                    Switch(
-                                                                        r.Operator,
-                                                                        "OnOrAfter",
-                                                                        Collect(colQbTerms, {
-                                                                            FieldName: r.FieldName, QueryOperator: ">=",
-                                                                            ValueType: "DateTime", RawValue: t0,
-                                                                            KqlLiteral: "datetime(" & t0 & ")"
-                                                                        }),
-                                                                        "OnOrBefore",
-                                                                        Collect(colQbTerms, {
-                                                                            FieldName: r.FieldName, QueryOperator: "<",
-                                                                            ValueType: "DateTime", RawValue: t1,
-                                                                            KqlLiteral: "datetime(" & t1 & ")"
-                                                                        }),
-                                                                        Collect(
-                                                                            colQbTerms,
-                                                                            {
-                                                                                FieldName: r.FieldName, QueryOperator: ">=",
-                                                                                ValueType: "DateTime", RawValue: t0,
-                                                                                KqlLiteral: "datetime(" & t0 & ")"
-                                                                            },
-                                                                            {
-                                                                                FieldName: r.FieldName, QueryOperator: "<",
-                                                                                ValueType: "DateTime", RawValue: t1,
-                                                                                KqlLiteral: "datetime(" & t1 & ")"
-                                                                            }
-                                                                        )
-                                                                    )
-                                                                )
-                                                            ),
-                                                            With(
-                                                                { encoded: JSON(r.RawValue, JSONFormat.Compact) },
-                                                                Collect(
-                                                                    colQbTerms,
-                                                                    {
-                                                                        FieldName: r.FieldName,
-                                                                        QueryOperator: r.QueryOperator,
-                                                                        ValueType: "String",
-                                                                        RawValue: r.RawValue,
-                                                                        KqlLiteral:
-                                                                            Char(39) &
-                                                                            Substitute(
-                                                                                Substitute(
-                                                                                    Mid(encoded, 2, Len(encoded) - 2),
-                                                                                    Char(92) & Char(34),
-                                                                                    Char(34)
-                                                                                ),
-                                                                                Char(39),
-                                                                                Char(92) & Char(39)
-                                                                            ) &
-                                                                            Char(39)
-                                                                    }
-                                                                )
-                                                            )
-                                                        )
-                                                    ),
-                                                    Notify("Queryvoorwaarden bouwen mislukt: " & FirstError.Message, NotificationType.Error);
-                                                    false,
-                                                    true
-                                                )
-                                            );
-                                            If(
-                                                varQbTermsOk,
-                                                If(
-                                                    IsEmpty(colQbTerms),
-                                                    Notify("Er zijn geen queryvoorwaarden gemaakt.", NotificationType.Error),
-
-                                                    Set(
-                                                        varQbKql,
-                                                        IfError(
-                                                            "PowerPlatformResources" &
-                                                            Concat(varQbExtends As e, Char(10) & "| extend " & e.FieldName & " = " & e.Expression) &
-                                                            Concat(colQbTerms As t, Char(10) & "| where " & t.FieldName & " " & t.QueryOperator & " " & t.KqlLiteral),
-                                                            Notify("KQL bouwen mislukt: " & FirstError.Message, NotificationType.Error);
-                                                            Blank()
-                                                        )
-                                                    );
-                                                    Set(
-                                                        varQbClausesJson,
-                                                        IfError(
-                                                            "[" &
-                                                            Concat(
-                                                                varQbExtends As e,
-                                                                JSON(
-                                                                    { '$type': "extend", FieldName: e.FieldName, Expression: e.Expression },
-                                                                    JSONFormat.Compact
-                                                                ) & ","
-                                                            ) &
-                                                            Concat(
-                                                                colQbTerms As t,
-                                                                JSON(
-                                                                    {
-                                                                        '$type': "where",
-                                                                        FieldName: t.FieldName,
-                                                                        Operator: t.QueryOperator,
-                                                                        Values: [t.KqlLiteral]
-                                                                    },
-                                                                    JSONFormat.FlattenValueTables
-                                                                ),
-                                                                ","
-                                                            ) &
-                                                            "]",
-                                                            Notify("Clauses maken mislukt: " & FirstError.Message, NotificationType.Error);
-                                                            Blank()
-                                                        )
-                                                    );
-                                                    Set(
-                                                        varQbTransportJson,
-                                                        IfError(
-                                                            JSON(
-                                                                ForAll(
-                                                                    colQbTerms As t,
-                                                                    {
-                                                                        FieldName: t.FieldName,
-                                                                        Operator: t.QueryOperator,
-                                                                        ValueType: t.ValueType,
-                                                                        Value: t.RawValue
-                                                                    }
-                                                                ),
-                                                                JSONFormat.Compact
-                                                            ),
-                                                            Notify("Flow-invoer maken mislukt: " & FirstError.Message, NotificationType.Error);
-                                                            Blank()
-                                                        )
-                                                    );
-                                                    Set(
-                                                        varQbSnapshot,
-                                                        IfError(
-                                                            JSON(
-                                                                ForAll(
-                                                                    colInventoryFilter As f,
-                                                                    {
-                                                                        Id: Text(f.id),
-                                                                        FieldName: f.field.FieldName,
-                                                                        Operator: f.operator.Operator,
-                                                                        Value: f.value,
-                                                                        Enabled: f.enabled
-                                                                    }
-                                                                ),
-                                                                JSONFormat.Compact
-                                                            ),
-                                                            Notify("Filterstatus bewaren mislukt: " & FirstError.Message, NotificationType.Error);
-                                                            Blank()
-                                                        )
-                                                    );
-                                                    Set(
-                                                        varQbReady,
-                                                        !IsBlank(varQbKql) &&
-                                                        !IsBlank(varQbClausesJson) &&
-                                                        !IsBlank(varQbTransportJson) &&
-                                                        !IsBlank(varQbSnapshot)
-                                                    );
-                                                    If(
-                                                        !varQbReady,
-                                                        Set(varQbKql, Blank());
-                                                        Set(varQbClausesJson, Blank());
-                                                        Set(varQbTransportJson, Blank())
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
+                              OnSelect: "=Set(varQbReady, false);\r\nSet(varQbKql, Blank());\r\nSet(varQbClausesJson, Blank());\r\nSet(varQbTransportJson, Blank());\r\nSet(varQbSnapshot, Blank());\r\nSet(varQbToday, Today());\r\n\r\nSet(\r\n    varQbRules,\r\n    IfError(\r\n        ForAll(\r\n            Filter(colInventoryFilter, enabled) As f,\r\n            With(\r\n                {\r\n                    fld: LookUp(colInventoryColumns As c, c.FieldName = f.field.FieldName),\r\n                    op: LookUp(colInventoryOperators As o, o.Operator = f.operator.Operator),\r\n                    parsedDate: IfError(DateValue(f.value, \"en-US\"), Blank())\r\n                },\r\n                {\r\n                    Id: f.id,\r\n                    FieldName: fld.FieldName,\r\n                    FieldType: fld.FieldType,\r\n                    Operator: op.Operator,\r\n                    QueryOperator: op.QueryOperator,\r\n                    RawValue: f.value,\r\n                    Day: If(\r\n                        fld.FieldType = \"DateTime\",\r\n                        Switch(\r\n                            op.Operator,\r\n                            \"Yesterday\", DateAdd(varQbToday, -1, TimeUnit.Days),\r\n                            \"Today\", varQbToday,\r\n                            \"Tomorrow\", DateAdd(varQbToday, 1, TimeUnit.Days),\r\n                            parsedDate\r\n                        ),\r\n                        Blank()\r\n                    ),\r\n                    Valid:\r\n                        !IsBlank(fld.FieldName) &&\r\n                        !IsBlank(op.Operator) &&\r\n                        (fld.FieldType in op.FieldTypes) &&\r\n                        If(\r\n                            fld.FieldType = \"DateTime\",\r\n                            (op.Operator in [\"On\", \"OnOrAfter\", \"OnOrBefore\", \"Yesterday\", \"Today\", \"Tomorrow\"]) &&\r\n                            (\r\n                                (op.Operator in [\"Yesterday\", \"Today\", \"Tomorrow\"]) ||\r\n                                (\r\n                                    !IsBlank(parsedDate) &&\r\n                                    Text(parsedDate, \"yyyy-mm-dd\", \"en-US\") = f.value\r\n                                )\r\n                            ),\r\n                            (fld.FieldType in [\"String\", \"LookUp\"]) &&\r\n                            !IsBlank(Trim(f.value)) &&\r\n                            !IsMatch(f.value, \"[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F]\", MatchOptions.Contains) &&\r\n                            (op.QueryOperator in [\"==\", \"!=\", \"contains\", \"!contains\", \"startswith\", \"!startswith\", \"endswith\", \"!endswith\"])\r\n                        )\r\n                }\r\n            )\r\n        ),\r\n        Notify(\"Filterregels verwerken mislukt: \" & FirstError.Message, NotificationType.Error);\r\n        Blank()\r\n    )\r\n);\r\n\r\nIf(\r\n    IsBlank(varQbRules),\r\n    false,\r\n    IsEmpty(varQbRules),\r\n    Notify(\"Voeg ten minste één actief filter toe.\", NotificationType.Error);\r\n    false,\r\n    !IsEmpty(Filter(varQbRules, !Valid)),\r\n    Notify(\"Controleer veld, operator en waarde van de actieve filters.\", NotificationType.Error);\r\n    false,\r\n\r\n    Set(\r\n        varQbExtends,\r\n        IfError(\r\n            ForAll(\r\n                Filter(\r\n                    colInventoryColumns As column,\r\n                    !IsBlank(column.ExtendExpression) &&\r\n                    !IsBlank(LookUp(varQbRules As r, r.FieldName = column.FieldName))\r\n                ) As selectedColumn,\r\n                {\r\n                    FieldName: selectedColumn.FieldName,\r\n                    Expression: selectedColumn.ExtendExpression\r\n                }\r\n            ),\r\n            Notify(\"Veldexpressies verwerken mislukt: \" & FirstError.Message, NotificationType.Error);\r\n            Blank()\r\n        )\r\n    );\r\n    If(\r\n        !IsBlank(varQbExtends),\r\n        Set(\r\n            varQbInitOk,\r\n            IfError(\r\n                ClearCollect(\r\n                    colQbTerms,\r\n                    Filter(\r\n                        Table({ FieldName: \"\", QueryOperator: \"\", ValueType: \"\", RawValue: \"\", KqlLiteral: \"\" }),\r\n                        false\r\n                    )\r\n                ),\r\n                Notify(\"Queryvoorwaarden initialiseren mislukt: \" & FirstError.Message, NotificationType.Error);\r\n                false,\r\n                true\r\n            )\r\n        );\r\n        If(\r\n            varQbInitOk,\r\n            Set(\r\n                varQbTermsOk,\r\n                IfError(\r\n                    ForAll(\r\n                        varQbRules As r,\r\n                        If(\r\n                            r.FieldType = \"DateTime\",\r\n                            With(\r\n                                {\r\n                                    d0: r.Day,\r\n                                    d1: DateAdd(r.Day, 1, TimeUnit.Days)\r\n                                },\r\n                                With(\r\n                                    {\r\n                                        t0: Text(d0, DateTimeFormat.UTC),\r\n                                        t1: Text(d1, DateTimeFormat.UTC)\r\n                                    },\r\n                                    Switch(\r\n                                        r.Operator,\r\n                                        \"OnOrAfter\",\r\n                                        Collect(colQbTerms, {\r\n                                            FieldName: r.FieldName, QueryOperator: \">=\",\r\n                                            ValueType: \"DateTime\", RawValue: t0,\r\n                                            KqlLiteral: \"datetime(\" & t0 & \")\"\r\n                                        }),\r\n                                        \"OnOrBefore\",\r\n                                        Collect(colQbTerms, {\r\n                                            FieldName: r.FieldName, QueryOperator: \"<\",\r\n                                            ValueType: \"DateTime\", RawValue: t1,\r\n                                            KqlLiteral: \"datetime(\" & t1 & \")\"\r\n                                        }),\r\n                                        Collect(\r\n                                            colQbTerms,\r\n                                            {\r\n                                                FieldName: r.FieldName, QueryOperator: \">=\",\r\n                                                ValueType: \"DateTime\", RawValue: t0,\r\n                                                KqlLiteral: \"datetime(\" & t0 & \")\"\r\n                                            },\r\n                                            {\r\n                                                FieldName: r.FieldName, QueryOperator: \"<\",\r\n                                                ValueType: \"DateTime\", RawValue: t1,\r\n                                                KqlLiteral: \"datetime(\" & t1 & \")\"\r\n                                            }\r\n                                        )\r\n                                    )\r\n                                )\r\n                            ),\r\n                            With(\r\n                                { encoded: JSON(r.RawValue, JSONFormat.Compact) },\r\n                                Collect(\r\n                                    colQbTerms,\r\n                                    {\r\n                                        FieldName: r.FieldName,\r\n                                        QueryOperator: r.QueryOperator,\r\n                                        ValueType: \"String\",\r\n                                        RawValue: r.RawValue,\r\n                                        KqlLiteral:\r\n                                            Char(39) &\r\n                                            Substitute(\r\n                                                Substitute(\r\n                                                    Mid(encoded, 2, Len(encoded) - 2),\r\n                                                    Char(92) & Char(34),\r\n                                                    Char(34)\r\n                                                ),\r\n                                                Char(39),\r\n                                                Char(92) & Char(39)\r\n                                            ) &\r\n                                            Char(39)\r\n                                    }\r\n                                )\r\n                            )\r\n                        )\r\n                    ),\r\n                    Notify(\"Queryvoorwaarden bouwen mislukt: \" & FirstError.Message, NotificationType.Error);\r\n                    false,\r\n                    true\r\n                )\r\n            );\r\n            If(\r\n                varQbTermsOk,\r\n                If(\r\n                    IsEmpty(colQbTerms),\r\n                    Notify(\"Er zijn geen queryvoorwaarden gemaakt.\", NotificationType.Error),\r\n\r\n                    Set(\r\n                        varQbKql,\r\n                        IfError(\r\n                            \"PowerPlatformResources\" &\r\n                            Char(10) &\r\n                            \"| where type == '\" & varResourceType & \"'\" &\r\n                            Concat(\r\n                                varQbExtends As e,\r\n                                Char(10) &\r\n                                \"| extend \" & e.FieldName & \" = \" & e.Expression\r\n                            ) &\r\n                            Concat(\r\n                                colQbTerms As t,\r\n                                Char(10) &\r\n                                \"| where \" & t.FieldName & \" \" &\r\n                                t.QueryOperator & \" \" & t.KqlLiteral\r\n                            ),\r\n                            Notify(\r\n                                \"KQL bouwen mislukt: \" & FirstError.Message,\r\n                                NotificationType.Error\r\n                            );\r\n                            Blank()\r\n                        )\r\n                    );\r\n\r\n                    Set(\r\n                        varQbClausesJson,\r\n                        IfError(\r\n                            \"[\" &\r\n                            JSON(\r\n                                {\r\n                                    '$type': \"where\",\r\n                                    FieldName: \"type\",\r\n                                    Operator: \"==\",\r\n                                    Values: [\"'microsoft.powerautomate/cloudflows'\"]\r\n                                },\r\n                                JSONFormat.FlattenValueTables\r\n                            ) &\r\n                            Concat(\r\n                                varQbExtends As e,\r\n                                \",\" &\r\n                                JSON(\r\n                                    {\r\n                                        '$type': \"extend\",\r\n                                        FieldName: e.FieldName,\r\n                                        Expression: e.Expression\r\n                                    },\r\n                                    JSONFormat.Compact\r\n                                )\r\n                            ) &\r\n                            Concat(\r\n                                colQbTerms As t,\r\n                                \",\" &\r\n                                JSON(\r\n                                    {\r\n                                        '$type': \"where\",\r\n                                        FieldName: t.FieldName,\r\n                                        Operator: t.QueryOperator,\r\n                                        Values: [t.KqlLiteral]\r\n                                    },\r\n                                    JSONFormat.FlattenValueTables\r\n                                )\r\n                            ) &\r\n                            \"]\",\r\n                            Notify(\r\n                                \"Clauses maken mislukt: \" & FirstError.Message,\r\n                                NotificationType.Error\r\n                            );\r\n                            Blank()\r\n                        )\r\n                    );\r\n\r\n                    Set(\r\n                        varQbTransportJson,\r\n                        IfError(\r\n                            \"[\" &\r\n                            JSON(\r\n                                {\r\n                                    FieldName: \"type\",\r\n                                    Operator: \"==\",\r\n                                    ValueType: \"String\",\r\n                                    Value: \"microsoft.powerautomate/cloudflows\"\r\n                                },\r\n                                JSONFormat.Compact\r\n                            ) &\r\n                            Concat(\r\n                                colQbTerms As t,\r\n                                \",\" &\r\n                                JSON(\r\n                                    {\r\n                                        FieldName: t.FieldName,\r\n                                        Operator: t.QueryOperator,\r\n                                        ValueType: t.ValueType,\r\n                                        Value: t.RawValue\r\n                                    },\r\n                                    JSONFormat.Compact\r\n                                )\r\n                            ) &\r\n                            \"]\",\r\n                            Notify(\r\n                                \"Flow-invoer maken mislukt: \" & FirstError.Message,\r\n                                NotificationType.Error\r\n                            );\r\n                            Blank()\r\n                        )\r\n                    );\r\n\r\n                    Set(\r\n                        varQbSnapshot,\r\n                        IfError(\r\n                            JSON(\r\n                                ForAll(\r\n                                    colInventoryFilter As f,\r\n                                    {\r\n                                        Id: Text(f.id),\r\n                                        FieldName: f.field.FieldName,\r\n                                        Operator: f.operator.Operator,\r\n                                        Value: f.value,\r\n                                        Enabled: f.enabled\r\n                                    }\r\n                                ),\r\n                                JSONFormat.Compact\r\n                            ),\r\n                            Notify(\"Filterstatus bewaren mislukt: \" & FirstError.Message, NotificationType.Error);\r\n                            Blank()\r\n                        )\r\n                    );\r\n                    \r\n                    Set(\r\n                        varQbReady,\r\n                        !IsBlank(varQbKql) &&\r\n                        !IsBlank(varQbClausesJson) &&\r\n                        !IsBlank(varQbTransportJson) &&\r\n                        !IsBlank(varQbSnapshot)\r\n                    );\r\n                    If(\r\n                        !varQbReady,\r\n                        Set(varQbKql, Blank());\r\n                        Set(varQbClausesJson, Blank());\r\n                        Set(varQbTransportJson, Blank())\r\n                    )\r\n                )\r\n            )\r\n        )\r\n    )\r\n);\r\n\r\n\r\n\r\n// Run flow!\r\n\r\nSet(\r\n    varQbCurrentSnapshot,\r\n    IfError(\r\n        JSON(\r\n            ForAll(\r\n                colInventoryFilter As f,\r\n                {\r\n                    Id: Text(f.id),\r\n                    FieldName: f.field.FieldName,\r\n                    Operator: f.operator.Operator,\r\n                    Value: f.value,\r\n                    Enabled: f.enabled\r\n                }\r\n            ),\r\n            JSONFormat.Compact\r\n        ),\r\n        Notify(\"Filterstatus controleren mislukt: \" & FirstError.Message, NotificationType.Error);\r\n        Blank()\r\n    )\r\n);\r\nIf(\r\n    IsBlank(varQbCurrentSnapshot),\r\n    false,\r\n    !varQbReady || varQbCurrentSnapshot <> varQbSnapshot || varQbToday <> Today(),\r\n    Set(varQbReady, false);\r\n    Notify(\"De filters of kalenderdag zijn gewijzigd. Bouw de query opnieuw.\", NotificationType.Error),\r\n\r\n    Set(varQbFlowFailed, false);\r\n    Set(\r\n        varQbFlowResult,\r\n        IfError(\r\n\r\n            Set(\r\n                varInventory,\r\n                ParseInventory(\r\n                    'PPAT-SearchInventory'.Run(varQbClausesJson).data\r\n                )\r\n            ),\r\n\r\n            Set(varQbFlowFailed, true);\r\n            Notify(\"Flow aanroepen mislukt: \" & FirstError.Message, NotificationType.Error);\r\n            Blank()\r\n        )\r\n    );\r\n\r\n)\r\n\r\n"
                               Text: ="Apply"
                         - btnPaneFooterCancel_Filter:
                             Control: ModernButton@1.0.0

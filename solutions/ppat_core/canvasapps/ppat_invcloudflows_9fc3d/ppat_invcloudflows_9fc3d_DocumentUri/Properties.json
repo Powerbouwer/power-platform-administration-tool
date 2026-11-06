@@ -113,24 +113,24 @@
   "EnableInstrumentation": false,
   "ControlCount": {
     "screen": 2,
-    "groupContainer": 54,
-    "modernButton": 16,
-    "rectangle": 8,
+    "groupContainer": 58,
+    "modernButton": 19,
+    "rectangle": 9,
     "modernTextInput": 6,
-    "modernIcon": 2,
-    "modernText": 25,
+    "modernIcon": 3,
+    "modernText": 27,
     "modernDataGrid": 1,
     "modernDataGridColumn": 27,
     "gallery": 8,
     "galleryTemplate": 8,
     "image": 2,
-    "modernDatePicker": 1,
-    "modernCombobox": 3,
     "modernCheckbox": 2,
+    "modernCombobox": 3,
+    "modernDatePicker": 1,
     "modernTabList": 1,
     "modernInformationButton": 3,
     "modernLink": 1
   },
-  "DeserializationLoadTime": 1.6199417,
-  "AnalysisLoadTime": 0.9347018
+  "DeserializationLoadTime": 1.684464,
+  "AnalysisLoadTime": 1.0129637
 }
