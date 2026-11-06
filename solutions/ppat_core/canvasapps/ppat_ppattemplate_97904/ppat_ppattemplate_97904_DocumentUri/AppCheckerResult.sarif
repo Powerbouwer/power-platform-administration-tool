@@ -3533,9 +3533,7 @@
                 }
               },
               "properties": {
-                "howToFix": [
-                  "Remove the unused variable."
-                ],
+                "howToFix": ["Remove the unused variable."],
                 "whyFix": "This variable is declared but is not referenced by any control, so it is not needed.",
                 "componentType": "app",
                 "primaryCategory": "performance",

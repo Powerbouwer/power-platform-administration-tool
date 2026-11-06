@@ -1,6 +1,6 @@
 Workflow:
-  '@WorkflowId': '{ca27d5d6-2bc3-f111-a05c-70a8a507ac5b}'
-  '@Name': PPAT - Search Inventory
+  "@WorkflowId": "{ca27d5d6-2bc3-f111-a05c-70a8a507ac5b}"
+  "@Name": PPAT - Search Inventory
   JsonFileName: /modernflows/ca27d5d6-2bc3-f111-a05c-70a8a507ac5b/PPAT-SearchInventory-CA27D5D6-2BC3-F111-A05C-70A8A507AC5B.json
   Type: 1
   Subprocess: 0
@@ -25,5 +25,5 @@ Workflow:
   PrimaryEntity: none
   LocalizedNames:
     LocalizedName:
-      '@languagecode': 1033
-      '@description': PPAT - Search Inventory
+      "@languagecode": 1033
+      "@description": PPAT - Search Inventory

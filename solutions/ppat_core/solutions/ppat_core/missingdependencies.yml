@@ -1,43 +1,43 @@
 MissingDependencies:
   MissingDependency:
-  - Required:
-      '@type': 61
-      '@schemaName': msdyn_/Images/AppModule_Default_Icon.png
-      '@displayName': msdyn_/Images/AppModule_Default_Icon.png
-      '@solution': AppModuleWebResources (2.5)
-      package:
-        '@appName': AppModule Web Resources Package
-        '@version': 2.5
-        '#text': AppModuleWebResources (2.5)
-    Dependent:
-      '@type': 80
-      '@schemaName': ppat_PowerPlatformAdministrationTool
-      '@displayName': Power Platform Administration Tool
-  - Required:
-      '@type': SettingDefinition
-      '@displayName': AppChannel
-      '@solution': msdyn_AppFrameworkInfraExtensions (1.0.0.27)
-      '@id.uniquename': AppChannel
-      package:
-        '@appName': PowerAppsAppFramework Package
-        '@version': 1.0.0.27
-        '#text': PowerAppsAppFramework_Anchor (1.0.0.27)
-    Dependent:
-      '@type': AppSetting
-      '@displayName': parentappmoduleid.uniquename=ppat_PowerPlatformAdministrationTool,settingdefinitionid.uniquename=AppChannel
-      '@id.parentappmoduleid.uniquename': ppat_PowerPlatformAdministrationTool
-      '@id.settingdefinitionid.uniquename': AppChannel
-  - Required:
-      '@type': SettingDefinition
-      '@displayName': HeaderAndNavigationRefresh
-      '@solution': msdyn_AppFrameworkInfraExtensions (1.0.0.27)
-      '@id.uniquename': HeaderAndNavigationRefresh
-      package:
-        '@appName': PowerAppsAppFramework Package
-        '@version': 1.0.0.27
-        '#text': PowerAppsAppFramework_Anchor (1.0.0.27)
-    Dependent:
-      '@type': AppSetting
-      '@displayName': parentappmoduleid.uniquename=ppat_PowerPlatformAdministrationTool,settingdefinitionid.uniquename=HeaderAndNavigationRefresh
-      '@id.parentappmoduleid.uniquename': ppat_PowerPlatformAdministrationTool
-      '@id.settingdefinitionid.uniquename': HeaderAndNavigationRefresh
+    - Required:
+        "@type": 61
+        "@schemaName": msdyn_/Images/AppModule_Default_Icon.png
+        "@displayName": msdyn_/Images/AppModule_Default_Icon.png
+        "@solution": AppModuleWebResources (2.5)
+        package:
+          "@appName": AppModule Web Resources Package
+          "@version": 2.5
+          "#text": AppModuleWebResources (2.5)
+      Dependent:
+        "@type": 80
+        "@schemaName": ppat_PowerPlatformAdministrationTool
+        "@displayName": Power Platform Administration Tool
+    - Required:
+        "@type": SettingDefinition
+        "@displayName": AppChannel
+        "@solution": msdyn_AppFrameworkInfraExtensions (1.0.0.27)
+        "@id.uniquename": AppChannel
+        package:
+          "@appName": PowerAppsAppFramework Package
+          "@version": 1.0.0.27
+          "#text": PowerAppsAppFramework_Anchor (1.0.0.27)
+      Dependent:
+        "@type": AppSetting
+        "@displayName": parentappmoduleid.uniquename=ppat_PowerPlatformAdministrationTool,settingdefinitionid.uniquename=AppChannel
+        "@id.parentappmoduleid.uniquename": ppat_PowerPlatformAdministrationTool
+        "@id.settingdefinitionid.uniquename": AppChannel
+    - Required:
+        "@type": SettingDefinition
+        "@displayName": HeaderAndNavigationRefresh
+        "@solution": msdyn_AppFrameworkInfraExtensions (1.0.0.27)
+        "@id.uniquename": HeaderAndNavigationRefresh
+        package:
+          "@appName": PowerAppsAppFramework Package
+          "@version": 1.0.0.27
+          "#text": PowerAppsAppFramework_Anchor (1.0.0.27)
+      Dependent:
+        "@type": AppSetting
+        "@displayName": parentappmoduleid.uniquename=ppat_PowerPlatformAdministrationTool,settingdefinitionid.uniquename=HeaderAndNavigationRefresh
+        "@id.parentappmoduleid.uniquename": ppat_PowerPlatformAdministrationTool
+        "@id.settingdefinitionid.uniquename": HeaderAndNavigationRefresh

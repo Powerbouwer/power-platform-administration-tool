@@ -7,31 +7,31 @@ CanvasApp:
   Tags: '{"primaryDeviceWidth":"2199","primaryDeviceHeight":"1165","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.26102.13","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false","m365CopilotSettingValue":"0","sienaVersion":"20261016T090958Z-3.26101.10.0"}'
   IsCdsUpgraded: 0
   GalleryItemId:
-    '@xsi:nil': true
-    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+    "@xsi:nil": true
+    "@xmlns:xsi": http://www.w3.org/2001/XMLSchema-instance
   BackgroundColor: RGBA(0,176,240,1)
   DisplayName: INV - Cloud Flows
   Description:
-    '@xsi:nil': true
-    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+    "@xsi:nil": true
+    "@xmlns:xsi": http://www.w3.org/2001/XMLSchema-instance
   CommitMessage:
-    '@xsi:nil': true
-    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+    "@xsi:nil": true
+    "@xmlns:xsi": http://www.w3.org/2001/XMLSchema-instance
   Publisher:
-    '@xsi:nil': true
-    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
-  AuthorizationReferences: '[]'
+    "@xsi:nil": true
+    "@xmlns:xsi": http://www.w3.org/2001/XMLSchema-instance
+  AuthorizationReferences: "[]"
   ConnectionReferences: '{"02c1c781-2f42-401c-af81-31457fd53731":{"id":"/providers/microsoft.powerapps/apis/shared_logicflows","displayName":"Logic flows","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1827/1.0.1827.4908/logicflows/icon.png","dataSources":["PPAT-SearchInventory"],"dependencies":["3200a325-9c3e-474c-9b9c-0c0f7e4042f9"],"dependents":[],"parameterHints":{"workflowName":{"value":"bfd94da5-4d40-45d6-a7ae-c1b326fd0639"},"workflowEntityId":{"value":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b"},"workflowDisplayName":{"value":"PPAT - Search Inventory"},"3200a325-9c3e-474c-9b9c-0c0f7e4042f9":{"value":"shared_powerplatformadminv2_1"}},"parameterHintsV2":{"workflowName":{"value":"bfd94da5-4d40-45d6-a7ae-c1b326fd0639"},"workflowEntityId":{"value":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b"},"workflowDisplayName":{"value":"PPAT - Search Inventory"},"shared_powerplatformadminv2_1":{"value":"3200a325-9c3e-474c-9b9c-0c0f7e4042f9"}},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard","actions":["Run"]},"3200a325-9c3e-474c-9b9c-0c0f7e4042f9":{"id":"/providers/microsoft.powerapps/apis/shared_powerplatformadminv2","displayName":"Power Platform for Admins V2","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1835/1.0.1835.5096/powerplatformadminv2/icon.png","dataSources":[],"dependencies":[],"dependents":["02c1c781-2f42-401c-af81-31457fd53731"],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard"},"5238e892-6a45-4c01-ab20-e6058994a2ce":{"id":"/providers/microsoft.powerapps/apis/shared_azuread","displayName":"Microsoft Entra ID","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1828/1.0.1828.4964/azuread/icon.png","dataSources":["MicrosoftEntraID"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard","authenticationType":"EntraOAuth"}}'
   DatabaseReferences: '{"default.cds":{"databaseDetails":{"referenceType":"Environmental","environmentName":"default.cds","overrideValues":{"status":"NotSpecified","environmentVariableName":""}},"dataSources":{"Users":{"entitySetName":"systemusers","logicalName":"systemuser"}}}}'
-  AppComponents: '[]'
-  AppComponentDependencies: '[]'
+  AppComponents: "[]"
+  AppComponentDependencies: "[]"
   CanConsumeAppPass: 1
   CanvasAppType: 2
   BypassConsent: 0
   AdminControlBypassConsent: 0
   EmbeddedApp:
-    '@xsi:nil': true
-    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+    "@xsi:nil": true
+    "@xmlns:xsi": http://www.w3.org/2001/XMLSchema-instance
   IntroducedVersion: 1.0
   CdsDependencies: '{"cdsdependencies":[{"dependencyid":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b","componenttype":29,"componenttypeplatformname":"Workflow"},{"logicalname":"systemuser","componenttype":1}]}'
   IsCustomizable: 1

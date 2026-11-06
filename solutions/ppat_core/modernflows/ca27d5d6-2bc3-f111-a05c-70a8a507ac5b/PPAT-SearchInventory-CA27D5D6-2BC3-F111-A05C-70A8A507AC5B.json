@@ -43,9 +43,7 @@
                   "description": "Complete inventory query request body as JSON text."
                 }
               },
-              "required": [
-                "text"
-              ]
+              "required": ["text"]
             }
           }
         }
@@ -74,9 +72,7 @@
         },
         "Respond_to_App": {
           "runAfter": {
-            "Search_Inventory": [
-              "Succeeded"
-            ]
+            "Search_Inventory": ["Succeeded"]
           },
           "metadata": {
             "operationMetadataId": "1d7f31e0-926d-4012-b08e-9b0dffb34246"

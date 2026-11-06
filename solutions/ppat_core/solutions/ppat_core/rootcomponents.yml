@@ -1,17 +1,17 @@
 RootComponents:
   RootComponent:
-  - '@type': 29
-    '@id': '{ca27d5d6-2bc3-f111-a05c-70a8a507ac5b}'
-    '@behavior': 0
-  - '@type': 62
-    '@schemaName': ppat_PowerPlatformAdministrationTool
-    '@behavior': 0
-  - '@type': 80
-    '@schemaName': ppat_PowerPlatformAdministrationTool
-    '@behavior': 0
-  - '@type': 300
-    '@schemaName': ppat_invcloudflows_9fc3d
-    '@behavior': 0
-  - '@type': 300
-    '@schemaName': ppat_ppattemplate_97904
-    '@behavior': 0
+    - "@type": 29
+      "@id": "{ca27d5d6-2bc3-f111-a05c-70a8a507ac5b}"
+      "@behavior": 0
+    - "@type": 62
+      "@schemaName": ppat_PowerPlatformAdministrationTool
+      "@behavior": 0
+    - "@type": 80
+      "@schemaName": ppat_PowerPlatformAdministrationTool
+      "@behavior": 0
+    - "@type": 300
+      "@schemaName": ppat_invcloudflows_9fc3d
+      "@behavior": 0
+    - "@type": 300
+      "@schemaName": ppat_ppattemplate_97904
+      "@behavior": 0

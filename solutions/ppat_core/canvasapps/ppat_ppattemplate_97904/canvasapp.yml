@@ -7,31 +7,31 @@ CanvasApp:
   Tags: '{"primaryDeviceWidth":"1366","primaryDeviceHeight":"768","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.26093.9","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false","m365CopilotSettingValue":"0"}'
   IsCdsUpgraded: 0
   GalleryItemId:
-    '@xsi:nil': true
-    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+    "@xsi:nil": true
+    "@xmlns:xsi": http://www.w3.org/2001/XMLSchema-instance
   BackgroundColor: RGBA(0,176,240,1)
   DisplayName: PPAT - Template
   Description:
-    '@xsi:nil': true
-    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+    "@xsi:nil": true
+    "@xmlns:xsi": http://www.w3.org/2001/XMLSchema-instance
   CommitMessage:
-    '@xsi:nil': true
-    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+    "@xsi:nil": true
+    "@xmlns:xsi": http://www.w3.org/2001/XMLSchema-instance
   Publisher:
-    '@xsi:nil': true
-    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
-  AuthorizationReferences: '[]'
-  ConnectionReferences: '{}'
-  DatabaseReferences: '{}'
-  AppComponents: '[]'
-  AppComponentDependencies: '[]'
+    "@xsi:nil": true
+    "@xmlns:xsi": http://www.w3.org/2001/XMLSchema-instance
+  AuthorizationReferences: "[]"
+  ConnectionReferences: "{}"
+  DatabaseReferences: "{}"
+  AppComponents: "[]"
+  AppComponentDependencies: "[]"
   CanConsumeAppPass: 1
   CanvasAppType: 2
   BypassConsent: 0
   AdminControlBypassConsent: 0
   EmbeddedApp:
-    '@xsi:nil': true
-    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+    "@xsi:nil": true
+    "@xmlns:xsi": http://www.w3.org/2001/XMLSchema-instance
   IntroducedVersion: 1.0
   CdsDependencies: '{"cdsdependencies":[]}'
   IsCustomizable: 1

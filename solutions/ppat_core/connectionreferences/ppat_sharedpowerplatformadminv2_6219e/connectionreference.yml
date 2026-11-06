@@ -1,5 +1,5 @@
 connectionreference:
-  '@connectionreferencelogicalname': ppat_sharedpowerplatformadminv2_6219e
+  "@connectionreferencelogicalname": ppat_sharedpowerplatformadminv2_6219e
   connectionreferencedisplayname: Power Platform for Admins V2 ppat_core-6219e
   connectorid: /providers/Microsoft.PowerApps/apis/shared_powerplatformadminv2
   iscustomizable: 1

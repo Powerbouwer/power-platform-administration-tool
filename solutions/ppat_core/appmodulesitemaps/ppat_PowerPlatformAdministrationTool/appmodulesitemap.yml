@@ -5,41 +5,41 @@ AppModuleSiteMap:
   ShowPinned: True
   ShowRecents: True
   SiteMap:
-    '@IntroducedVersion': 7.0.0.0
+    "@IntroducedVersion": 7.0.0.0
     Area:
-      '@Id': area_4dbb72c4
-      '@ResourceId': SitemapDesigner.NewTitle
-      '@DescriptionResourceId': SitemapDesigner.NewTitle
-      '@ShowGroups': true
-      '@IntroducedVersion': 7.0.0.0
+      "@Id": area_4dbb72c4
+      "@ResourceId": SitemapDesigner.NewTitle
+      "@DescriptionResourceId": SitemapDesigner.NewTitle
+      "@ShowGroups": true
+      "@IntroducedVersion": 7.0.0.0
       Titles:
         Title:
-          '@LCID': 1033
-          '@Title': Area1
+          "@LCID": 1033
+          "@Title": Area1
       Group:
-        '@Id': group_inventory
-        '@ResourceId': SitemapDesigner.NewGroup
-        '@DescriptionResourceId': SitemapDesigner.NewGroup
-        '@IntroducedVersion': 7.0.0.0
-        '@IsProfile': false
-        '@ToolTipResourseId': SitemapDesigner.Unknown
+        "@Id": group_inventory
+        "@ResourceId": SitemapDesigner.NewGroup
+        "@DescriptionResourceId": SitemapDesigner.NewGroup
+        "@IntroducedVersion": 7.0.0.0
+        "@IsProfile": false
+        "@ToolTipResourseId": SitemapDesigner.Unknown
         Titles:
           Title:
-            '@LCID': 1033
-            '@Title': Inventory
+            "@LCID": 1033
+            "@Title": Inventory
         SubArea:
-          '@Id': subarea_7e18599c
-          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
-          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
-          '@AvailableOffline': true
-          '@PassParams': false
-          '@Sku': All,OnPremise,Live,SPLA
-          '@Page': ppat_invcloudflows_9fc3d
+          "@Id": subarea_7e18599c
+          "@Icon": /_imgs/imagestrips/transparent_spacer.gif
+          "@Client": All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          "@AvailableOffline": true
+          "@PassParams": false
+          "@Sku": All,OnPremise,Live,SPLA
+          "@Page": ppat_invcloudflows_9fc3d
           Titles:
             Title:
-              '@LCID': 1033
-              '@Title': Cloud Flows
+              "@LCID": 1033
+              "@Title": Cloud Flows
   LocalizedNames:
     LocalizedName:
-      '@description': Power Platform Administration Tool
-      '@languagecode': 1033
+      "@description": Power Platform Administration Tool
+      "@languagecode": 1033

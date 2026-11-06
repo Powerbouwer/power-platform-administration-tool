@@ -23473,9 +23473,7 @@
                             "RuleProviderType": "Unknown"
                           }
                         ],
-                        "ControlPropertyState": [
-                          "TemplateFill"
-                        ],
+                        "ControlPropertyState": ["TemplateFill"],
                         "IsLocked": false,
                         "ControlUniqueId": "88",
                         "Children": []
@@ -34321,9 +34319,7 @@
                             "RuleProviderType": "Unknown"
                           }
                         ],
-                        "ControlPropertyState": [
-                          "TemplateFill"
-                        ],
+                        "ControlPropertyState": ["TemplateFill"],
                         "IsLocked": false,
                         "ControlUniqueId": "116",
                         "Children": []

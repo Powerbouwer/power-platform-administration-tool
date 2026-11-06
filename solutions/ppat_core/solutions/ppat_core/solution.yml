@@ -1,16 +1,16 @@
 ImportExportXml:
-  '@version': 9.2.26101.177
-  '@SolutionPackageVersion': 9.2
-  '@languagecode': 1033
-  '@generatedBy': CrmLive
-  '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+  "@version": 9.2.26101.177
+  "@SolutionPackageVersion": 9.2
+  "@languagecode": 1033
+  "@generatedBy": CrmLive
+  "@xmlns:xsi": http://www.w3.org/2001/XMLSchema-instance
   SolutionManifest:
     UniqueName: ppat_core
     LocalizedNames:
       LocalizedName:
-        '@description': Power Platform Administration Tool
-        '@languagecode': 1033
-    Descriptions: 
+        "@description": Power Platform Administration Tool
+        "@languagecode": 1033
+    Descriptions:
     Version: 1.0.0.1
     Managed: 0
     Publisher:
