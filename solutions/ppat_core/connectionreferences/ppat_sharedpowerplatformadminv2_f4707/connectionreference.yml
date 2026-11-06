@@ -1,8 +1,0 @@
-connectionreference:
-  "@connectionreferencelogicalname": ppat_sharedpowerplatformadminv2_f4707
-  connectionreferencedisplayname: Power Platform for Admins V2 ppat_core-f4707
-  connectorid: /providers/Microsoft.PowerApps/apis/shared_powerplatformadminv2
-  iscustomizable: 1
-  promptingbehavior: 0
-  statecode: 0
-  statuscode: 1

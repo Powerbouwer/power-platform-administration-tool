@@ -1,34 +1,31 @@
 {
   "properties": {
     "connectionReferences": {
-      "shared_powerplatformadminv2_1": {
-        "runtimeSource": "invoker",
-        "connection": {
-          "connectionReferenceLogicalName": "ppat_sharedpowerplatformadminv2_f4707"
-        },
+      "shared_powerplatformadminv2": {
         "api": {
           "name": "shared_powerplatformadminv2"
-        }
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "ppat_PowerPlatformAdminsV2"
+        },
+        "runtimeSource": "invoker"
       }
     },
     "definition": {
       "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
       "contentVersion": "1.0.0.0",
       "parameters": {
-        "$connections": {
-          "defaultValue": {},
-          "type": "Object"
-        },
         "$authentication": {
           "defaultValue": {},
           "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
         }
       },
       "triggers": {
         "manual": {
-          "metadata": {
-            "operationMetadataId": "86349243-1c0e-4313-8dd5-6d64bfa66417"
-          },
           "type": "Request",
           "kind": "PowerAppV2",
           "inputs": {
@@ -43,50 +40,41 @@
                   "description": "Complete inventory query request body as JSON text."
                 }
               },
-              "required": ["text"]
+              "required": [
+                "text"
+              ]
             }
+          },
+          "metadata": {
+            "operationMetadataId": "86349243-1c0e-4313-8dd5-6d64bfa66417"
           }
         }
       },
       "actions": {
         "Search_Inventory": {
-          "runAfter": {},
-          "metadata": {
-            "operationMetadataId": "54ac0f76-ce5a-4ac3-af57-e46e4454e338"
-          },
           "type": "OpenApiConnection",
+          "description": "Queries one inventory page using the solution connection reference ppat_PowerPlatformAdminsV2. The bound identity MUST have active Power Platform Administrator rights in the target tenant. Restrict access to trusted administration app users.",
           "inputs": {
-            "host": {
-              "connectionName": "shared_powerplatformadminv2_1",
-              "operationId": "QueryResources",
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_powerplatformadminv2"
-            },
             "parameters": {
               "api-version": "2024-10-01",
               "body/TableName": "PowerPlatformResources",
               "body/Clauses": "@json(triggerBody()['text'])"
             },
-            "authentication": "@parameters('$authentication')"
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_powerplatformadminv2",
+              "operationId": "QueryResources",
+              "connectionName": "shared_powerplatformadminv2"
+            }
           },
-          "description": "Queries one inventory page using the solution connection reference ppat_PowerPlatformAdminsV2. The bound identity MUST have active Power Platform Administrator rights in the target tenant. Restrict access to trusted administration app users."
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "54ac0f76-ce5a-4ac3-af57-e46e4454e338"
+          }
         },
         "Respond_to_App": {
-          "runAfter": {
-            "Search_Inventory": ["Succeeded"]
-          },
-          "metadata": {
-            "operationMetadataId": "1d7f31e0-926d-4012-b08e-9b0dffb34246"
-          },
           "type": "Response",
           "kind": "PowerApp",
           "inputs": {
-            "statusCode": 200,
-            "body": {
-              "data": "@{outputs('Search_Inventory')?['body/data']}",
-              "totalrecords": "@{outputs('Search_Inventory')?['body/totalRecords']}",
-              "count": "@{outputs('Search_Inventory')?['body/count']}",
-              "resulttruncated": "@{outputs('Search_Inventory')?['body/resultTruncated']}"
-            },
             "schema": {
               "type": "object",
               "properties": {
@@ -110,14 +98,30 @@
                   "x-ms-dynamically-added": true,
                   "type": "string"
                 }
-              }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "data": "@{outputs('Search_Inventory')?['body/data']}",
+              "totalrecords": "@{outputs('Search_Inventory')?['body/totalRecords']}",
+              "count": "@{outputs('Search_Inventory')?['body/count']}",
+              "resulttruncated": "@{outputs('Search_Inventory')?['body/resultTruncated']}"
             }
+          },
+          "runAfter": {
+            "Search_Inventory": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "1d7f31e0-926d-4012-b08e-9b0dffb34246"
           }
         }
       },
       "outputs": {}
     },
-    "templateName": ""
+    "templateName": null
   },
   "schemaVersion": "1.0.0.0"
 }
