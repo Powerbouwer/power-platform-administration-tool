@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "GitHub.copilot-chat",
+    "github.vscode-github-actions",
+    "MS-SarifVSCode.sarif-viewer",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "stoplight.spectral",
+    "chrischinchilla.vale-vscode",
+    "yzhang.markdown-all-in-one",
+    "redhat.vscode-yaml",
+    "Vue.volar"
+  ]
+}

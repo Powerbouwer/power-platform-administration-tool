@@ -5,16 +5,16 @@ layout: doc
 
 # Maker Enablement
 
-The Maker Enablement module supports activities that help makers work effectively with Microsoft Power Platform.
+The Maker Enablement module provides activities that help makers use Microsoft Power Platform.
 
 ## Overview
 
-Detailed information about the module's purpose, supported scenarios, and main workflows will be added as the implementation is documented.
+The team will document the module's purpose, supported scenarios, and main workflows as implementation progresses.
 
 ## Availability
 
-Deployment requirements and availability information are not yet documented.
+The team will document deployment requirements and availability information.
 
 ## Learn more
 
-Configuration, usage, and troubleshooting guidance will be added here.
+The team will add configuration, usage, and troubleshooting guidance here.

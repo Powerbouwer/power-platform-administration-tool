@@ -1,0 +1,38 @@
+extends: capitalization
+message: "'%s' should use sentence-style capitalization."
+link: https://learn.microsoft.com/en-us/style-guide/capitalization
+level: suggestion
+scope: heading
+match: $sentence
+indicators:
+  - ':'
+exceptions:
+  - Azure
+  - CLI
+  - Code
+  - Cosmos
+  - Docker
+  - Emmet
+  - Environment Settings Configurator
+  - Git
+  - Governance Processes
+  - I
+  - Kubernetes
+  - Linux
+  - macOS
+  - Marketplace
+  - Message Center Triage
+  - Maker Enablement
+  - Maker Hub
+  - MongoDB
+  - JavaScript
+  - Power Platform
+  - Power Platform Administration Tool
+  - REPL
+  - Studio
+  - TypeScript
+  - Tenant Monitor
+  - URLs
+  - Visual
+  - VS
+  - Windows

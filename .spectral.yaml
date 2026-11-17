@@ -1,0 +1,187 @@
+# Power Platform solution standards: automated checks (Spectral only).
+#
+# Source of truth: docs/developer/standards/. Only objectively checkable rules are
+# implemented here; everything else is manual review (see the docs).
+# Spectral only reads the native Git source under solutions/; it never fixes or rewrites files.
+#
+# Run locally or in CI: npm run lint:spectral
+#
+# Structure:
+#   rules      Each rule is defined once and is "off" by default.
+#   overrides  Enables rules per component type, scoped by native Git file path.
+#
+# The publisher prefix "ppat" is fixed in PPAT-001: Spectral cannot read
+# publishers/<publisher>/publisher.yml while linting another file.
+
+# Current file is just for a setup. We will implement spectral rules gradually.
+rules:
+  # --- Shared (docs/developer/standards/index.md) ---------------------------------------------
+
+  NAM-001:
+    description: Solution, publisher and model-driven app unique names are technical identifiers.
+    message: 'Unique name "{{value}}" is not a technical identifier. Expected: a letter followed by letters, digits or underscores, e.g. "ppat_Inventory".'
+    severity: "off"
+    given:
+      - "$.ImportExportXml.SolutionManifest.UniqueName"
+      - "$.Publisher.UniqueName"
+      - "$.AppModule.UniqueName"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Za-z][A-Za-z0-9_]*$"
+
+  NAM-002:
+    description: Localized resource names have a non-empty label.
+    message: 'Localized name label is empty. Expected: a readable name, e.g. "Inventory".'
+    severity: "off"
+    given:
+      - "$.ImportExportXml.SolutionManifest.LocalizedNames..['@description']"
+      - "$.Publisher.LocalizedNames..['@description']"
+      - "$.AppModule.LocalizedNames..['@description']"
+      - "$.AppModuleSiteMap.LocalizedNames..['@description']"
+      - "$.Workflow.LocalizedNames..['@description']"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: string
+          pattern: '\S'
+
+  PPAT-001:
+    description: Solution, app and sitemap technical names start with the publisher prefix "ppat_".
+    message: 'Technical name "{{value}}" does not start with the publisher prefix. Expected: "ppat_<Name>", e.g. "ppat_Inventory".'
+    severity: "off"
+    given:
+      - "$.ImportExportXml.SolutionManifest.UniqueName"
+      - "$.AppModule.UniqueName"
+      - "$.AppModuleSiteMap.SiteMapUniqueName"
+      - "$.CanvasApp.Name"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^ppat_"
+
+  GEN-001:
+    description: Resources have a description where supported. Only presence is checked; quality is manual review.
+    message: "Description is missing. Expected: a meaningful description, added in the maker portal."
+    severity: "off"
+    given:
+      - "$.ImportExportXml.SolutionManifest.Descriptions"
+      - "$.Publisher.Descriptions"
+      - "$.CanvasApp.Description"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          # Text or a populated <Descriptions> block; an empty value (null) or xsi:nil fails.
+          anyOf:
+            - type: string
+              pattern: '\S'
+            - type: object
+              minProperties: 1
+              not:
+                required: ["@xsi:nil"]
+
+  # --- Cloud flows (docs/developer/standards/cloud-flows/index.md) ------------------------------
+  # Category 5 is a modern cloud flow; other workflow categories are not checked.
+
+  CFL-001:
+    description: Cloud flows have a display name.
+    message: "Cloud flow name is empty. Expected: a readable display name."
+    severity: "off"
+    given: "$[?(@property === 'Workflow' && @.Category == 5)]"
+    then:
+      field: "@Name"
+      function: schema
+      functionOptions:
+        schema:
+          type: string
+          pattern: '\S'
+
+  PPAT-002:
+    description: Cloud flow names follow "PPAT <Module> - <Subject> - <Purpose>".
+    message: 'Cloud flow name "{{value}}" does not follow the convention. Expected: "PPAT <Module> - <Subject> - <Purpose>", e.g. "PPAT Core - Inventory - Search Resources".'
+    severity: "off"
+    given: "$[?(@property === 'Workflow' && @.Category == 5)]"
+    then:
+      field: "@Name"
+      function: pattern
+      functionOptions:
+        # Three segments separated by " - " (ASCII hyphen); each segment starts with a letter or digit.
+        match: "^PPAT [A-Za-z0-9](?:(?! - ).)* - [A-Za-z0-9](?:(?! - ).)* - [A-Za-z0-9](?:(?! - ).)*$"
+
+  # --- Canvas apps and custom pages (docs/developer/standards/canvas-apps/index.md) -------------
+
+  CAN-001:
+    description: Canvas apps have a readable display name.
+    message: 'Canvas app display name is empty. Expected: readable text, e.g. "PPAT - Inventory".'
+    severity: "off"
+    given: "$.CanvasApp"
+    then:
+      field: DisplayName
+      function: schema
+      functionOptions:
+        schema:
+          type: string
+          pattern: '\S'
+
+  CAN-002:
+    description: Screen names are words starting with an uppercase letter.
+    message: 'Screen name "{{property}}" does not follow the convention. Expected: words starting with an uppercase letter, separated by single spaces, e.g. "Home Screen".'
+    severity: "off"
+    given: "$.Screens"
+    then:
+      field: "@key"
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][A-Za-z0-9]*(?: [A-Z0-9][A-Za-z0-9]*)*$"
+
+  CAN-003:
+    description: Control names are identifiers.
+    message: 'Control name "{{property}}" contains invalid characters. Expected: a letter followed by letters, digits or underscores, e.g. "btnSave_Form".'
+    severity: "off"
+    given: "$.Screens[*]..Children[*]"
+    then:
+      field: "@key"
+      function: pattern
+      functionOptions:
+        match: "^[A-Za-z][A-Za-z0-9_]*$"
+
+  PPAT-004:
+    description: Recognized standard controls start with a control prefix followed by an uppercase purpose.
+    message: 'Control "{{property}}" does not start with a control prefix and an uppercase purpose. Expected: e.g. "btnSave_Form", "lblStatus", "conHeader" (see PPAT-004 for all prefixes).'
+    severity: "off"
+    # Selects the names (~) of controls whose type is in the standard's prefix table and occurs in
+    # PPAT source. Other control types and generated data card names are not checked.
+    given: "$.Screens[*]..Children[*][?(@.Control && @.Control.match(/^(GroupContainer|Gallery|ModernButton|ModernCombobox|ModernIcon|ModernInformationButton|ModernTabList|ModernText|ModernTextInput|Rectangle)@/) && !@property.match(/^(DataCardKey|DataCardValue|ErrorMessage|StarVisible)[0-9_]*$/))]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(txt|btn|lbl|gal|frm|con|drp|cmb|rad|tgl|dtp|sli|tab|tmr|img|icn|htm|rec|cir|cam|bar|pic|inf|pen|lis|rte|cmp)[A-Z]"
+
+  # --- Model-driven apps (docs/developer/standards/model-driven-apps/index.md) ------------------
+
+  MDA-001:
+    description: The sitemap unique name is a technical identifier.
+    message: 'Sitemap unique name "{{value}}" is not a technical identifier. Expected: a letter followed by letters, digits or underscores, e.g. "ppat_Administration".'
+    severity: "off"
+    given: "$.AppModuleSiteMap.SiteMapUniqueName"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Za-z][A-Za-z0-9_]*$"
+
+  MDA-002:
+    description: Sitemap titles contain text and are not designer placeholders.
+    message: 'Sitemap title "{{value}}" is empty or a designer placeholder. Expected: a readable title, e.g. "Administration".'
+    severity: "off"
+    given: "$.AppModuleSiteMap.SiteMap..Titles..['@Title']"
+    then:
+      - function: schema
+        functionOptions:
+          schema:
+            type: string
+            pattern: '\S'
+      - function: pattern
+        functionOptions:
+          notMatch: "^(Area|Group|SubArea)[0-9]+$"

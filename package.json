@@ -1,10 +1,55 @@
 {
   "scripts": {
+    "audit": "audit-ci",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "lint:prettier": "prettier --check .",
+    "lint:prettier:fix": "prettier --write .",
+    "lint:vale": "vale --glob=\"!docs/.vitepress/dist/**\" .",
+    "lint:vale:report": "npm run repo:report-dir && vale --glob=\"!docs/.vitepress/dist/**\" . --output=line > lint-reports/vale-report.txt",
+    "lint:eslint": "eslint . --max-warnings 0",
+    "lint:eslint:report": "npm run repo:report-dir && eslint . --max-warnings 0 --format stylish --no-color --output-file ./lint-reports/eslint-report.txt",
+    "lint:spectral": "spectral lint \"solutions/**/*.{json,yml,yaml}\" --ruleset .spectral.yaml",
+    "lint:spectral:report": "npm run repo:report-dir && spectral lint \"solutions/**/*.{json,yml,yaml}\" --ruleset .spectral.yaml --display-only-failures --format text --output \"./lint-reports/spectral-report.txt\"",
+    "lint:check-ghsa": "node scripts/check-vulnerability-docs.mjs",
+    "lint:check-ghsa:report": "npm run repo:report-dir && node scripts/check-vulnerability-docs.mjs > lint-reports/vulnerability-docs-report.txt 2>&1",
+    "lint": "npm run lint:check-ghsa && npm run lint:prettier && npm run lint:vale && npm run lint:eslint && npm run lint:spectral",
+    "lint:report": "npm run lint:check-ghsa:report & npm run lint:vale:report & npm run lint:eslint:report & npm run lint:spectral:report",
+    "repo:report-dir": "node scripts/ensure-report-directory.mjs",
+    "repo:clean": "git clean -Xdf",
+    "repo:clean:test": "git clean -Xdn",
+    "repo:reset": "npm run repo:clean && npm ci",
+    "repo:sync-main": "git fetch origin && git merge origin/main && npm run repo:reset"
   },
   "devDependencies": {
-    "vitepress": "^1.6.4"
+    "@eslint/js": "10.0.1",
+    "@microsoft/eslint-plugin-power-apps": "0.6.0",
+    "@stoplight/spectral-cli": "6.17.0",
+    "@vvago/vale": "3.25.1",
+    "audit-ci": "7.1.0",
+    "eslint": "10.13.0",
+    "eslint-plugin-html": "8.2.1",
+    "globals": "17.13.0",
+    "prettier": "3.9.10",
+    "vitepress": "1.6.4",
+    "yaml": "2.9.1"
+  },
+  "allowScripts": {
+    "@vvago/vale": true,
+    "@scarf/scarf": true,
+    "esbuild": true
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "26.13.0",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": "11.20.0",
+      "onFail": "error"
+    }
   }
 }

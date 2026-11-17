@@ -1,0 +1,80 @@
+name: Document issues
+
+on:
+  issues:
+    types:
+      - closed
+
+permissions:
+  contents: write
+  issues: read
+  pull-requests: write
+
+concurrency:
+  group: issues-to-docs-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    name: Generate documentation pull request
+    # Only run this job for issues that are completed and of type ADR or vulnerability
+    if: >-
+      github.event.issue.state_reason == 'completed' &&
+      (github.event.issue.type.name == 'ADR' ||
+       github.event.issue.type.name == 'vulnerability')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.BRANCH_AUTOMATION_TOKEN }}
+
+    steps:
+      - name: Validate automation token
+        shell: bash
+        run: |
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo "Repository secret BRANCH_AUTOMATION_TOKEN is required." >&2
+            exit 1
+          fi
+
+      - name: Checkout main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.BRANCH_AUTOMATION_TOKEN }}
+
+      - name: Generate documentation
+        id: document
+        run: node scripts/issue-to-md.mjs
+
+      - name: Create documentation branch
+        shell: bash
+        env:
+          BRANCH: ${{ steps.document.outputs.branch }}
+        run: git switch -C "$BRANCH"
+
+      - name: Commit and push documentation
+        shell: bash
+        env:
+          BRANCH: ${{ steps.document.outputs.branch }}
+          CHANGE_PATH: ${{ steps.document.outputs.path }}
+          COMMIT_TITLE: ${{ steps.document.outputs.title }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$CHANGE_PATH"
+          git commit -m "$COMMIT_TITLE"
+          git push origin "$BRANCH"
+
+      - name: Create pull request
+        shell: bash
+        env:
+          BRANCH: ${{ steps.document.outputs.branch }}
+          BASE: main
+          PR_TITLE: ${{ steps.document.outputs.title }}
+        run: |
+          gh pr create \
+            --repo "$GITHUB_REPOSITORY" \
+            --base "$BASE" \
+            --head "$BRANCH" \
+            --title "$PR_TITLE" \
+            --template .github/pull_request_template.md

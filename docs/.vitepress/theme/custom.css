@@ -1,0 +1,32 @@
+/* Powerbouwer blue, adapted for the default VitePress surfaces. */
+:root {
+  --vp-c-bg-alt: #dbdbdb;
+  --vp-c-bg-soft: var(--vp-c-bg-alt);
+  --vp-c-text-2: #5c5c63;
+
+  --vp-c-brand-1: #0010b2;
+  --vp-c-brand-2: #0017d8;
+  --vp-c-brand-3: #001fff;
+  --vp-c-brand-soft: rgba(0, 31, 255, 0.14);
+
+  /* Keep white button labels readable in both color modes. */
+  --vp-button-brand-bg: #001fff;
+  --vp-button-brand-hover-bg: #0017d8;
+  --vp-button-brand-active-bg: #0010b2;
+}
+
+.dark {
+  --vp-c-bg: #000064;
+  --vp-c-bg-alt: #000050;
+  --vp-c-bg-elv: #0a166e;
+  --vp-c-bg-soft: var(--vp-c-bg-elv);
+  --vp-c-text-2: #dbdbdb;
+  --vp-c-border: #364e94;
+  --vp-c-divider: #243878;
+  --vp-c-gutter: var(--vp-c-bg-alt);
+
+  --vp-c-brand-1: #9bbdff;
+  --vp-c-brand-2: #78a7ff;
+  --vp-c-brand-3: #528eff;
+  --vp-c-brand-soft: rgba(82, 142, 255, 0.16);
+}
