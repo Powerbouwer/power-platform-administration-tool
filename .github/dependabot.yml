@@ -31,7 +31,7 @@ updates:
     schedule:
       interval: weekly
       day: wednesday
-      time: 08:00
+      time: "08:00"
       timezone: Europe/Amsterdam
     cooldown:
       default-days: 7
@@ -41,7 +41,7 @@ updates:
     schedule:
       interval: weekly
       day: wednesday
-      time: 08:00
+      time: "08:00"
       timezone: Europe/Amsterdam
     cooldown:
       default-days: 7
