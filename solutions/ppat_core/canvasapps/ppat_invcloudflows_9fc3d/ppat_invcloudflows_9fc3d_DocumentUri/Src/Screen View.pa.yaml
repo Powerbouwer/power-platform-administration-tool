@@ -116,26 +116,6 @@ Screens:
                                     Tooltip: =AppSettings.pageRibbon.View.refresh.tooltip
                                     Visible: =AppSettings.pageRibbon.View.refresh.enabled
                                     Width: =100
-                              - btnRibbonQuickView_View:
-                                  Control: ModernButton@1.0.0
-                                  Properties:
-                                    Appearance: =ButtonAppearance.Subtle
-                                    Icon: ="ArrowCircleRight"
-                                    LayoutMinHeight: =16
-                                    LayoutMinWidth: =16
-                                    OnSelect: |-
-                                      =If ( 
-                                          varViewPaneDetails,
-
-                                          Set(varViewPaneDetails, false),
-
-                                          Set(varViewPaneDetails, true)
-
-                                      );
-                                    Text: ="Quick View"
-                                    Tooltip: =AppSettings.pageRibbon.View.quickview.tooltip
-                                    Visible: =AppSettings.pageRibbon.View.quickview.enabled
-                                    Width: =124
                               - conRibbonFiller_View:
                                   Control: GroupContainer@1.5.0
                                   Variant: AutoLayout
@@ -153,31 +133,6 @@ Screens:
                                     RadiusBottomRight: =0
                                     RadiusTopLeft: =0
                                     RadiusTopRight: =0
-                              - btnRibbonQuickViewToggle_View:
-                                  Control: ModernButton@1.0.0
-                                  Properties:
-                                    Appearance: =ButtonAppearance.Subtle
-                                    Icon: ="PanelRight"
-                                    Layout: =ButtonLayout.IconOnly
-                                    LayoutMinHeight: =16
-                                    LayoutMinWidth: =16
-                                    OnSelect: |-
-                                      =If ( 
-                                          varViewPaneDetails,
-
-                                          Set(varViewPaneDetails, false),
-
-                                          Set(varViewPaneDetails, true)
-
-                                      );
-                                    PaddingBottom: =0
-                                    PaddingLeft: =0
-                                    PaddingRight: =0
-                                    PaddingTop: =0
-                                    Text: ="Quick View"
-                                    Tooltip: =AppSettings.pageRibbon.View.quickview.tooltip
-                                    Visible: =AppSettings.pageRibbon.View.quickview.enabled
-                                    Width: =32
                   - conViewData:
                       Control: GroupContainer@1.5.0
                       Variant: AutoLayout
@@ -228,6 +183,7 @@ Screens:
                                           FontWeight: =FontWeight.Semibold
                                           LayoutMinHeight: =16
                                           LayoutMinWidth: =16
+                                          OnSelect: =
                                           PaddingBottom: =0
                                           PaddingLeft: =0
                                           PaddingRight: =0
@@ -303,13 +259,17 @@ Screens:
                               LayoutMinWidth: =16
                             Children:
                               - dgrDatagrid:
-                                  Control: ModernDataGrid@1.6.0
+                                  Control: ModernDataGrid@1.8.0
                                   Properties:
                                     Height: =Parent.Height
                                     Items: =nfInventory
                                     OnChange: |+
                                       =//Set(varViewPaneDetails, true);
-                                      Set(varSelectedItem, dgrDatagrid.Selected);
+                                          Set(varSelectedItem, dgrDatagrid.Selected);
+
+                                      // Set default value form Screen Form Quickselect Gallery
+                                          Set(varSelectedDefault, dgrDatagrid.Selected.id);
+
 
                                       Set(
                                           varInventoryDynamic,
@@ -324,13 +284,7 @@ Screens:
                                           )
                                       );
 
-                                      If( 
-
-                                          !varViewPaneDetails, 
-
-                                          Navigate('Screen Form');
-
-                                      );
+                                      Navigate('Screen Form')
 
                                     SelectMultiple: =false
                                     ShowSelector: =false
@@ -672,283 +626,6 @@ Screens:
                                     Size: =14
                                     Text: |
                                       ="Rows: 1000 / 1233"
-            - conPaneDetails:
-                Control: GroupContainer@1.5.0
-                Variant: AutoLayout
-                Properties:
-                  LayoutAlignItems: =LayoutAlignItems.Center
-                  LayoutDirection: =LayoutDirection.Vertical
-                  LayoutGap: =4
-                  LayoutMinHeight: =16
-                  LayoutMinWidth: =16
-                  PaddingBottom: =16
-                  PaddingTop: =8
-                  RadiusBottomLeft: =0
-                  RadiusBottomRight: =0
-                  RadiusTopLeft: =0
-                  RadiusTopRight: =0
-                  Visible: =varViewPaneDetails
-                Children:
-                  - conQuickviewHeader:
-                      Control: GroupContainer@1.5.0
-                      Variant: AutoLayout
-                      Properties:
-                        DropShadow: =DropShadow.None
-                        FillPortions: =0
-                        Height: =48
-                        LayoutAlignItems: =LayoutAlignItems.Center
-                        LayoutDirection: =LayoutDirection.Horizontal
-                        LayoutMinHeight: =16
-                        LayoutMinWidth: =16
-                        PaddingLeft: =16
-                        PaddingRight: =16
-                        RadiusBottomLeft: =0
-                        RadiusBottomRight: =0
-                        RadiusTopLeft: =0
-                        RadiusTopRight: =0
-                      Children:
-                        - Text1:
-                            Control: ModernText@1.0.0
-                            Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
-                              FillPortions: =1
-                              FontWeight: =FontWeight.Semibold
-                              LayoutMinHeight: =16
-                              LayoutMinWidth: =16
-                              PaddingBottom: =0
-                              PaddingLeft: =0
-                              PaddingRight: =0
-                              PaddingTop: =0
-                              Size: =20
-                              Text: =$"Quickview"
-                        - Button1:
-                            Control: ModernButton@1.0.0
-                            Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
-                              Appearance: =ButtonAppearance.Subtle
-                              Icon: ="Dismiss"
-                              Layout: =ButtonLayout.IconOnly
-                              LayoutMinHeight: =16
-                              LayoutMinWidth: =16
-                              OnSelect: =Set(varViewPaneDetails, false);
-                              Width: =24
-                  - recQuickviewDivider_General:
-                      Control: Rectangle@2.3.0
-                      Properties:
-                        AlignInContainer: =AlignInContainer.Stretch
-                        BorderColor: =RGBA(166, 166, 166, 1)
-                        BorderStyle: =BorderStyle.None
-                        DisabledFill: =RGBA(166, 166, 166, 1)
-                        Fill: |
-                          =ColorValue("#d2d2d2")
-                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
-                        Height: =1
-                        HoverFill: =RGBA(0, 120, 212, 1)
-                        LayoutMinHeight: =16
-                        LayoutMinWidth: =16
-                        PressedFill: =RGBA(0, 120, 212, 1)
-                  - conQuickviewWrapper:
-                      Control: GroupContainer@1.5.0
-                      Variant: AutoLayout
-                      Properties:
-                        DropShadow: =DropShadow.None
-                        LayoutAlignItems: =LayoutAlignItems.Center
-                        LayoutDirection: =LayoutDirection.Vertical
-                        LayoutMinHeight: =16
-                        LayoutMinWidth: =16
-                        LayoutOverflowY: =LayoutOverflow.Scroll
-                        PaddingBottom: =32
-                        PaddingLeft: =16
-                        PaddingRight: =16
-                        PaddingTop: =8
-                        RadiusBottomLeft: =0
-                        RadiusBottomRight: =0
-                        RadiusTopLeft: =0
-                        RadiusTopRight: =0
-                      Children:
-                        - conQuickview_General:
-                            Control: GroupContainer@1.5.0
-                            Variant: AutoLayout
-                            Properties:
-                              DropShadow: =DropShadow.None
-                              FillPortions: =0
-                              Height: =CountRows( Filter( colInventoryColumns, visible, section = "General") ) * 54 + 40 + Self.LayoutGap
-                              LayoutAlignItems: =LayoutAlignItems.Center
-                              LayoutDirection: =LayoutDirection.Vertical
-                              LayoutGap: =8
-                              LayoutMaxHeight: =
-                              LayoutMinHeight: =16
-                              LayoutMinWidth: =16
-                              LayoutOverflowY: =LayoutOverflow.Scroll
-                              RadiusBottomLeft: =0
-                              RadiusBottomRight: =0
-                              RadiusTopLeft: =0
-                              RadiusTopRight: =0
-                            Children:
-                              - lblQuickviewTitle_General:
-                                  Control: ModernText@1.0.0
-                                  Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Semibold
-                                    LayoutMinHeight: =16
-                                    LayoutMinWidth: =16
-                                    PaddingBottom: =0
-                                    PaddingLeft: =0
-                                    PaddingRight: =0
-                                    PaddingTop: =0
-                                    Size: =14
-                                    Text: ="GENERAL"
-                              - galQuickview_General:
-                                  Control: Gallery@2.15.0
-                                  Variant: Vertical
-                                  Properties:
-                                    BorderColor: =RGBA(166, 166, 166, 1)
-                                    FocusedBorderColor: =RGBA(0, 120, 212, 1)
-                                    FocusedBorderThickness: =2
-                                    Items: |-
-                                      =Sort(
-                                          Filter(
-                                              colInventoryColumns,
-                                              visible,
-                                              section = "General"
-                                          ),
-                                          order,
-                                          SortOrder.Ascending
-                                      )
-                                    LayoutMinWidth: =120
-                                    LoadingSpinner: =LoadingSpinner.None
-                                    TemplatePadding: =0
-                                    TemplateSize: =54
-                                  Children:
-                                    - lblQuickviewValue_General:
-                                        Control: ModernText@1.0.0
-                                        Properties:
-                                          Height: =24
-                                          OnSelect: =Select(Parent)
-                                          PaddingBottom: =0
-                                          PaddingLeft: =16
-                                          PaddingRight: =0
-                                          PaddingTop: =0
-                                          Size: =14
-                                          Text: |-
-                                            =If(
-                                                IsBlank(varInventoryDynamic),
-                                                Blank(),
-                                                Text(
-                                                    Column(
-                                                        varInventoryDynamic,
-                                                        ThisItem.column
-                                                    )
-                                                )
-                                            )
-                                          Width: =Parent.TemplateWidth
-                                          Wrap: =false
-                                          Y: =24
-                                    - lblQuickviewDisplayname_General:
-                                        Control: ModernText@1.0.0
-                                        Properties:
-                                          FontWeight: =FontWeight.Semibold
-                                          Height: =24
-                                          OnSelect: =Select(Parent)
-                                          PaddingBottom: =0
-                                          PaddingLeft: =0
-                                          PaddingRight: =0
-                                          PaddingTop: =0
-                                          Size: =14
-                                          Text: =ThisItem.displayname
-                                          Width: =Parent.TemplateWidth
-                        - conQuickview_Resource:
-                            Control: GroupContainer@1.5.0
-                            Variant: AutoLayout
-                            Properties:
-                              DropShadow: =DropShadow.None
-                              FillPortions: =0
-                              Height: =CountRows( Filter( colInventoryColumns, visible, section = "Resource") ) * 54 + 32 + Self.LayoutGap
-                              LayoutAlignItems: =LayoutAlignItems.Center
-                              LayoutDirection: =LayoutDirection.Vertical
-                              LayoutGap: =8
-                              LayoutMaxHeight: =
-                              LayoutMinHeight: =16
-                              LayoutMinWidth: =16
-                              LayoutOverflowY: =LayoutOverflow.Scroll
-                              PaddingRight: =16
-                              RadiusBottomLeft: =0
-                              RadiusBottomRight: =0
-                              RadiusTopLeft: =0
-                              RadiusTopRight: =0
-                            Children:
-                              - lblQuickviewTitle_Resouce:
-                                  Control: ModernText@1.0.0
-                                  Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Semibold
-                                    LayoutMinHeight: =16
-                                    LayoutMinWidth: =16
-                                    PaddingBottom: =0
-                                    PaddingLeft: =0
-                                    PaddingRight: =0
-                                    PaddingTop: =0
-                                    Size: =14
-                                    Text: ="RESOURCE"
-                              - galQuickview_Resource:
-                                  Control: Gallery@2.15.0
-                                  Variant: Vertical
-                                  Properties:
-                                    BorderColor: =RGBA(166, 166, 166, 1)
-                                    FocusedBorderColor: =RGBA(0, 120, 212, 1)
-                                    FocusedBorderThickness: =2
-                                    Items: |-
-                                      =Sort(
-                                          Filter(
-                                              colInventoryColumns,
-                                              visible,
-                                              section = "Resource"
-                                          ),
-                                          order,
-                                          SortOrder.Ascending
-                                      )
-                                    LayoutMinWidth: =120
-                                    LoadingSpinner: =LoadingSpinner.None
-                                    TemplatePadding: =0
-                                    TemplateSize: =54
-                                  Children:
-                                    - lblQuickviewValue_Resource:
-                                        Control: ModernText@1.0.0
-                                        Properties:
-                                          Height: =24
-                                          OnSelect: =Select(Parent)
-                                          PaddingBottom: =0
-                                          PaddingLeft: =16
-                                          PaddingRight: =0
-                                          PaddingTop: =0
-                                          Size: =14
-                                          Text: |-
-                                            =If(
-                                                IsBlank(varInventoryDynamic),
-                                                Blank(),
-                                                Text(
-                                                    Column(
-                                                        varInventoryDynamic,
-                                                        ThisItem.column
-                                                    )
-                                                )
-                                            )
-                                          Width: =Parent.TemplateWidth
-                                          Wrap: =false
-                                          Y: =24
-                                    - lblQuickviewDisplayname_Resource:
-                                        Control: ModernText@1.0.0
-                                        Properties:
-                                          FontWeight: =FontWeight.Semibold
-                                          Height: =24
-                                          OnSelect: =Select(Parent)
-                                          PaddingBottom: =0
-                                          PaddingLeft: =0
-                                          PaddingRight: =0
-                                          PaddingTop: =0
-                                          Size: =14
-                                          Text: =ThisItem.displayname
-                                          Width: =Parent.TemplateWidth
       - conOverlay:
           Control: GroupContainer@1.5.0
           Variant: ManualLayout
@@ -1046,6 +723,68 @@ Screens:
                         LayoutMinHeight: =16
                         LayoutMinWidth: =16
                         PressedFill: =RGBA(0, 120, 212, 1)
+                  - conPaneSaved_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =8
+                        Visible: =CountIf(nfInventoryQueries, true) > 0
+                      Children:
+                        - lblPaneSaved_Filter:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Text: ="Saved filters"
+                              Width: =90
+                        - cmbPaneSaved_Filter:
+                            Control: ModernCombobox@1.1.2
+                            Properties:
+                              FillPortions: =1
+                              InputTextPlaceholder: ="Select a saved filter"
+                              ItemDisplayText: =ThisItem.Name
+                              Items: ='Inventory Queries'
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnChange: |
+                                =If(
+                                    !IsBlank(cmbPaneSaved_Filter.Selected.Filter),
+                                    ClearCollect(
+                                        colInventoryFilter,
+                                            ParseJSON(cmbPaneSaved_Filter.Selected.Filter, FilterType) 
+                                    )
+                                )
+                              SelectMultiple: =false
+                  - recPaneTabs_Filter:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
                   - conPaneTabs_Filter:
                       Control: GroupContainer@1.5.0
                       Variant: AutoLayout
@@ -1080,7 +819,7 @@ Screens:
                               PaddingLeft: =0
                               PaddingRight: =0
                               PaddingTop: =0
-                              Size: =14
+                              Size: =13
                               Text: ="Filter"
                               Width: =90
                         - Button2_1:
@@ -1097,7 +836,7 @@ Screens:
                               PaddingLeft: =0
                               PaddingRight: =0
                               PaddingTop: =0
-                              Size: =14
+                              Size: =13
                               Text: ="JSON"
                               Width: =86
                         - Button2_2:
@@ -1114,10 +853,44 @@ Screens:
                               PaddingLeft: =0
                               PaddingRight: =0
                               PaddingTop: =0
-                              Size: =14
+                              Size: =13
                               Text: ="KQL"
                               Width: =86
-                  - recPaneTabs_Filter:
+                        - Button2_3:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Transparent
+                              FontWeight: =FontWeight.Normal
+                              Height: =24
+                              Icon: ="Save"
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: =Set(varViewPaneFilterTab, "KQL");
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Text: ="Save query"
+                              Width: =110
+                        - Button2_4:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Transparent
+                              FontWeight: =FontWeight.Normal
+                              Height: =24
+                              Icon: ="ArrowReset"
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: =Set(varViewPaneFilterTab, "KQL");
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Text: ="Reset filters"
+                              Width: =110
+                  - recPaneTabs_Filter_1:
                       Control: Rectangle@2.3.0
                       Properties:
                         AlignInContainer: =AlignInContainer.Stretch
@@ -1292,7 +1065,9 @@ Screens:
                                                       {
                                                           enabled: true
                                                       }
-                                                  )
+                                                  );
+
+                                                  Set(varInventoryFilterIsChanged, true);
                                                 OnUncheck: |-
                                                   =Patch(  
                                                       colInventoryFilter,
@@ -1300,7 +1075,9 @@ Screens:
                                                       {
                                                           enabled: false
                                                       }
-                                                  )
+                                                  );
+
+                                                  Set(varInventoryFilterIsChanged, true);
                                                 Width: =32
                                           - cmbFilterRowField:
                                               Control: ModernCombobox@1.1.2
@@ -1325,6 +1102,8 @@ Screens:
                                                   );
 
                                                   Reset(cmbFilterRowOperator);
+
+                                                  Set(varInventoryFilterIsChanged, true);
                                                 RadiusBottomLeft: =0
                                                 RadiusBottomRight: =0
                                                 RadiusTopLeft: =0
@@ -1352,7 +1131,7 @@ Screens:
                                                   )
                                                 LayoutMinHeight: =16
                                                 LayoutMinWidth: =16
-                                                OnChange: |+
+                                                OnChange: |-
                                                   =Patch(  
                                                       colInventoryFilter,
                                                       ThisItem,
@@ -1361,6 +1140,7 @@ Screens:
                                                       }
                                                   ); 
 
+                                                  Set(varInventoryFilterIsChanged, true);
                                                 RadiusBottomLeft: =0
                                                 RadiusBottomRight: =0
                                                 RadiusTopLeft: =0
@@ -1429,7 +1209,9 @@ Screens:
                                                             {
                                                                 value: Self.Text
                                                             }
-                                                        )
+                                                        );
+
+                                                        Set(varInventoryFilterIsChanged, true);
                                                       RadiusBottomLeft: =0
                                                       RadiusBottomRight: =0
                                                       RadiusTopLeft: =0
@@ -1460,7 +1242,10 @@ Screens:
                                                 Layout: =ButtonLayout.IconOnly
                                                 LayoutMinHeight: =16
                                                 LayoutMinWidth: =16
-                                                OnSelect: =RemoveIf(colInventoryFilter, id = ThisItem.id)
+                                                OnSelect: |-
+                                                  =RemoveIf(colInventoryFilter, id = ThisItem.id);
+
+                                                  Set(varInventoryFilterIsChanged, true);
                                                 Width: =32
                         - Container3:
                             Control: GroupContainer@1.5.0
@@ -1504,7 +1289,9 @@ Screens:
                                               id: GUID(),
                                               enabled: true
                                           }
-                                      )
+                                      ); 
+
+                                      Set(varInventoryFilterIsChanged, true);
                                     Text: ="Add"
                   - conPaneJSON_Filter:
                       Control: GroupContainer@1.5.0
@@ -1653,20 +1440,36 @@ Screens:
                         LayoutMinHeight: =16
                         LayoutMinWidth: =16
                         PaddingBottom: =8
-                        PaddingLeft: =8
-                        PaddingRight: =8
+                        PaddingLeft: =16
+                        PaddingRight: =16
                         PaddingTop: =8
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                       Children:
+                        - btnPaneFooterSaveApply_Filter:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =
+
+
+                                // Reset indicator for made changes in saved filter
+                                    Set(varInventoryFilterIsChanged, false);
+                              Size: =13
+                              Text: ="Save & Apply"
+                              Visible: =!IsEmpty( cmbPaneSaved_Filter.SelectedItems )
+                              Width: =110
                         - btnPaneFooterApply_Filter:
                             Control: ModernButton@1.0.0
                             Properties:
                               LayoutMinHeight: =16
                               LayoutMinWidth: =16
                               OnSelect: "=Set(varQbReady, false);\r\nSet(varQbKql, Blank());\r\nSet(varQbClausesJson, Blank());\r\nSet(varQbTransportJson, Blank());\r\nSet(varQbSnapshot, Blank());\r\nSet(varQbToday, Today());\r\n\r\nSet(\r\n    varQbRules,\r\n    IfError(\r\n        ForAll(\r\n            Filter(colInventoryFilter, enabled) As f,\r\n            With(\r\n                {\r\n                    fld: LookUp(colInventoryColumns As c, c.FieldName = f.field.FieldName),\r\n                    op: LookUp(colInventoryOperators As o, o.Operator = f.operator.Operator),\r\n                    parsedDate: IfError(DateValue(f.value, \"en-US\"), Blank())\r\n                },\r\n                {\r\n                    Id: f.id,\r\n                    FieldName: fld.FieldName,\r\n                    FieldType: fld.FieldType,\r\n                    Operator: op.Operator,\r\n                    QueryOperator: op.QueryOperator,\r\n                    RawValue: f.value,\r\n                    Day: If(\r\n                        fld.FieldType = \"DateTime\",\r\n                        Switch(\r\n                            op.Operator,\r\n                            \"Yesterday\", DateAdd(varQbToday, -1, TimeUnit.Days),\r\n                            \"Today\", varQbToday,\r\n                            \"Tomorrow\", DateAdd(varQbToday, 1, TimeUnit.Days),\r\n                            parsedDate\r\n                        ),\r\n                        Blank()\r\n                    ),\r\n                    Valid:\r\n                        !IsBlank(fld.FieldName) &&\r\n                        !IsBlank(op.Operator) &&\r\n                        (fld.FieldType in op.FieldTypes) &&\r\n                        If(\r\n                            fld.FieldType = \"DateTime\",\r\n                            (op.Operator in [\"On\", \"OnOrAfter\", \"OnOrBefore\", \"Yesterday\", \"Today\", \"Tomorrow\"]) &&\r\n                            (\r\n                                (op.Operator in [\"Yesterday\", \"Today\", \"Tomorrow\"]) ||\r\n                                (\r\n                                    !IsBlank(parsedDate) &&\r\n                                    Text(parsedDate, \"yyyy-mm-dd\", \"en-US\") = f.value\r\n                                )\r\n                            ),\r\n                            (fld.FieldType in [\"String\", \"LookUp\"]) &&\r\n                            !IsBlank(Trim(f.value)) &&\r\n                            !IsMatch(f.value, \"[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F]\", MatchOptions.Contains) &&\r\n                            (op.QueryOperator in [\"==\", \"!=\", \"contains\", \"!contains\", \"startswith\", \"!startswith\", \"endswith\", \"!endswith\"])\r\n                        )\r\n                }\r\n            )\r\n        ),\r\n        Notify(\"Filterregels verwerken mislukt: \" & FirstError.Message, NotificationType.Error);\r\n        Blank()\r\n    )\r\n);\r\n\r\nIf(\r\n    IsBlank(varQbRules),\r\n    false,\r\n    IsEmpty(varQbRules),\r\n    Notify(\"Voeg ten minste één actief filter toe.\", NotificationType.Error);\r\n    false,\r\n    !IsEmpty(Filter(varQbRules, !Valid)),\r\n    Notify(\"Controleer veld, operator en waarde van de actieve filters.\", NotificationType.Error);\r\n    false,\r\n\r\n    Set(\r\n        varQbExtends,\r\n        IfError(\r\n            ForAll(\r\n                Filter(\r\n                    colInventoryColumns As column,\r\n                    !IsBlank(column.ExtendExpression) &&\r\n                    !IsBlank(LookUp(varQbRules As r, r.FieldName = column.FieldName))\r\n                ) As selectedColumn,\r\n                {\r\n                    FieldName: selectedColumn.FieldName,\r\n                    Expression: selectedColumn.ExtendExpression\r\n                }\r\n            ),\r\n            Notify(\"Veldexpressies verwerken mislukt: \" & FirstError.Message, NotificationType.Error);\r\n            Blank()\r\n        )\r\n    );\r\n    If(\r\n        !IsBlank(varQbExtends),\r\n        Set(\r\n            varQbInitOk,\r\n            IfError(\r\n                ClearCollect(\r\n                    colQbTerms,\r\n                    Filter(\r\n                        Table({ FieldName: \"\", QueryOperator: \"\", ValueType: \"\", RawValue: \"\", KqlLiteral: \"\" }),\r\n                        false\r\n                    )\r\n                ),\r\n                Notify(\"Queryvoorwaarden initialiseren mislukt: \" & FirstError.Message, NotificationType.Error);\r\n                false,\r\n                true\r\n            )\r\n        );\r\n        If(\r\n            varQbInitOk,\r\n            Set(\r\n                varQbTermsOk,\r\n                IfError(\r\n                    ForAll(\r\n                        varQbRules As r,\r\n                        If(\r\n                            r.FieldType = \"DateTime\",\r\n                            With(\r\n                                {\r\n                                    d0: r.Day,\r\n                                    d1: DateAdd(r.Day, 1, TimeUnit.Days)\r\n                                },\r\n                                With(\r\n                                    {\r\n                                        t0: Text(d0, DateTimeFormat.UTC),\r\n                                        t1: Text(d1, DateTimeFormat.UTC)\r\n                                    },\r\n                                    Switch(\r\n                                        r.Operator,\r\n                                        \"OnOrAfter\",\r\n                                        Collect(colQbTerms, {\r\n                                            FieldName: r.FieldName, QueryOperator: \">=\",\r\n                                            ValueType: \"DateTime\", RawValue: t0,\r\n                                            KqlLiteral: \"datetime(\" & t0 & \")\"\r\n                                        }),\r\n                                        \"OnOrBefore\",\r\n                                        Collect(colQbTerms, {\r\n                                            FieldName: r.FieldName, QueryOperator: \"<\",\r\n                                            ValueType: \"DateTime\", RawValue: t1,\r\n                                            KqlLiteral: \"datetime(\" & t1 & \")\"\r\n                                        }),\r\n                                        Collect(\r\n                                            colQbTerms,\r\n                                            {\r\n                                                FieldName: r.FieldName, QueryOperator: \">=\",\r\n                                                ValueType: \"DateTime\", RawValue: t0,\r\n                                                KqlLiteral: \"datetime(\" & t0 & \")\"\r\n                                            },\r\n                                            {\r\n                                                FieldName: r.FieldName, QueryOperator: \"<\",\r\n                                                ValueType: \"DateTime\", RawValue: t1,\r\n                                                KqlLiteral: \"datetime(\" & t1 & \")\"\r\n                                            }\r\n                                        )\r\n                                    )\r\n                                )\r\n                            ),\r\n                            With(\r\n                                { encoded: JSON(r.RawValue, JSONFormat.Compact) },\r\n                                Collect(\r\n                                    colQbTerms,\r\n                                    {\r\n                                        FieldName: r.FieldName,\r\n                                        QueryOperator: r.QueryOperator,\r\n                                        ValueType: \"String\",\r\n                                        RawValue: r.RawValue,\r\n                                        KqlLiteral:\r\n                                            Char(39) &\r\n                                            Substitute(\r\n                                                Substitute(\r\n                                                    Mid(encoded, 2, Len(encoded) - 2),\r\n                                                    Char(92) & Char(34),\r\n                                                    Char(34)\r\n                                                ),\r\n                                                Char(39),\r\n                                                Char(92) & Char(39)\r\n                                            ) &\r\n                                            Char(39)\r\n                                    }\r\n                                )\r\n                            )\r\n                        )\r\n                    ),\r\n                    Notify(\"Queryvoorwaarden bouwen mislukt: \" & FirstError.Message, NotificationType.Error);\r\n                    false,\r\n                    true\r\n                )\r\n            );\r\n            If(\r\n                varQbTermsOk,\r\n                If(\r\n                    IsEmpty(colQbTerms),\r\n                    Notify(\"Er zijn geen queryvoorwaarden gemaakt.\", NotificationType.Error),\r\n\r\n                    Set(\r\n                        varQbKql,\r\n                        IfError(\r\n                            \"PowerPlatformResources\" &\r\n                            Char(10) &\r\n                            \"| where type == '\" & varResourceType & \"'\" &\r\n                            Concat(\r\n                                varQbExtends As e,\r\n                                Char(10) &\r\n                                \"| extend \" & e.FieldName & \" = \" & e.Expression\r\n                            ) &\r\n                            Concat(\r\n                                colQbTerms As t,\r\n                                Char(10) &\r\n                                \"| where \" & t.FieldName & \" \" &\r\n                                t.QueryOperator & \" \" & t.KqlLiteral\r\n                            ),\r\n                            Notify(\r\n                                \"KQL bouwen mislukt: \" & FirstError.Message,\r\n                                NotificationType.Error\r\n                            );\r\n                            Blank()\r\n                        )\r\n                    );\r\n\r\n                    Set(\r\n                        varQbClausesJson,\r\n                        IfError(\r\n                            \"[\" &\r\n                            JSON(\r\n                                {\r\n                                    '$type': \"where\",\r\n                                    FieldName: \"type\",\r\n                                    Operator: \"==\",\r\n                                    Values: [\"'microsoft.powerautomate/cloudflows'\"]\r\n                                },\r\n                                JSONFormat.FlattenValueTables\r\n                            ) &\r\n                            Concat(\r\n                                varQbExtends As e,\r\n                                \",\" &\r\n                                JSON(\r\n                                    {\r\n                                        '$type': \"extend\",\r\n                                        FieldName: e.FieldName,\r\n                                        Expression: e.Expression\r\n                                    },\r\n                                    JSONFormat.Compact\r\n                                )\r\n                            ) &\r\n                            Concat(\r\n                                colQbTerms As t,\r\n                                \",\" &\r\n                                JSON(\r\n                                    {\r\n                                        '$type': \"where\",\r\n                                        FieldName: t.FieldName,\r\n                                        Operator: t.QueryOperator,\r\n                                        Values: [t.KqlLiteral]\r\n                                    },\r\n                                    JSONFormat.FlattenValueTables\r\n                                )\r\n                            ) &\r\n                            \"]\",\r\n                            Notify(\r\n                                \"Clauses maken mislukt: \" & FirstError.Message,\r\n                                NotificationType.Error\r\n                            );\r\n                            Blank()\r\n                        )\r\n                    );\r\n\r\n                    Set(\r\n                        varQbTransportJson,\r\n                        IfError(\r\n                            \"[\" &\r\n                            JSON(\r\n                                {\r\n                                    FieldName: \"type\",\r\n                                    Operator: \"==\",\r\n                                    ValueType: \"String\",\r\n                                    Value: \"microsoft.powerautomate/cloudflows\"\r\n                                },\r\n                                JSONFormat.Compact\r\n                            ) &\r\n                            Concat(\r\n                                colQbTerms As t,\r\n                                \",\" &\r\n                                JSON(\r\n                                    {\r\n                                        FieldName: t.FieldName,\r\n                                        Operator: t.QueryOperator,\r\n                                        ValueType: t.ValueType,\r\n                                        Value: t.RawValue\r\n                                    },\r\n                                    JSONFormat.Compact\r\n                                )\r\n                            ) &\r\n                            \"]\",\r\n                            Notify(\r\n                                \"Flow-invoer maken mislukt: \" & FirstError.Message,\r\n                                NotificationType.Error\r\n                            );\r\n                            Blank()\r\n                        )\r\n                    );\r\n\r\n                    Set(\r\n                        varQbSnapshot,\r\n                        IfError(\r\n                            JSON(\r\n                                ForAll(\r\n                                    colInventoryFilter As f,\r\n                                    {\r\n                                        Id: Text(f.id),\r\n                                        FieldName: f.field.FieldName,\r\n                                        Operator: f.operator.Operator,\r\n                                        Value: f.value,\r\n                                        Enabled: f.enabled\r\n                                    }\r\n                                ),\r\n                                JSONFormat.Compact\r\n                            ),\r\n                            Notify(\"Filterstatus bewaren mislukt: \" & FirstError.Message, NotificationType.Error);\r\n                            Blank()\r\n                        )\r\n                    );\r\n                    \r\n                    Set(\r\n                        varQbReady,\r\n                        !IsBlank(varQbKql) &&\r\n                        !IsBlank(varQbClausesJson) &&\r\n                        !IsBlank(varQbTransportJson) &&\r\n                        !IsBlank(varQbSnapshot)\r\n                    );\r\n                    If(\r\n                        !varQbReady,\r\n                        Set(varQbKql, Blank());\r\n                        Set(varQbClausesJson, Blank());\r\n                        Set(varQbTransportJson, Blank())\r\n                    )\r\n                )\r\n            )\r\n        )\r\n    )\r\n);\r\n\r\n\r\n\r\n// Run flow!\r\n\r\nSet(\r\n    varQbCurrentSnapshot,\r\n    IfError(\r\n        JSON(\r\n            ForAll(\r\n                colInventoryFilter As f,\r\n                {\r\n                    Id: Text(f.id),\r\n                    FieldName: f.field.FieldName,\r\n                    Operator: f.operator.Operator,\r\n                    Value: f.value,\r\n                    Enabled: f.enabled\r\n                }\r\n            ),\r\n            JSONFormat.Compact\r\n        ),\r\n        Notify(\"Filterstatus controleren mislukt: \" & FirstError.Message, NotificationType.Error);\r\n        Blank()\r\n    )\r\n);\r\nIf(\r\n    IsBlank(varQbCurrentSnapshot),\r\n    false,\r\n    !varQbReady || varQbCurrentSnapshot <> varQbSnapshot || varQbToday <> Today(),\r\n    Set(varQbReady, false);\r\n    Notify(\"De filters of kalenderdag zijn gewijzigd. Bouw de query opnieuw.\", NotificationType.Error),\r\n\r\n    Set(varQbFlowFailed, false);\r\n    Set(\r\n        varQbFlowResult,\r\n        IfError(\r\n\r\n            Set(\r\n                varInventory,\r\n                ParseInventory(\r\n                    'PPAT-SearchInventory'.Run(varQbClausesJson).data\r\n                )\r\n            ),\r\n\r\n            Set(varQbFlowFailed, true);\r\n            Notify(\"Flow aanroepen mislukt: \" & FirstError.Message, NotificationType.Error);\r\n            Blank()\r\n        )\r\n    );\r\n\r\n)\r\n\r\n"
+                              Size: =13
                               Text: ="Apply"
                         - btnPaneFooterCancel_Filter:
                             Control: ModernButton@1.0.0
@@ -1677,6 +1480,7 @@ Screens:
                               OnSelect: |-
                                 =Set(varViewOverlay, false);
                                 Set(varViewPaneFilter, false);
+                              Size: =13
                               Text: ="Cancel"
             - conPane_Columns:
                 Control: GroupContainer@1.5.0

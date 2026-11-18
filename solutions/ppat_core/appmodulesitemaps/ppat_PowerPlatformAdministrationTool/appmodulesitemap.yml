@@ -5,41 +5,174 @@ AppModuleSiteMap:
   ShowPinned: True
   ShowRecents: True
   SiteMap:
-    "@IntroducedVersion": 7.0.0.0
+    '@IntroducedVersion': 7.0.0.0
     Area:
-      "@Id": area_4dbb72c4
-      "@ResourceId": SitemapDesigner.NewTitle
-      "@DescriptionResourceId": SitemapDesigner.NewTitle
-      "@ShowGroups": true
-      "@IntroducedVersion": 7.0.0.0
+      '@Id': area_4dbb72c4
+      '@ResourceId': SitemapDesigner.NewTitle
+      '@DescriptionResourceId': SitemapDesigner.NewTitle
+      '@ShowGroups': true
+      '@IntroducedVersion': 7.0.0.0
       Titles:
         Title:
-          "@LCID": 1033
-          "@Title": Area1
+          '@LCID': 1033
+          '@Title': Area1
       Group:
-        "@Id": group_inventory
-        "@ResourceId": SitemapDesigner.NewGroup
-        "@DescriptionResourceId": SitemapDesigner.NewGroup
-        "@IntroducedVersion": 7.0.0.0
-        "@IsProfile": false
-        "@ToolTipResourseId": SitemapDesigner.Unknown
+        '@Id': group_inventory
+        '@ResourceId': SitemapDesigner.NewGroup
+        '@DescriptionResourceId': SitemapDesigner.NewGroup
+        '@IntroducedVersion': 7.0.0.0
+        '@IsProfile': false
+        '@ToolTipResourseId': SitemapDesigner.Unknown
         Titles:
           Title:
-            "@LCID": 1033
-            "@Title": Inventory
+            '@LCID': 1033
+            '@Title': Inventory
         SubArea:
-          "@Id": subarea_7e18599c
-          "@Icon": /_imgs/imagestrips/transparent_spacer.gif
-          "@Client": All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
-          "@AvailableOffline": true
-          "@PassParams": false
-          "@Sku": All,OnPremise,Live,SPLA
-          "@Page": ppat_invcloudflows_9fc3d
+        - '@Id': subarea_e5170d4d
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Canvas%20apps
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
           Titles:
             Title:
-              "@LCID": 1033
-              "@Title": Cloud Flows
+              '@LCID': 1033
+              '@Title': Canvas Apps
+        - '@Id': subarea_812863e6
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Model-driven%20apps
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': Model-driven apps
+        - '@Id': subarea_88a79b20
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Code%20apps
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': Code apps
+        - '@Id': subarea_f0015c2c
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Managed%20apps
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': Managed apps
+        - '@Id': subarea_29cff5b6
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Cloud%20flows
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': Cloud Flows
+        - '@Id': subarea_9e53a1c0
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Agent%20flows
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': Agent flows
+        - '@Id': subarea_b8813538
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Workflow%20agent%20flows
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': Workflow agent flows
+        - '@Id': subarea_89373aef
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Copilot%20Studio%20agents
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': Copilot Studio agents
+        - '@Id': subarea_a70d195b
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Power%20Pages%20sites
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': Power Pages sites
+        - '@Id': subarea_625e5e70
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Connectors
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': Connectors
+        - '@Id': subarea_4553ee2d
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Environments
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': Environments
+        - '@Id': subarea_0bc71ea5
+          '@ResourceId': SitemapDesigner.NewSubArea
+          '@Icon': /_imgs/imagestrips/transparent_spacer.gif
+          '@Url': /main.aspx?apname=ppat_PowerPlatformAdministrationTool&pagetype=custom&name=ppat_ppatresources_2c91b&etn=Environment%20groups
+          '@Client': All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web
+          '@AvailableOffline': true
+          '@PassParams': false
+          '@Sku': All,OnPremise,Live,SPLA
+          Titles:
+            Title:
+              '@LCID': 1033
+              '@Title': Environments groups
   LocalizedNames:
     LocalizedName:
-      "@description": Power Platform Administration Tool
-      "@languagecode": 1033
+      '@description': Power Platform Administration Tool
+      '@languagecode': 1033

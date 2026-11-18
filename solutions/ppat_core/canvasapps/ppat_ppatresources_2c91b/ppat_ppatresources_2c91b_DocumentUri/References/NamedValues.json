@@ -1,0 +1,59 @@
+{
+  "NamedValues": [
+    {
+      "Name": "PPAT - Template",
+      "Value": "custompage:ppat_ppattemplate_97904",
+      "Kind": "Page"
+    },
+    {
+      "Name": "INV - Apps",
+      "Value": "custompage:ppat_invapps_658f9",
+      "Kind": "Page"
+    },
+    {
+      "Name": "INV - Environments",
+      "Value": "custompage:ppat_invenvironments_e3770",
+      "Kind": "Page"
+    },
+    {
+      "Name": "INV - Environments Groups",
+      "Value": "custompage:ppat_invenvironmentsgroups_cadbc",
+      "Kind": "Page"
+    },
+    {
+      "Name": "INV - Solutions",
+      "Value": "custompage:ppat_invsolutions_8d8c9",
+      "Kind": "Page"
+    },
+    {
+      "Name": "INV - Agents",
+      "Value": "custompage:ppat_invagents_ebc95",
+      "Kind": "Page"
+    },
+    {
+      "Name": "INV - Connectors",
+      "Value": "custompage:ppat_invconnectors_7b890",
+      "Kind": "Page"
+    },
+    {
+      "Name": "INV - Flows",
+      "Value": "custompage:ppat_invflows_e8008",
+      "Kind": "Page"
+    },
+    {
+      "Name": "INV - Power Pages",
+      "Value": "custompage:ppat_invpowerpages_65108",
+      "Kind": "Page"
+    },
+    {
+      "Name": "INV - Cloud Flows",
+      "Value": "custompage:ppat_invcloudflows_9fc3d",
+      "Kind": "Page"
+    },
+    {
+      "Name": "PPAT - Resources",
+      "Value": "custompage:ppat_ppatresources_2c91b",
+      "Kind": "Page"
+    }
+  ]
+}

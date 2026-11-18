@@ -1,0 +1,1923 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Screen View:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+    Children:
+      - conWrapper_View:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Horizontal
+            Width: =Parent.Width
+          Children:
+            - conView:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =ColorValue("#fafafa")
+                  FillPortions: =3
+                  Height: =Parent.Height
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =8
+                  PaddingBottom: =16
+                  PaddingLeft: =8
+                  PaddingRight: =16
+                  PaddingTop: =8
+                  Width: =Parent.Width
+                Children:
+                  - conRibbonView:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.Semilight
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =48
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                      Children:
+                        - conRibbonButtons_View:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              Width: =330
+                            Children:
+                              - btnRibbonBack_View:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    AccessibleLabel: ="Back"
+                                    Appearance: =ButtonAppearance.Subtle
+                                    DisplayMode: =DisplayMode.Disabled
+                                    Icon: ="ArrowLeft"
+                                    Layout: =ButtonLayout.IconOnly
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingBottom: =2
+                                    PaddingLeft: =2
+                                    PaddingRight: =2
+                                    PaddingTop: =2
+                                    Size: =14
+                                    Text: ="New"
+                                    Tooltip: =AppSettings.pageRibbon.View.back.tooltip
+                                    Visible: =AppSettings.pageRibbon.View.back.enabled
+                                    Width: =40
+                              - recRibbonDivider_View:
+                                  Control: Rectangle@2.3.0
+                                  Properties:
+                                    BorderColor: =RGBA(166, 166, 166, 1)
+                                    BorderStyle: =BorderStyle.None
+                                    BorderThickness: =2
+                                    DisabledFill: =RGBA(166, 166, 166, 1)
+                                    Fill: =ColorValue("#d1d1d1")
+                                    FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                                    Height: =24
+                                    HoverFill: =RGBA(0, 120, 212, 1)
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PressedFill: =RGBA(0, 120, 212, 1)
+                                    Width: =1
+                              - btnRibbonRefresh_View:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    AccessibleLabel: ="Refresh"
+                                    Appearance: =ButtonAppearance.Subtle
+                                    Icon: ="ArrowClockwise"
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    Size: =14
+                                    Text: ="Refresh"
+                                    Tooltip: =AppSettings.pageRibbon.View.refresh.tooltip
+                                    Visible: =AppSettings.pageRibbon.View.refresh.enabled
+                                    Width: =100
+                              - conRibbonFiller_View:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingBottom: =8
+                                    PaddingLeft: =8
+                                    PaddingRight: =8
+                                    PaddingTop: =8
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                  - conViewData:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.Semilight
+                        Fill: =RGBA(255, 255, 255, 1)
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =8
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =24
+                        PaddingRight: =24
+                        PaddingTop: =8
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                      Children:
+                        - conViewHeader:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =48
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                            Children:
+                              - conViewHeaderOptions:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =8
+                                    LayoutJustifyContent: =LayoutJustifyContent.End
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                  Children:
+                                    - Text3_1:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Semibold
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          OnSelect: =
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =20
+                                          Text: =varResource
+                                    - btnViewEditColumns:
+                                        Control: ModernButton@1.0.0
+                                        Properties:
+                                          Appearance: =ButtonAppearance.Subtle
+                                          FontWeight: =FontWeight.Normal
+                                          Icon: ="Settings"
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          OnSelect: |-
+                                            =Set(varViewOverlay, true);
+                                            Set(varViewPaneColumns, true);
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          Size: =14
+                                          Text: ="Edit columns"
+                                          Width: =120
+                                    - btnViewEditFilters:
+                                        Control: ModernButton@1.0.0
+                                        Properties:
+                                          Appearance: =ButtonAppearance.Subtle
+                                          FontWeight: =FontWeight.Normal
+                                          Icon: ="Filter"
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          OnSelect: |-
+                                            =Set(varViewOverlay, true);
+                                            Set(varViewPaneFilter, true);
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          Size: =14
+                                          Text: ="Edit filters"
+                                          Width: =110
+                                    - conViewSearch:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: ManualLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          FillPortions: =0
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          Width: =220
+                                        Children:
+                                          - txtViewSearch:
+                                              Control: ModernTextInput@1.1.2
+                                              Properties:
+                                                Appearance: =Appearance.Outline
+                                                BorderColor: =ColorValue("#616161")
+                                                PaddingLeft: =24
+                                                Placeholder: ="Filter by keyword"
+                                                Width: =Parent.Width
+                                                Y: =8
+                                          - icoViewSearch:
+                                              Control: ModernIcon@1.1.1
+                                              Properties:
+                                                Height: =24
+                                                Icon: ="Search"
+                                                IconColor: =ColorValue("#616161")
+                                                Width: =24
+                                                X: =8
+                                                Y: =12
+                        - conViewDatagrid:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                            Children:
+                              - dgrDatagrid:
+                                  Control: ModernDataGrid@1.8.0
+                                  Properties:
+                                    Height: =Parent.Height
+                                    Items: =nfInventory
+                                    OnChange: |+
+                                      =//Set(varViewPaneDetails, true);
+                                          Set(varSelectedItem, dgrDatagrid.Selected);
+
+                                      // Set default value form Screen Form Quickselect Gallery
+                                          Set(varSelectedDefault, dgrDatagrid.Selected.id);
+
+
+                                      Set(
+                                          varInventoryDynamic,
+                                          ParseJSON(
+                                              JSON(
+                                                  LookUp(
+                                                      nfInventory As resource,
+                                                      resource.id = dgrDatagrid.Selected.id
+                                                  ),
+                                                  JSONFormat.Compact
+                                              )
+                                          )
+                                      );
+
+                                      Navigate('Screen Form')
+
+                                    SelectMultiple: =false
+                                    ShowSelector: =false
+                                    Width: =Parent.Width
+                                  Children:
+                                    - colTriggerOperationId:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "triggerOperationId", displayname)
+                                          FieldName: ="triggerOperationId"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.triggerOperationId
+                                          Visible: =LookUp(colInventoryColumns, column = "triggerOperationId", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "triggerOperationId", width)
+                                    - colTriggerOperationDisplayName:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "triggerOperationDisplayName", displayname)
+                                          FieldName: ="triggerOperationDisplayName"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.triggerOperationDisplayName
+                                          Visible: =LookUp(colInventoryColumns, column = "triggerOperationDisplayName", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "triggerOperationDisplayName", width)
+                                    - colTriggerCount:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Number
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "triggerCount", displayname)
+                                          FieldName: ="triggerCount"
+                                          FieldVariantName: ="numberColumn"
+                                          Value: =ThisItem.triggerCount
+                                          Visible: =LookUp(colInventoryColumns, column = "triggerCount", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "triggerCount", width)
+                                    - colTriggerConnectorId:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "triggerConnectorId", displayname)
+                                          FieldName: ="triggerConnectorId"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.triggerConnectorId
+                                          Visible: =LookUp(colInventoryColumns, column = "triggerConnectorId", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "triggerConnectorId", width)
+                                    - colTriggerConnectorDisplayName:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "triggerConnectorDisplayName", displayname)
+                                          FieldName: ="triggerConnectorDisplayName"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.triggerConnectorDisplayName
+                                          Visible: =LookUp(colInventoryColumns, column = "triggerConnectorDisplayName", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "triggerConnectorDisplayName", width)
+                                    - colPropOwnerId:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "propOwnerId", displayname)
+                                          FieldName: ="propOwnerId"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.propOwnerIdUser
+                                          Visible: =LookUp(colInventoryColumns, column = "propOwnerId", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "propOwnerId", width)
+                                    - colPropEnvironmentId:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Url
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "propEnvironmentId", displayname)
+                                          FieldName: ="propEnvironmentId"
+                                          FieldVariantName: ="urlColumn"
+                                          Text: =ThisItem.propEnvironmentId
+                                          URL: ="https://nu.nl"
+                                          Visible: =LookUp(colInventoryColumns, column = "propEnvironmentId", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "propEnvironmentId", width)
+                                    - colPropWorkflowEntityId:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "propWorkflowEntityId", displayname)
+                                          FieldName: ="propWorkflowEntityId"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.propWorkflowEntityId
+                                          Visible: =LookUp(colInventoryColumns, column = "propWorkflowEntityId", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "propWorkflowEntityId", width)
+                                    - colSubscriptionId:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "subscriptionId", displayname)
+                                          FieldName: ="subscriptionId"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.subscriptionId
+                                          Visible: =LookUp(colInventoryColumns, column = "subscriptionId", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "subscriptionId", width)
+                                    - colPropCreatedAt:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "propCreatedAt", displayname)
+                                          FieldName: ="propCreatedAt"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.propCreatedAt
+                                          Visible: =LookUp(colInventoryColumns, column = "propCreatedAt", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "propCreatedAt", width)
+                                    - colConnectorIds:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "connectorIds", displayname)
+                                          FieldName: ="connectorIds"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.connectorIds
+                                          Visible: =LookUp(colInventoryColumns, column = "connectorIds", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "connectorIds", width)
+                                    - colType:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "type", displayname)
+                                          FieldName: ="type"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.type
+                                          Visible: =LookUp(colInventoryColumns, column = "type", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "type", width)
+                                    - colResourceGroup:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "resourceGroup", displayname)
+                                          FieldName: ="resourceGroup"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.resourceGroup
+                                          Visible: =LookUp(colInventoryColumns, column = "resourceGroup", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "resourceGroup", width)
+                                    - colTenantId:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "tenantId", displayname)
+                                          FieldName: ="tenantId"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.tenantId
+                                          Visible: =LookUp(colInventoryColumns, column = "tenantId", visible)
+                                    - colName:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "name", displayname)
+                                          FieldName: ="name"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.name
+                                          Visible: =LookUp(colInventoryColumns, column = "name", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "name", width)
+                                    - colManagedBy:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "managedBy", displayname)
+                                          FieldName: ="managedBy"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.managedBy
+                                          Visible: =LookUp(colInventoryColumns, column = "managedBy", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "managedBy", width)
+                                    - colLocation:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "location", displayname)
+                                          FieldName: ="location"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.location
+                                          Visible: =LookUp(colInventoryColumns, column = "location", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "location", width)
+                                    - colKind:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "kind", displayname)
+                                          FieldName: ="kind"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.kind
+                                          Visible: =LookUp(colInventoryColumns, column = "kind", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "kind", width)
+                                    - colId:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "id", displayname)
+                                          FieldName: ="id"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.id
+                                          Visible: =LookUp(colInventoryColumns, column = "id", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "id", width)
+                                    - colOperationCount:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Number
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "operationCount", displayname)
+                                          FieldName: ="operationCount"
+                                          FieldVariantName: ="numberColumn"
+                                          Value: =ThisItem.operationCount
+                                          Visible: =LookUp(colInventoryColumns, column = "operationCount", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "operationCount", width)
+                                    - colConnectorCount:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Number
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "connectorCount", displayname)
+                                          FieldName: ="connectorCount"
+                                          FieldVariantName: ="numberColumn"
+                                          Value: =ThisItem.connectorCount
+                                          Visible: =LookUp(colInventoryColumns, column = "connectorCount", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "connectorCount", width)
+                                    - colPropLastModifiedAt:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "propLastModifiedAt", displayname)
+                                          FieldName: ="propLastModifiedAt"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.propLastModifiedAt
+                                          Visible: =LookUp(colInventoryColumns, column = "propLastModifiedAt", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "propLastModifiedAt", width)
+                                    - colPropLastModifiedBy:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "propLastModifiedBy", displayname)
+                                          FieldName: ="propLastModifiedBy"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.propLastModifiedBy
+                                          Visible: =LookUp(colInventoryColumns, column = "propLastModifiedBy", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "propLastModifiedBy", width)
+                                    - colPropCreatedBy:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "propCreatedBy", displayname)
+                                          FieldName: ="propCreatedBy"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.propCreatedByUser
+                                          Visible: =LookUp(colInventoryColumns, column = "propCreatedBy", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "propCreatedBy", width)
+                                    - colPropFlowTriggerType:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "propFlowTriggerType", displayname)
+                                          FieldName: ="propFlowTriggerType"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.propFlowTriggerType
+                                          Visible: =LookUp(colInventoryColumns, column = "propFlowTriggerType", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "propFlowTriggerType", width)
+                                    - colPropStatus:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "propStatus", displayname)
+                                          FieldName: ="propStatus"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.propStatus
+                                          Visible: =LookUp(colInventoryColumns, column = "propStatus", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "propStatus", width)
+                                    - colPropDisplayName:
+                                        Control: ModernDataGridColumn@1.2.0
+                                        Variant: Textual
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: =LookUp(colInventoryColumns, column = "propDisplayName", displayname)
+                                          FieldName: ="propDisplayName"
+                                          FieldVariantName: ="textualColumn"
+                                          Text: =ThisItem.propDisplayName
+                                          Visible: =LookUp(colInventoryColumns, column = "propDisplayName", visible)
+                                          Width: =LookUp(colInventoryColumns, column = "propDisplayName", width)
+                        - conViewFooterDivider:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              BorderColor: =RGBA(166, 166, 166, 1)
+                              BorderStyle: =BorderStyle.None
+                              DisabledFill: =RGBA(166, 166, 166, 1)
+                              Fill: =ColorValue("#e0e0e0")
+                              FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                              Height: =1
+                              HoverFill: =RGBA(0, 120, 212, 1)
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PressedFill: =RGBA(0, 120, 212, 1)
+                        - conViewFooter:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =32
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                            Children:
+                              - lblViewFooter:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    FillPortions: =1
+                                    LayoutMaxWidth: =300
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: |
+                                      =$"Rows: {varInventoryCount} / {varInventoryTotalRecords}"
+      - conPane:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =RGBA(255, 255, 255, 0.5)
+            Height: =Parent.Height
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Visible: =varViewOverlay
+            Width: =Parent.Width
+          Children:
+            - conPane_Filter:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.ExtraBold
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =4
+                  PaddingBottom: =8
+                  PaddingTop: =8
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =varViewPaneFilter
+                  Width: =Parent.Width / 2
+                  X: =Parent.Width - Self.Width
+                Children:
+                  - conPaneHead_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - txtPaneHead_Filter:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              FillPortions: =1
+                              FontWeight: =FontWeight.Semibold
+                              Height: =40
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =20
+                              Text: |-
+                                =$"Filter: {varResource}"
+                        - btnPaneHead_Filter:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Subtle
+                              Icon: ="Dismiss"
+                              Layout: =ButtonLayout.IconOnly
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =Set(varViewOverlay, false);
+                                Set(varViewPaneFilter, false);
+                              Width: =24
+                  - recPaneHead_Filter_1:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                        Visible: =CountIf( nfInventoryQueries, 'Resource Type' = varResource ) > 0
+                  - conPaneSaved_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =8
+                        Visible: =CountIf( nfInventoryQueries, 'Resource Type' = varResource ) > 0
+                      Children:
+                        - lblPaneSaved_Filter:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Text: ="Saved filters"
+                              Width: =90
+                        - cmbPaneSaved_Filter:
+                            Control: ModernCombobox@1.1.2
+                            Properties:
+                              FillPortions: =1
+                              InputTextPlaceholder: ="Select a saved filter"
+                              ItemDisplayText: =ThisItem.Name
+                              Items: =Filter( nfInventoryQueries, 'Resource Type' = varResource )
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnChange: |+
+                                =// Build query based on seleted saved filter
+                                    udfQbBuildQuery();
+
+                                // Get the selected JSON from Dataverse and create the colInventoryFilter collection
+                                If(
+                                    !IsBlank(cmbPaneSaved_Filter.Selected.Filter),
+                                    ClearCollect(
+                                        colInventoryFilter,
+                                            ParseJSON(cmbPaneSaved_Filter.Selected.Filter, FilterType) 
+                                    )
+                                );
+
+
+                              SelectMultiple: =false
+                              Size: =13
+                  - recPaneTabs_Filter:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - conPaneTabs_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =32
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingLeft: =8
+                        PaddingRight: =16
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - tabPaneTabs_Filter:
+                            Control: ModernTabList@1.0.2
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              FillPortions: =1
+                              Items: |-
+                                =Table({Value: "Filter"}, {Value: "JSON"}, {Value: "KQL"})
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnChange: |-
+                                =// Build query based on filters
+                                    udfQbBuildQuery();
+
+                                // Changes visibility basd on chosen tab
+                                    Switch( 
+                                        tabPaneTabs_Filter.Selected.Value, 
+
+                                        "Filter",
+                                        Set(varViewPaneFilterTab, "Filter"),
+
+                                        "JSON", 
+                                        Set(varViewPaneFilterTab, "JSON"),
+
+                                        "KQL", 
+                                        Set(varViewPaneFilterTab, "KQL")
+
+                                    )
+                              Size: =13
+                              TabSize: =TabSize.Small
+                        - btnPaneTabsSave_Filter:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Transparent
+                              FontWeight: =FontWeight.Normal
+                              Height: =24
+                              Icon: ="Save"
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =// Open modal
+                                    Set(varViewModal, true);
+
+                                // Reset indicator for made changes in saved filter
+                                    Set(varInventoryFilterIsChanged, false);
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Text: ="Save filter"
+                              Width: =100
+                        - btnPaneTabsClear_Filter:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Transparent
+                              FontWeight: =FontWeight.Normal
+                              Height: =24
+                              Icon: ="ArrowReset"
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =Reset(cmbPaneSaved_Filter);
+
+                                Clear(colInventoryFilter);
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Text: ="Clear filter"
+                              Width: =100
+                  - recPaneTabs_Filter_1:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - conPaneList_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: =varViewPaneFilterTab = "Filter"
+                      Children:
+                        - Container2:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =32
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =8
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingRight: =48
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - Container4:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =RGBA(244, 244, 244, 1)
+                                    FillPortions: =0
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Width: =72
+                                  Children:
+                                    - TextInput1:
+                                        Control: ModernTextInput@1.1.2
+                                        Properties:
+                                          Align: =Align.Center
+                                          Color: =RGBA(204,204, 204,1)
+                                          Default: ="AND"
+                                          Size: =15
+                                          Width: =72
+                              - Text2_1:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    FillPortions: =1
+                                    FontWeight: =FontWeight.Semibold
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingLeft: =8
+                                    PaddingRight: =0
+                                    Size: =14
+                                    Text: ="Field"
+                              - Text2_2:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    FillPortions: =1
+                                    FontWeight: =FontWeight.Semibold
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingLeft: =8
+                                    PaddingRight: =0
+                                    Size: =14
+                                    Text: ="Operator"
+                              - Text2_3:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    FillPortions: =1
+                                    FontWeight: =FontWeight.Semibold
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingLeft: =8
+                                    Size: =14
+                                    Text: ="Value"
+                        - galFilter:
+                            Control: Gallery@2.15.0
+                            Variant: VariableHeight
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              FillPortions: =0
+                              FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                              FocusedBorderThickness: =2
+                              Height: =CountRows(colInventoryFilter) * 48
+                              Items: =colInventoryFilter
+                              ShowScrollbar: =false
+                              TemplatePadding: =0
+                              Width: =Parent.Width
+                            Children:
+                              - conFilterItem:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Height: =48
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Width: =Parent.TemplateWidth
+                                  Children:
+                                    - conFilterRowWrapper:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Height: =48
+                                          LayoutAlignItems: =LayoutAlignItems.Center
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutGap: =8
+                                          PaddingRight: =8
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Width: =Parent.Width
+                                        Children:
+                                          - imgFilterRow:
+                                              Control: Image@2.2.3
+                                              Properties:
+                                                Height: =48
+                                                Image: |-
+                                                  ="data:image/svg+xml;utf8, "&EncodeUrl("<svg width='32' height='48' viewBox='0 0 32 48' fill='none' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid meet'>
+                                                  <path d='M8.5 0L8.5 48' stroke='#3865EA'></path>
+                                                  <path d='M8 23.5H32' stroke='#3865EA'></path>
+                                                  </svg>")
+                                                Width: =32
+                                                X: =595
+                                                Y: =250
+                                          - chkFilterRow:
+                                              Control: ModernCheckbox@1.0.2
+                                              Properties:
+                                                Default: =ThisItem.enabled
+                                                Label: =
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                OnCheck: |-
+                                                  =Patch(  
+                                                      colInventoryFilter,
+                                                      ThisItem,
+                                                      {
+                                                          enabled: true
+                                                      }
+                                                  );
+
+                                                  Set(varInventoryFilterIsChanged, true);
+                                                OnUncheck: |-
+                                                  =Patch(  
+                                                      colInventoryFilter,
+                                                      ThisItem,
+                                                      {
+                                                          enabled: false
+                                                      }
+                                                  );
+
+                                                  Set(varInventoryFilterIsChanged, true);
+                                                Width: =32
+                                          - cmbFilterRowField:
+                                              Control: ModernCombobox@1.1.2
+                                              Properties:
+                                                Appearance: =Appearance.Outline
+                                                BorderColor: =RGBA(37, 37, 37, 1)
+                                                BorderStyle: =BorderStyle.Solid
+                                                BorderThickness: =1
+                                                DefaultSelectedItems: =LookUp(colInventoryColumns, column = ThisItem.field.column)
+                                                FillPortions: =1
+                                                ItemDisplayText: =$"{ThisItem.displayname} ({ThisItem.fieldtype})"
+                                                Items: =colInventoryColumns
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                OnChange: |-
+                                                  =Patch(  
+                                                      colInventoryFilter,
+                                                      ThisItem,
+                                                      {
+                                                          field: Self.Selected
+                                                      }
+                                                  );
+
+                                                  Reset(cmbFilterRowOperator);
+
+                                                  Set(varInventoryFilterIsChanged, true);
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                SelectMultiple: =false
+                                                Width: =280
+                                          - cmbFilterRowOperator:
+                                              Control: ModernCombobox@1.1.2
+                                              Properties:
+                                                Appearance: =Appearance.Outline
+                                                BorderColor: =RGBA(37, 37, 37, 1)
+                                                BorderStyle: =BorderStyle.Solid
+                                                BorderThickness: =1
+                                                DefaultSelectedItems: =LookUp(colInventoryOperators, Operator = ThisItem.operator.Operator)
+                                                FillPortions: =1
+                                                ItemDisplayText: =ThisItem.Displayname
+                                                Items: |-
+                                                  =SortByColumns(
+                                                      Filter(
+                                                          colInventoryOperators As op,
+                                                          ThisItem.field.fieldtype in op.FieldTypes
+                                                      ),
+                                                      "DisplayOrder",
+                                                      SortOrder.Ascending
+                                                  )
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                OnChange: |-
+                                                  =Patch(  
+                                                      colInventoryFilter,
+                                                      ThisItem,
+                                                      {
+                                                          operator: Self.Selected
+                                                      }
+                                                  ); 
+
+                                                  Set(varInventoryFilterIsChanged, true);
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                SelectMultiple: =false
+                                                Width: =120
+                                          - Container5:
+                                              Control: GroupContainer@1.5.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                              Children:
+                                                - dtpFilterRowValue:
+                                                    Control: ModernDatePicker@1.0.2
+                                                    Properties:
+                                                      Appearance: =Appearance.Outline
+                                                      BorderColor: =RGBA(37, 37, 37, 1)
+                                                      BorderStyle: =BorderStyle.Solid
+                                                      BorderThickness: =1
+                                                      DefaultDate: =//cmbFilterRowOperator.Selected.Displayname
+                                                      FillPortions: =1
+                                                      Format: =DatePickerFormat.Short
+                                                      LayoutMinHeight: =16
+                                                      LayoutMinWidth: =16
+                                                      OnChange: |-
+                                                        =Set(varQbReady, false);
+                                                        Patch(
+                                                            colInventoryFilter,
+                                                            ThisItem,
+                                                            {
+                                                                value: If(
+                                                                    IsBlank(Self.SelectedDate),
+                                                                    "",
+                                                                    Text(Self.SelectedDate, "yyyy-mm-dd", "en-US")
+                                                                )
+                                                            }
+                                                        )
+                                                      RadiusBottomLeft: =0
+                                                      RadiusBottomRight: =0
+                                                      RadiusTopLeft: =0
+                                                      RadiusTopRight: =0
+                                                      Visible: =ThisItem.field.fieldtype = "DateTime"
+                                                - txtFilterRowValue:
+                                                    Control: ModernTextInput@1.1.2
+                                                    Properties:
+                                                      Appearance: =Appearance.Outline
+                                                      BorderColor: =RGBA(37, 37, 37, 1)
+                                                      BorderStyle: =BorderStyle.Solid
+                                                      BorderThickness: =1
+                                                      Default: =ThisItem.value
+                                                      FillPortions: =1
+                                                      LayoutMinHeight: =16
+                                                      LayoutMinWidth: =16
+                                                      OnChange: |-
+                                                        =Patch(  
+                                                            colInventoryFilter,
+                                                            ThisItem,
+                                                            {
+                                                                value: Self.Text
+                                                            }
+                                                        );
+
+                                                        Set(varInventoryFilterIsChanged, true);
+                                                      RadiusBottomLeft: =0
+                                                      RadiusBottomRight: =0
+                                                      RadiusTopLeft: =0
+                                                      RadiusTopRight: =0
+                                                      Visible: =ThisItem.field.fieldtype = "String"
+                                                - cmbFilterRowValue:
+                                                    Control: ModernCombobox@1.1.2
+                                                    Properties:
+                                                      Appearance: =Appearance.Outline
+                                                      BorderColor: =RGBA(37, 37, 37, 1)
+                                                      BorderStyle: =BorderStyle.Solid
+                                                      BorderThickness: =1
+                                                      FillPortions: =1
+                                                      ItemDisplayText: =ThisItem.DisplayName
+                                                      Items: =ThisItem.field.related
+                                                      LayoutMinHeight: =16
+                                                      LayoutMinWidth: =16
+                                                      RadiusBottomLeft: =0
+                                                      RadiusBottomRight: =0
+                                                      RadiusTopLeft: =0
+                                                      RadiusTopRight: =0
+                                                      Visible: =ThisItem.field.fieldtype = "LookUp"
+                                          - icoFilterRowRemove:
+                                              Control: ModernButton@1.0.0
+                                              Properties:
+                                                Appearance: =ButtonAppearance.Transparent
+                                                Icon: ="Delete"
+                                                Layout: =ButtonLayout.IconOnly
+                                                LayoutMinHeight: =16
+                                                LayoutMinWidth: =16
+                                                OnSelect: |-
+                                                  =RemoveIf(colInventoryFilter, id = ThisItem.id);
+
+                                                  Set(varInventoryFilterIsChanged, true);
+                                                Width: =32
+                        - Container3:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =48
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - Image_4:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    Height: =48
+                                    Image: |-
+                                      ="data:image/svg+xml;utf8, "&EncodeUrl("<svg width='32' height='48' viewBox='0 0 32 48' fill='none' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid meet'>
+                                      <path d='M8.5 0L8.5 24' stroke='#3865EA'></path>
+                                      <path d='M8 23.5H32' stroke='#3865EA'></path>
+                                      </svg>")
+                                    Width: =32
+                                    X: =845
+                                    Y: =325
+                              - Button3:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    Appearance: =ButtonAppearance.Outline
+                                    Icon: ="Add"
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    OnSelect: |-
+                                      =Collect(
+                                          colInventoryFilter, 
+                                          {
+                                              id: GUID(),
+                                              enabled: true
+                                          }
+                                      ); 
+
+                                      Set(varInventoryFilterIsChanged, true);
+                                    Text: ="Add"
+                  - conPaneJSON_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =24
+                        PaddingLeft: =24
+                        PaddingRight: =24
+                        PaddingTop: =24
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: =varViewPaneFilterTab = "JSON"
+                      Children:
+                        - conPaneJSONContent_Filter:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              Fill: =RGBA(13, 50, 61, 1)
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =16
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PaddingTop: =16
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - lblPaneJSONContent_Filter:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    AutoHeight: =true
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Text: |-
+                                      =JSON(
+                                          ParseJSON(varQbClausesJson),
+                                          JSONFormat.IndentFour
+                                      )
+                                    Width: =Parent.Width - (Self.X * 2)
+                                    X: =24
+                                    Y: =24
+                              - icoPaneJSONCopy_Filter:
+                                  Control: ModernIcon@1.1.1
+                                  Properties:
+                                    Height: =24
+                                    Icon: ="Copy"
+                                    IconColor: =RGBA(255, 255, 255, 1)
+                                    OnSelect: |-
+                                      =Copy(
+                                          JSON(
+                                              ParseJSON(varQbClausesJson),
+                                              JSONFormat.IndentFour
+                                          )
+                                      )
+                                    Width: =24
+                                    X: =Parent.Width - (Parent.PaddingRight + Self.Width)
+                                    Y: =16
+                  - conPaneKQL_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =24
+                        PaddingLeft: =24
+                        PaddingRight: =24
+                        PaddingTop: =24
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: =varViewPaneFilterTab = "KQL"
+                      Children:
+                        - conPaneKQLContent_Filter:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              Fill: =RGBA(13, 50, 61, 1)
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =16
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PaddingTop: =16
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - lblPaneKQLContent_Filter:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    AutoHeight: =true
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Text: =varQbKql
+                                    Width: =Parent.Width - (Self.X * 2)
+                                    X: =24
+                                    Y: =24
+                              - icoPaneKQLCopy_Filter:
+                                  Control: ModernIcon@1.1.1
+                                  Properties:
+                                    Height: =24
+                                    Icon: ="Copy"
+                                    IconColor: =RGBA(255, 255, 255, 1)
+                                    OnSelect: =Copy(varQbKql)
+                                    Width: =24
+                                    X: =Parent.Width - (Parent.PaddingRight + Self.Width)
+                                    Y: =16
+                  - recPaneFooter_Filter:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - conPaneFooter_Filter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =8
+                        LayoutJustifyContent: =LayoutJustifyContent.End
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - Button1:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =// Build the required resource-type filter and any enabled UI filters.
+                                    udfQbBuildQuery();
+
+                                // Execute only when validation and query generation succeeded.
+                                    If(
+                                        varQbReady,
+                                        udfQbRunInventory()
+                                    )
+                              Text: ="Apply"
+                        - btnPaneFooterCancel_Filter:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Secondary
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =Set(varViewOverlay, false);
+                                Set(varViewPaneFilter, false);
+                              Size: =13
+                              Text: ="Cancel"
+            - conPane_Columns:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.ExtraBold
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =Parent.Height
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =4
+                  PaddingBottom: =8
+                  PaddingTop: =8
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =varViewPaneColumns
+                  X: =Parent.Width - Self.Width
+                Children:
+                  - conPaneHead_Columns:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - txtPaneHead_Columns:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              FillPortions: =1
+                              FontWeight: =FontWeight.Semibold
+                              Height: =40
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =20
+                              Text: |-
+                                =$"Edit Columns: {varResource}"
+                        - btnPaneHead_Columns:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Subtle
+                              Icon: ="Dismiss"
+                              Layout: =ButtonLayout.IconOnly
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =Set(varViewOverlay, false);
+                                Set(varViewPaneColumns, false);
+                              Width: =24
+                  - recPaneHead_Columns:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - conPaneList_Columns:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - galColumns:
+                            Control: Gallery@2.15.0
+                            Variant: Vertical
+                            Properties:
+                              BorderColor: =RGBA(166, 166, 166, 1)
+                              FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                              FocusedBorderThickness: =2
+                              Items: =SortByColumns( Filter( colInventoryColumns, enabled = true), "order", SortOrder.Ascending )
+                              TemplatePadding: =0
+                              TemplateSize: =40
+                            Children:
+                              - colColumnsRows:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Height: =40
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    PaddingLeft: =8
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Width: =Parent.TemplateWidth
+                                  Children:
+                                    - chkColumnsValue:
+                                        Control: ModernCheckbox@1.0.2
+                                        Properties:
+                                          AccessibleLabel: =ThisItem.displayname
+                                          CheckboxSize: =14
+                                          Default: =ThisItem.visible
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Normal
+                                          Label: =ThisItem.displayname
+                                          LayoutMinWidth: =16
+                                          OnCheck: |-
+                                            =Patch(colInventoryColumns, ThisItem, { visible: true })
+                                          OnUncheck: |-
+                                            =Patch(colInventoryColumns, ThisItem, { visible: false })
+                                          Tooltip: =ThisItem.tooltip
+                  - recPaneFooter_Columns:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(166, 166, 166, 1)
+                        BorderStyle: =BorderStyle.None
+                        DisabledFill: =RGBA(166, 166, 166, 1)
+                        Fill: |
+                          =ColorValue("#d2d2d2")
+                        FocusedBorderColor: =RGBA(0, 120, 212, 1)
+                        Height: =1
+                        HoverFill: =RGBA(0, 120, 212, 1)
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PressedFill: =RGBA(0, 120, 212, 1)
+                  - conPaneFooter_Columns:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =8
+                        LayoutJustifyContent: =LayoutJustifyContent.End
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - btnPaneFooterCancel_Columns:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Secondary
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: |-
+                                =Set(varViewOverlay, false);
+                                Set(varViewPaneColumns, false);
+                              Text: ="Cancel"
+      - conModal:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.25)
+            Height: =Parent.Height
+            Visible: =varViewModal
+            Width: =Parent.Width
+          Children:
+            - conModelContent:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.Bold
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =280
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =8
+                  PaddingBottom: =16
+                  PaddingLeft: =24
+                  PaddingRight: =24
+                  PaddingTop: =16
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  Width: =420
+                  X: =(Parent.Width - Self.Width) / 2
+                  Y: =(Parent.Height - Self.Height) / 2
+                Children:
+                  - conModelHead:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =0
+                        Height: =32
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - lblModelHead:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              FillPortions: =1
+                              FontWeight: =FontWeight.Semibold
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =20
+                              Text: ="Save filter"
+                        - btnModelHead:
+                            Control: ModernButton@1.0.0
+                            Properties:
+                              Appearance: =ButtonAppearance.Transparent
+                              Icon: ="Dismiss"
+                              Layout: =ButtonLayout.IconOnly
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              OnSelect: =Set(varViewModal, false)
+                              Width: =32
+                  - lblModelSubtitle:
+                      Control: ModernText@1.0.0
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: ="This filter wil be saved for reuse"
+                  - conModelFormFilter:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =8
+                        LayoutMinHeight: =16
+                        LayoutMinWidth: =16
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - conModalFormName:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =32
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - lblModelFormFilterName:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    FillPortions: =1
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: ="Name"
+                              - txtModelFormFilterName:
+                                  Control: ModernTextInput@1.1.2
+                                  Properties:
+                                    Default: =cmbPaneSaved_Filter.Selected.Name
+                                    FillPortions: =1
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                        - conModalFormDesc:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =80
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - lblModelFormFilterDescription:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    FillPortions: =1
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingTop: =0
+                                    Size: =14
+                                    Text: ="Description"
+                              - txtModelFormFilterDescription:
+                                  Control: ModernTextInput@1.1.2
+                                  Properties:
+                                    Default: =cmbPaneSaved_Filter.Selected.Description
+                                    FillPortions: =1
+                                    Height: =64
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    Type: =TextInputType.Multiline
+                        - conModalFormFilterButtons:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =32
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =8
+                              LayoutJustifyContent: =LayoutJustifyContent.End
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - btnModelFormFilterSave:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    OnSelect: |-
+                                      =// Step 1: Validate the filter name.
+                                      If(
+                                          IsBlank(Trim(txtModelFormFilterName.Text)),
+                                          Notify(
+                                              "Please enter a filter name.",
+                                              NotificationType.Warning
+                                          ),
+
+                                          // Step 2: Attempt to save the filter.
+                                          IfError(
+                                              Set(
+                                                  varSavedInventoryQuery,
+                                                  Patch(
+                                                      'Inventory Queries',
+
+                                                      // Step 3: Check the selected record's unique ID.
+                                                      // No ID means create; an existing ID means update.
+                                                      If(
+                                                          IsBlank(
+                                                              cmbPaneSaved_Filter.Selected.'Inventory Queries'
+                                                          ),
+                                                          Defaults('Inventory Queries'),
+                                                          cmbPaneSaved_Filter.Selected
+                                                      ),
+
+                                                      // Step 4: Set the values to save.
+                                                      {
+                                                          Name: txtModelFormFilterName.Text,
+                                                          Description: txtModelFormFilterDescription.Text,
+                                                          Filter: JSON(
+                                                              colInventoryFilter,
+                                                              JSONFormat.Compact
+                                                          ),
+                                                          'Resource Type': varResource
+                                                      }
+                                                  )
+                                              );
+
+                                              // Step 5: Confirm that Dataverse returned a record ID.
+                                              If(
+                                                  IsBlank(
+                                                      varSavedInventoryQuery.'Inventory Queries'
+                                                  ),
+                                                  Notify(
+                                                      "Saving could not be confirmed: no record ID was returned.",
+                                                      NotificationType.Error
+                                                  ),
+
+                                                  // Step 6: Run your Apply logic only in this success branch.
+                                                  Notify(
+                                                      "Filter saved successfully.",
+                                                      NotificationType.Success
+                                                  );
+
+                                                  // Reset form and ide modal
+                                                  Reset(txtModelFormFilterName);
+                                                  Reset(txtModelFormFilterDescription);
+                                                  Set(varViewModal, false)
+
+                                              ),
+
+                                              // Step 7: Display any error reported while saving.
+                                              Notify(
+                                                  "Failed to save the filter: " &
+                                                  Coalesce(
+                                                      FirstError.Message,
+                                                      "An unknown error occurred."
+                                                  ),
+                                                  NotificationType.Error
+                                              )
+                                          )
+                                      )
+                                    Text: ="Save"
+                              - btnModelFormFilterCancel:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    Appearance: =ButtonAppearance.Secondary
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    OnSelect: =Set(varViewModal, false)
+                                    Text: ="Cancel"

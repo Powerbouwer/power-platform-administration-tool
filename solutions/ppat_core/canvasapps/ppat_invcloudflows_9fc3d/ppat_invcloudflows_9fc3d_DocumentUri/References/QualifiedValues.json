@@ -10,6 +10,13 @@
         "User form – Business": "c2413504-7eb2-4c59-a087-95d819866114",
         "Application User": "d26924ef-4d80-46f7-ab1d-e6ae80a54ce8"
       }
+    },
+    {
+      "Namespace": "Inventory Queries (Forms)",
+      "Kind": "default.cds_ppat_inventoryqueries_forms",
+      "Values": {
+        "Information": "c47672ad-e109-47b3-acb1-ccdf4554e95e"
+      }
     }
   ]
 }

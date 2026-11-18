@@ -1,0 +1,41 @@
+CanvasApp:
+  Name: ppat_ppatresources_2c91b
+  AppVersion: 2026-11-17T14:17:56.0000000Z
+  Status: Ready
+  CreatedByClientVersion: 3.26103.34.0
+  MinClientVersion: 3.26103.34.0
+  Tags: '{"primaryDeviceWidth":"2188","primaryDeviceHeight":"1146","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.26103.34","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false","m365CopilotSettingValue":"0","sienaVersion":"20261116T124131Z-3.26103.34.0"}'
+  IsCdsUpgraded: 0
+  GalleryItemId:
+    '@xsi:nil': true
+    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+  BackgroundColor: RGBA(0,176,240,1)
+  DisplayName: PPAT - Resources
+  Description:
+    '@xsi:nil': true
+    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+  CommitMessage:
+    '@xsi:nil': true
+    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+  Publisher:
+    '@xsi:nil': true
+    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+  AuthorizationReferences: '[]'
+  ConnectionReferences: '{"5238e892-6a45-4c01-ab20-e6058994a2ce":{"id":"/providers/microsoft.powerapps/apis/shared_azuread","displayName":"Microsoft Entra ID","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1828/1.0.1828.4964/azuread/icon.png","dataSources":["MicrosoftEntraID"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard","authenticationType":"EntraOAuth"},"932e517a-e87c-407f-a94c-18c9afefbc70":{"id":"/providers/microsoft.powerapps/apis/shared_logicflows","displayName":"Logic flows","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1827/1.0.1827.4908/logicflows/icon.png","dataSources":["PPAT-SearchInventory"],"dependencies":["38171578-853f-494c-bdd7-c867caa086ce"],"dependents":[],"parameterHints":{"workflowName":{"value":"1323c0e0-96ec-46d7-8335-b7fb52dc5442"},"workflowEntityId":{"value":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b"},"workflowDisplayName":{"value":"PPAT - Search Inventory"},"38171578-853f-494c-bdd7-c867caa086ce":{"value":"shared_powerplatformadminv2"}},"parameterHintsV2":{"workflowName":{"value":"1323c0e0-96ec-46d7-8335-b7fb52dc5442"},"workflowEntityId":{"value":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b"},"workflowDisplayName":{"value":"PPAT - Search Inventory"},"shared_powerplatformadminv2":{"value":"38171578-853f-494c-bdd7-c867caa086ce"}},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard","actions":["Run"]},"38171578-853f-494c-bdd7-c867caa086ce":{"id":"/providers/microsoft.powerapps/apis/shared_powerplatformadminv2","displayName":"Power Platform for Admins V2","iconUri":"https://static.powerapps.com/resource/ppcr/releases/v1.0.1835/1.0.1835.5096/powerplatformadminv2/icon.png","dataSources":[],"dependencies":[],"dependents":["932e517a-e87c-407f-a94c-18c9afefbc70"],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{},"apiTier":"Standard"}}'
+  DatabaseReferences: '{"default.cds":{"databaseDetails":{"referenceType":"Environmental","environmentName":"default.cds","overrideValues":{"status":"NotSpecified","environmentVariableName":""}},"dataSources":{"Users":{"entitySetName":"systemusers","logicalName":"systemuser"},"Inventory Queries":{"entitySetName":"ppat_inventoryquerieses","logicalName":"ppat_inventoryqueries"}}}}'
+  AppComponents: '[]'
+  AppComponentDependencies: '[]'
+  CanConsumeAppPass: 1
+  CanvasAppType: 2
+  BypassConsent: 0
+  AdminControlBypassConsent: 0
+  EmbeddedApp:
+    '@xsi:nil': true
+    '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+  IntroducedVersion: 1.0
+  CdsDependencies: '{"cdsdependencies":[{"dependencyid":"ca27d5d6-2bc3-f111-a05c-70a8a507ac5b","componenttype":29,"componenttypeplatformname":"Workflow"},{"logicalname":"systemuser","componenttype":1},{"logicalname":"ppat_inventoryqueries","componenttype":1}]}'
+  IsCustomizable: 1
+  BackgroundImageUri: /canvasapps/ppat_ppatresources_2c91b/ppat_ppatresources_2c91b_BackgroundImageUri
+  DocumentUri: /canvasapps/ppat_ppatresources_2c91b/ppat_ppatresources_2c91b_DocumentUri.msapp
+  AdditionalUris:
+    AdditionalUri: /canvasapps/ppat_ppatresources_2c91b/ppat_ppatresources_2c91b_AdditionalUris0_identity.json

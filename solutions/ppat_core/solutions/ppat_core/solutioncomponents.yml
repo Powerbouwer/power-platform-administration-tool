@@ -3,8 +3,48 @@ SolutionComponents:
   - '@path': /appmodules/ppat_PowerPlatformAdministrationTool
   - '@path': /appmodulesitemaps/ppat_PowerPlatformAdministrationTool
   - '@path': /canvasapps/ppat_invcloudflows_9fc3d
+  - '@path': /canvasapps/ppat_ppatresources_2c91b
   - '@path': /canvasapps/ppat_ppattemplate_97904
   - '@path': /connectionreferences/ppat_PowerPlatformAdminsV2
   - '@path': /dvtablesearchs/df136279-94bd-f111-aaad-7ced8d72f9d9
+  - '@path': /entities/ppat_inventoryqueries
+  - '@path': /entities/ppat_inventoryqueries/attributes/createdby.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/createdon.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/createdonbehalfby.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/importsequencenumber.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/modifiedby.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/modifiedon.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/modifiedonbehalfby.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/overriddencreatedon.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/ownerid.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/owningbusinessunit.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/owningteam.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/owninguser.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/ppat_description.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/ppat_filter.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/ppat_inventoryqueriesid.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/ppat_name.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/ppat_resourcetype.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/statecode.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/statuscode.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/timezoneruleversionnumber.yml
+  - '@path': /entities/ppat_inventoryqueries/attributes/utcconversiontimezonecode.yml
+  - '@path': /entities/ppat_inventoryqueries/formxml/card/e5c4a803-36ad-47ee-b375-840b5ba29540
+  - '@path': /entities/ppat_inventoryqueries/formxml/main/c47672ad-e109-47b3-acb1-ccdf4554e95e
+  - '@path': /entities/ppat_inventoryqueries/formxml/quick/72135e24-d16c-4468-9ac2-7b22978690f3
+  - '@path': /entities/ppat_inventoryqueries/ribbondiffs
+  - '@path': /entities/ppat_inventoryqueries/savedqueries/4d1d2d04-7595-40d6-a02e-7b26b8e6fb9b
+  - '@path': /entities/ppat_inventoryqueries/savedqueries/7f3a6c06-762b-469b-bd49-2a3091b3c522
+  - '@path': /entities/ppat_inventoryqueries/savedqueries/91d3858c-3060-4ac6-bff2-b9a3a54764fd
+  - '@path': /entities/ppat_inventoryqueries/savedqueries/a5edbf13-0591-4400-bd37-2557076828cf
+  - '@path': /entities/ppat_inventoryqueries/savedqueries/bdbbdca8-a420-4722-bde3-a6ac5c9fe05b
+  - '@path': /entities/ppat_inventoryqueries/savedqueries/bff7a5b4-32ef-49ad-94f3-7ece37aff7f4
+  - '@path': /entities/ppat_inventoryqueries/savedqueries/c678c010-ef65-47da-927b-2c4d8203b9f9
+  - '@path': /entityrelationships/business_unit_ppat_inventoryqueries
+  - '@path': /entityrelationships/lk_ppat_inventoryqueries_createdby
+  - '@path': /entityrelationships/lk_ppat_inventoryqueries_modifiedby
+  - '@path': /entityrelationships/owner_ppat_inventoryqueries
+  - '@path': /entityrelationships/team_ppat_inventoryqueries
+  - '@path': /entityrelationships/user_ppat_inventoryqueries
   - '@path': /modernflows/ca27d5d6-2bc3-f111-a05c-70a8a507ac5b
   - '@path': /publishers/ppat

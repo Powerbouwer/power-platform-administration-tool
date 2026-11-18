@@ -2,7 +2,7 @@ AppModule:
   UniqueName: ppat_PowerPlatformAdministrationTool
   IntroducedVersion: 1.0.0.0
   WebResourceId: 953b9fac-1e5e-e611-80d6-00155ded156f
-  OptimizedFor: ""
+  OptimizedFor: ''
   statecode: 0
   statuscode: 1
   FormFactor: 1
@@ -10,37 +10,32 @@ AppModule:
   NavigationType: 0
   AppModuleComponents:
     AppModuleComponent:
-      "@type": 62
-      "@schemaName": ppat_PowerPlatformAdministrationTool
+      '@type': 62
+      '@schemaName': ppat_PowerPlatformAdministrationTool
   AppModuleRoleMaps:
     Role:
-      - "@id": "{627090ff-40a3-4053-8790-584edc5be201}"
-      - "@id": "{119f245c-3cc8-4b62-b31c-d1a046ced15d}"
+    - '@id': '{627090ff-40a3-4053-8790-584edc5be201}'
+    - '@id': '{119f245c-3cc8-4b62-b31c-d1a046ced15d}'
   LocalizedNames:
     LocalizedName:
-      "@description": Power Platform Administration Tool
-      "@languagecode": 1033
+      '@description': Power Platform Administration Tool
+      '@languagecode': 1033
   Descriptions:
     Description:
-      "@description": Streamline administrative tasks and centralize management functions with Power Platform Administration Tool. This solution is currently in initial development to support efficient oversight of your Power Platform environment.
-      "@languagecode": 1033
+      '@description': Streamline administrative tasks and centralize management functions with Power Platform Administration Tool. This solution is currently in initial development to support efficient oversight of your Power Platform environment.
+      '@languagecode': 1033
   appelements:
     appelement:
-      - "@uniquename": ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_invcloudflows_9fc3d
-        canvasappid:
-          name: ppat_invcloudflows_9fc3d
-        iscustomizable: 1
-        name: ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_invcloudflows_9fc3d
-      - "@uniquename": ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_ppattemplate_97904
-        canvasappid:
-          name: ppat_ppattemplate_97904
-        iscustomizable: 1
-        name: ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_ppattemplate_97904
+      '@uniquename': ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_ppatresources_2c91b
+      canvasappid:
+        name: ppat_ppatresources_2c91b
+      iscustomizable: 1
+      name: ppat_ppat_PowerPlatformAdministrationTool_canvasappid_ppat_ppatresources_2c91b
   appsettings:
     appsetting:
-      - "@settingdefinitionid.uniquename": AppChannel
-        iscustomizable: 1
-        value: 1
-      - "@settingdefinitionid.uniquename": HeaderAndNavigationRefresh
-        iscustomizable: 1
-        value: 2
+    - '@settingdefinitionid.uniquename': AppChannel
+      iscustomizable: 1
+      value: 1
+    - '@settingdefinitionid.uniquename': HeaderAndNavigationRefresh
+      iscustomizable: 1
+      value: 2

@@ -1,0 +1,47 @@
+savedquery:
+  IsCustomizable: 1
+  CanBeDeleted: 0
+  isquickfindquery: 0
+  isprivate: 0
+  isdefault: 0
+  savedqueryid: '{91d3858c-3060-4ac6-bff2-b9a3a54764fd}'
+  layoutxml:
+    grid:
+      '@name': resultset
+      '@jump': ppat_name
+      '@select': 1
+      '@icon': 1
+      '@preview': 1
+      row:
+        '@name': result
+        '@id': ppat_inventoryqueriesid
+        cell:
+        - '@name': ppat_name
+          '@width': 300
+        - '@name': createdon
+          '@width': 125
+  querytype: 0
+  fetchxml:
+    fetch:
+      '@version': 1.0
+      '@mapping': logical
+      entity:
+        '@name': ppat_inventoryqueries
+        attribute:
+        - '@name': ppat_inventoryqueriesid
+        - '@name': ppat_name
+        - '@name': createdon
+        order:
+          '@attribute': ppat_name
+          '@descending': false
+        filter:
+          '@type': and
+          condition:
+            '@attribute': statecode
+            '@operator': eq
+            '@value': 1
+  IntroducedVersion: 1.0
+  LocalizedNames:
+    LocalizedName:
+      '@description': Inactive Inventory Queries
+      '@languagecode': 1033

@@ -1,5 +1,8 @@
 RootComponents:
   RootComponent:
+  - '@type': 1
+    '@schemaName': ppat_inventoryqueries
+    '@behavior': 0
   - '@type': 29
     '@id': '{ca27d5d6-2bc3-f111-a05c-70a8a507ac5b}'
     '@behavior': 0
@@ -11,6 +14,9 @@ RootComponents:
     '@behavior': 0
   - '@type': 300
     '@schemaName': ppat_invcloudflows_9fc3d
+    '@behavior': 0
+  - '@type': 300
+    '@schemaName': ppat_ppatresources_2c91b
     '@behavior': 0
   - '@type': 300
     '@schemaName': ppat_ppattemplate_97904
