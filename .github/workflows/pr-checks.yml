@@ -1,0 +1,102 @@
+name: Pull Request checks
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+      - edited
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  check-pull-request:
+    name: Validation result
+    runs-on: ubuntu-latest
+    outputs:
+      classified: ${{ steps.changes.outcome }}
+      docs: ${{ steps.changes.outputs.docs }}
+      project: ${{ steps.changes.outputs.project }}
+      dev: ${{ steps.changes.outputs.dev }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+
+      - name: Classify changes
+        id: changes
+        run: node scripts/classify-scope.mjs
+
+      - name: Reject solution and project mix
+        id: reject-mixed
+        if: steps.changes.outputs.dev == 'true' && steps.changes.outputs.project == 'true'
+        run: |
+          echo "::error::dev and project changes cannot share a pull request, with or without docs."
+          exit 1
+
+      - name: Install package lock dependencies
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+        run: |
+          if [[ -z "$NODE_AUTH_TOKEN" ]]; then
+            echo "::error::Repository secret GH_PACKAGES_TOKEN is missing or unavailable."
+            exit 1
+          fi
+          npm ci
+
+      - name: Audit dependencies
+        run: npm run audit
+
+      - name: Lint repository
+        run: npm run lint
+
+  label-pull-request:
+    name: Apply change type labels
+    needs: check-pull-request
+    # Keep labeling failed PRs, but never grant write access to PR code or forks.
+    if: >-
+      !cancelled() &&
+      needs.check-pull-request.outputs.classified == 'success' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    env:
+      HAS_DOCS: ${{ needs.check-pull-request.outputs.docs }}
+      HAS_PROJECT: ${{ needs.check-pull-request.outputs.project }}
+      HAS_DEV: ${{ needs.check-pull-request.outputs.dev }}
+    steps:
+      - name: Apply category labels
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const pullRequest = { ...context.repo, issue_number: context.issue.number };
+            const currentLabels = await github.paginate(github.rest.issues.listLabelsOnIssue, pullRequest);
+            const categories = {
+              dev: process.env.HAS_DEV === "true",
+              docs: process.env.HAS_DOCS === "true",
+              project: process.env.HAS_PROJECT === "true",
+            };
+
+            for (const [label, selected] of Object.entries(categories)) {
+              const exists = currentLabels.some(current => current.name === label);
+              if (selected && !exists) {
+                await github.rest.issues.addLabels({ ...pullRequest, labels: [label] });
+              } else if (!selected && exists) {
+                await github.rest.issues.removeLabel({ ...pullRequest, name: label });
+              }
+            }

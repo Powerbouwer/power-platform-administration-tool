@@ -9,11 +9,11 @@ This page introduces the people and community behind the Power Platform Administ
 
 ## Maintainers
 
-The current maintainers and their areas of responsibility will be listed here.
+This page will list current maintainers and their areas of responsibility.
 
 ## Contributors
 
-Contributor acknowledgements will be added here.
+This page will recognize contributors.
 
 ## Contributing
 

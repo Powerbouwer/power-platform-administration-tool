@@ -9,12 +9,12 @@ This page will describe how to install and configure the Power Platform Administ
 
 ## Prerequisites
 
-Required licenses, permissions, tools, and platform dependencies are not yet documented.
+The team will document required licenses, permissions, tools, and platform dependencies.
 
 ## Installation steps
 
-The validated installation procedure will be added here.
+The team will add the validated installation procedure here.
 
 ## Verification
 
-Post-installation checks and troubleshooting guidance will be added here.
+The team will describe post-installation checks and troubleshooting guidance here.

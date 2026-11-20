@@ -1,5 +1,5 @@
-name: 💡 Feature request
-description: Suggest a new feature or improvement for PPAT.
+name: 💡 Feature / Improvement
+description: Propose a new capability or track a concrete improvement to PPAT functionality.
 title: "💡 [FEATURE] "
 type: feature
 
@@ -9,16 +9,17 @@ body:
       value: |
         Thanks for suggesting an improvement to PPAT.
 
-        Feature requests help us understand real-world needs and shape the roadmap. 
+        Use this form for both initial ideas and defined product development work.
+        Describe the problem and desired outcome. Acceptance criteria and technical details can be refined in this issue during discussion.
         At this stage, implementation is handled by the PPAT maintainers to ensure consistency and quality across the project.
 
   - type: checkboxes
     id: existing-issue-check
     attributes:
       label: Existing request check
-      description: Have you checked that this feature has not already been requested in the [backlog](https://github.com/Powerbouwer/power-platform-administration-tool/issues)?
+      description: Have you checked that this work is not already tracked in the [backlog](https://github.com/Powerbouwer/power-platform-administration-tool/issues)?
       options:
-        - label: I have searched the existing issues and confirm that this feature has not already been requested.
+        - label: I have searched the existing issues and confirm that this work is not already tracked.
           required: true
 
   - type: textarea
@@ -28,13 +29,24 @@ body:
       description: Describe the people or roles that would benefit from this capability.
       placeholder: Describe who has this need and in what context they use PPAT.
     validations:
-      required: true
+      required: false
+
+  - type: dropdown
+    id: solution
+    attributes:
+      label: Target solution
+      description: Select a solution if applicable. Leave blank for cross-solution work or when not yet determined.
+      options:
+        - Core
+        - Change Viewer
+    validations:
+      required: false
 
   - type: textarea
     id: problem
     attributes:
-      label: Problem or use case
-      description: Describe what the user is trying to achieve and what currently prevents or complicates it.
+      label: Problem or reason for change
+      description: Describe the problem, use case, or technical reason this product improvement is needed.
       placeholder: |
         Explain the current situation, the goal, and why the existing functionality does not meet this need.
     validations:
@@ -44,11 +56,22 @@ body:
     id: desired-outcome
     attributes:
       label: Desired outcome
-      description: Describe what the user should be able to achieve, without prescribing a specific implementation.
+      description: Describe the observable behavior or result this work should deliver, without requiring a specific implementation.
       placeholder: |
-        Describe the improved outcome from the user's perspective.
+        Describe what should be different when this work is complete.
     validations:
       required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: Optionally describe how completion will be verified. These criteria can be refined in this issue during discussion.
+      placeholder: |
+        - [ ] Given ..., when ..., then ...
+        - [ ] ...
+    validations:
+      required: false
 
   - type: textarea
     id: ideas-examples
@@ -72,8 +95,8 @@ body:
   - type: textarea
     id: additional-context
     attributes:
-      label: Additional context
-      description: Add examples, screenshots, links, Microsoft documentation, APIs, or other information that may help explain the request.
-      placeholder: Add any additional context here.
+      label: Technical context and boundaries
+      description: Add technical constraints, scope boundaries, design notes, screenshots, links, Microsoft documentation, or APIs where relevant.
+      placeholder: Describe relevant technical context, what is included, and what is out of scope.
     validations:
       required: false

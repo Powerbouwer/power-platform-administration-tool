@@ -3,18 +3,18 @@ title: "Change Viewer"
 layout: doc
 ---
 
-# Change Viewer
+# Change viewer
 
-The Change Viewer module provides visibility into changes relevant to Power Platform administration.
+The Change viewer module provides visibility into changes relevant to Power Platform administration.
 
 ## Overview
 
-Detailed information about the module's purpose, supported change types, and main workflows will be added as the implementation is documented.
+This page will cover the module's purpose, supported change types, and main workflows as implementation documentation develops.
 
 ## Availability
 
-Deployment requirements and availability information are not yet documented.
+Deployment requirements and availability information aren't yet documented.
 
 ## Learn more
 
-Configuration, usage, and troubleshooting guidance will be added here.
+This section will explain how to configure and use the module and troubleshoot common issues.

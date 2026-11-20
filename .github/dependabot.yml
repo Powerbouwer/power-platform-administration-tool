@@ -1,0 +1,47 @@
+version: 2
+updates:
+  # npm dependencies update configuration
+  - package-ecosystem: npm
+    # Location of package.json and package-lock.json files
+    directory: /
+    schedule:
+      # Check for version updates every week. Security updates are not delayed by this schedule.
+      interval: weekly
+      day: wednesday
+      time: "08:00"
+      timezone: Europe/Amsterdam
+    cooldown:
+      # Wait 7 days after release before considering a version update.
+      # Security updates are not delayed by this cooldown.
+      # https://docs.github.com/en/code-security/tutorials/secure-your-dependencies/optimizing-pr-creation-version-updates#setting-up-a-cooldown-period-for-dependency-updates
+      default-days: 7
+    # Limit the number of open pull requests to 5 at a time
+    open-pull-requests-limit: 5
+    # Assign pull requests to specific users
+    assignees:
+      - miguelverweij
+    # We use the increase versioning strategy to automatically increment the version number for updates.
+    # This helps to ensure that updates are applied in a controlled manner.
+    # We have also set the save-exact=true option in our package manager configuration to ensure that exact versions are saved in package.json.
+    versioning-strategy: increase
+    # We group dependencies into categories to group version update PRs in line with our branch strategy.
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: wednesday
+      time: "08:00"
+      timezone: Europe/Amsterdam
+    cooldown:
+      default-days: 7
+
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+      day: wednesday
+      time: "08:00"
+      timezone: Europe/Amsterdam
+    cooldown:
+      default-days: 7
