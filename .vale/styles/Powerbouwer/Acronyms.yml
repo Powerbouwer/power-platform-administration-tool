@@ -17,6 +17,7 @@ exceptions:
   - MDA
   - IAM
   - GHSA
+  - PAC
   # The acronyms below are specific for Spectral rules.
   - CAN
   - MDA
