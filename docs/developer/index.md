@@ -21,32 +21,58 @@ Use the Bug, Documentation, ADR, or Project forms for problems in existing behav
 
 Follow the [Power Platform resource standards](./standards/) when building solution components. The naming validator checks all solutions, not just changed resources. Naming errors block pull requests regardless of the target branch. Power Fx analysis and Solution Checker are outside this validator.
 
+## Use a development container
+
+The repository includes a Linux development container for Windows, macOS, and Linux. It provides consistent versions of Node.js, npm, and the Power Platform CLI without installing those tools on the host. VS Code and its Dev Containers extension run on the host. Docker mounts the repository folder into the container. Docker also downloads the Microsoft base image and builds the container locally. The repository doesn't publish a custom image.
+
+Install these host tools:
+
+- **Windows:** Install [Docker Desktop](https://docs.docker.com/desktop/setup/install/windows-install/) and [Visual Studio Code](https://code.visualstudio.com/). Docker Desktop uses Windows Subsystem for Linux (WSL) version 2 for Linux containers by default. WSL is a Linux environment built into Windows. Keeping the repository in the WSL file system can improve performance, but isn't required.
+- **macOS:** Install [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/) and [Visual Studio Code](https://code.visualstudio.com/). Docker Desktop selects the matching image architecture on Intel and Apple silicon Macs.
+- **Linux:** Install [Docker Engine](https://docs.docker.com/engine/install/) for your distribution and [Visual Studio Code](https://code.visualstudio.com/). Configure Docker for your user according to the installation guide.
+
+Docker Desktop is free for personal use and some organizations, but larger organizations may need a paid subscription. Check [Docker's current license terms](https://www.docker.com/pricing/faq/) before installing it for work. Docker Engine on Linux doesn't require Docker Desktop. You can also use Engine in WSL 2 on Windows or Colima on macOS, but both alternatives require additional setup.
+
+Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) in VS Code, open the repository folder, and run **Dev Containers: Reopen in Container** from the Command Palette (`F1`). The first start downloads the base image and features and can take several minutes. VS Code then connects to the container and installs the configured extensions.
+
+The extension list in `.devcontainer/devcontainer.json` matches the recommendations in `.vscode/extensions.json`. Update both lists when changing the recommendations.
+
+The container gets Node.js `26.13.1` and npm `11.20.0`, matching `.nvmrc` and `package.json`. It restores the pinned Power Platform CLI (PAC) from `.config/dotnet-tools.json`. Run this tool with `dotnet tool run pac`. A separate Docker volume stores `node_modules`, so Linux packages don't overwrite or mix with a host installation. The container forwards port `5173` for VitePress.
+
+After signing in to GitHub Packages as described below, install the project dependencies from the repository root in the container:
+
+```sh
+npm ci
+```
+
+Start the documentation site with `npm run docs:dev`. Open the forwarded port when VS Code prompts. To apply changes to `.devcontainer/devcontainer.json`, run **Dev Containers: Rebuild Container**. To stop working, close the remote VS Code window. To continue, reopen the repository and choose **Dev Containers: Reopen in Container**.
+
 ## Install development dependencies
 
 The repository uses `@powerbouwer/coding-standards` from GitHub Packages. The project `.npmrc` selects the registry but doesn't contain credentials.
 
-To install dependencies locally, use your own GitHub account with access to the package:
+Use your own GitHub account with access to the package. The same steps apply on your computer and in the development container:
 
-1. Create a personal access token (classic) with `read:packages`. If your organization requires single sign-on, authorize the token for the organization.
-1. In the VS Code terminal, open PowerShell and run:
+1. Create a [personal access token (classic)](https://github.com/settings/tokens) with `read:packages`. GitHub Packages doesn't support fine-grained tokens. If your organization requires single sign-on, authorize the token for the organization.
+1. In the VS Code terminal, sign in to the GitHub Packages registry:
 
-   ```powershell
-   $token = Read-Host "GitHub Packages token" -AsSecureString
+   ```sh
+   npm login --scope=@powerbouwer --auth-type=legacy --registry=https://npm.pkg.github.com
    ```
 
-1. At the prompt, paste your token using **Ctrl+Shift+V** and press Enter. The token isn't shown in plain text.
-1. Store the token and check access to the package:
+1. Respond to the prompts:
+   - **Username:** enter your GitHub username.
+   - **Password:** paste your personal access token, not your GitHub password. In the VS Code terminal, paste with **Ctrl+Shift+V** on Windows and Linux or **Cmd+V** on macOS. **Ctrl+V** may not paste the token correctly. The terminal shows no characters while you paste or type. Press Enter after pasting.
 
-   ```powershell
-   npm config set "//npm.pkg.github.com/:_authToken" ([System.Net.NetworkCredential]::new("", $token).Password) --location=user
-   Remove-Variable token
+1. Check access to the package:
 
+   ```sh
    npm view @powerbouwer/coding-standards version
    ```
 
 1. Run `npm ci` from the repository root.
 
-The command passes the token as a process argument, and npm stores it in your user `.npmrc` as plain text. Don't put tokens in repository files.
+`npm login` stores the token as plain text in your user `.npmrc`, not in the repository. On your computer, it remains available until you sign out with `npm logout --scope=@powerbouwer --registry=https://npm.pkg.github.com` or revoke the token. In the development container, it remains available when you stop and restart the same container. Sign in again after you rebuild or recreate the container. Git credentials forwarded by VS Code don't grant npm access to GitHub Packages. Never share or commit the token.
 
 GitHub Actions uses the `GH_PACKAGES_TOKEN` repository secret instead of a developer's local token. An administrator must add a personal access token (classic) as `GH_PACKAGES_TOKEN` under **Settings** > **Secrets and variables** > **Actions**. The token must have `read:packages` and access to the package. Renew it before it expires.
 
