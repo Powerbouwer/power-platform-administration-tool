@@ -21,6 +21,37 @@ Use the Bug, Documentation, ADR, or Project forms for problems in existing behav
 
 Follow the [Power Platform resource standards](./standards/) when building solution components. The naming validator checks all solutions, not just changed resources. Naming errors block pull requests regardless of the target branch. Power Fx analysis and Solution Checker are outside this validator.
 
+## Install development dependencies
+
+The repository uses `@powerbouwer/coding-standards` from GitHub Packages. The project `.npmrc` selects the registry but doesn't contain credentials.
+
+To install dependencies locally, use your own GitHub account with access to the package:
+
+1. Create a personal access token (classic) with `read:packages`. If your organization requires single sign-on, authorize the token for the organization.
+1. In the VS Code terminal, open PowerShell and run:
+
+   ```powershell
+   $token = Read-Host "GitHub Packages token" -AsSecureString
+   ```
+
+1. At the prompt, paste your token using **Ctrl+Shift+V** and press Enter. The token isn't shown in plain text.
+1. Store the token and check access to the package:
+
+   ```powershell
+   npm config set "//npm.pkg.github.com/:_authToken" ([System.Net.NetworkCredential]::new("", $token).Password) --location=user
+   Remove-Variable token
+
+   npm view @powerbouwer/coding-standards version
+   ```
+
+1. Run `npm ci` from the repository root.
+
+The command passes the token as a process argument, and npm stores it in your user `.npmrc` as plain text. Don't put tokens in repository files.
+
+GitHub Actions uses the `GH_PACKAGES_TOKEN` repository secret instead of a developer's local token. An administrator must add a personal access token (classic) as `GH_PACKAGES_TOKEN` under **Settings** > **Secrets and variables** > **Actions**. The token must have `read:packages` and access to the package. Renew it before it expires.
+
+Workflows triggered by Dependabot use Dependabot secrets. Add `GH_PACKAGES_TOKEN` under **Settings** > **Secrets and variables** > **Dependabot** too. Pull requests from forks normally can't access repository secrets, so those pull requests can't install this package using this secret.
+
 ## Documentation development
 
 Use the repository's configured Node.js version and run `npm ci` from the repository root. The root package owns VitePress and the documentation scripts, so you don't need a separate installation in `docs`.

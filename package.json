@@ -25,6 +25,7 @@
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@microsoft/eslint-plugin-power-apps": "0.6.0",
+    "@powerbouwer/coding-standards": "latest",
     "@stoplight/spectral-cli": "6.17.0",
     "@vvago/vale": "3.25.1",
     "audit-ci": "7.1.0",
@@ -43,7 +44,7 @@
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": "26.13.0",
+      "version": "26.13.1",
       "onFail": "error"
     },
     "packageManager": {

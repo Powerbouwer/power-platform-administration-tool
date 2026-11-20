@@ -26,14 +26,15 @@ jobs:
       project: ${{ steps.changes.outputs.project }}
       dev: ${{ steps.changes.outputs.dev }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
+          registry-url: https://npm.pkg.github.com
 
       - name: Classify changes
         id: changes
@@ -47,7 +48,14 @@ jobs:
           exit 1
 
       - name: Install package lock dependencies
-        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+        run: |
+          if [[ -z "$NODE_AUTH_TOKEN" ]]; then
+            echo "::error::Repository secret GH_PACKAGES_TOKEN is missing or unavailable."
+            exit 1
+          fi
+          npm ci
 
       - name: Audit dependencies
         run: npm run audit
@@ -73,7 +81,7 @@ jobs:
       HAS_DEV: ${{ needs.check-pull-request.outputs.dev }}
     steps:
       - name: Apply category labels
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const pullRequest = { ...context.repo, issue_number: context.issue.number };
