@@ -19,18 +19,21 @@ concurrency:
 jobs:
   check-pull-request:
     name: Validation result
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     outputs:
       classified: ${{ steps.changes.outcome }}
       docs: ${{ steps.changes.outputs.docs }}
       project: ${{ steps.changes.outputs.project }}
       dev: ${{ steps.changes.outputs.dev }}
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        # Required to fetch the full history for accurate change detection
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v7
+      - name: Setup Node
+        uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -71,7 +74,7 @@ jobs:
       !cancelled() &&
       needs.check-pull-request.outputs.classified == 'success' &&
       github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     permissions:
       issues: write
       pull-requests: write

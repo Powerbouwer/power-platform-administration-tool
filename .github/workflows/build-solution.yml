@@ -17,18 +17,20 @@ concurrency:
 jobs:
   changes:
     name: Detect changed solutions
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     permissions:
       contents: read
     outputs:
       solutions: ${{ steps.changes.outputs.solutions }}
     steps:
-      - name: Checkout release commit
+      - name: Checkout repository
         uses: actions/checkout@v7
+        # Fetch the full history for accurate change detection
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v7
+      - name: Setup Node
+        uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -57,7 +59,7 @@ jobs:
   release:
     name: Build and pre-release ${{ matrix.solution.name }}
     needs: changes
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix:

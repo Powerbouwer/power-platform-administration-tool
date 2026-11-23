@@ -22,7 +22,7 @@ jobs:
       github.event.issue.state_reason == 'completed' &&
       (github.event.issue.type.name == 'ADR' ||
        github.event.issue.type.name == 'vulnerability')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     env:
       GH_TOKEN: ${{ secrets.BRANCH_AUTOMATION_TOKEN }}
 
@@ -41,6 +41,11 @@ jobs:
           ref: main
           fetch-depth: 0
           token: ${{ secrets.BRANCH_AUTOMATION_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
 
       - name: Generate documentation
         id: document

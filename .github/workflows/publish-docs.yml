@@ -20,14 +20,18 @@ concurrency:
 
 jobs:
   build:
-    name: Build VitePress
-    runs-on: ubuntu-latest
+    name: Build and deploy VitePress
+    runs-on: ubuntu-26.04
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
@@ -55,16 +59,6 @@ jobs:
         with:
           path: docs/.vitepress/dist
 
-  deploy:
-    name: Deploy GitHub Pages
-    needs: build
-    runs-on: ubuntu-latest
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

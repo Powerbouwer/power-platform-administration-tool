@@ -1,6 +1,6 @@
 {
   "name": "Power Platform Administration Tool",
-  "image": "mcr.microsoft.com/devcontainers/base:bookworm",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu26.04",
   "features": {
     "ghcr.io/devcontainers/features/node:2": {
       "version": "26.13.1",
