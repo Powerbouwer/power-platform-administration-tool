@@ -35,7 +35,8 @@
         "redhat.vscode-yaml",
         "Vue.volar",
         "ms-vscode-remote.remote-containers",
-        "microsoft-IsvExpTools.powerplatform-vscode"
+        "microsoft-IsvExpTools.powerplatform-vscode",
+        "GitHub.vscode-pull-request-github"
       ]
     }
   },
