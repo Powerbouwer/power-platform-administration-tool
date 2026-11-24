@@ -37,8 +37,21 @@
         "ms-vscode-remote.remote-containers",
         "microsoft-IsvExpTools.powerplatform-vscode",
         "GitHub.vscode-pull-request-github"
-      ]
-    }
-  },
-  "remoteUser": "vscode"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "vale.valeCLI.installVale": true,
+        "vale.valeCLI.config": ".vale.ini",
+        "yaml.schemas": {
+          "https://raw.githubusercontent.com/microsoft/PowerApps-Tooling/master/schemas/pa-yaml/v3.0/pa.schema.yaml": "*.pa.yaml"
+        },
+        "json.schemaDownload.trustedDomains": {
+          "https://github.com/IBM/audit-ci/raw/main/docs/schema.json": true
+        },
+        "sarif-viewer.connectToGithubCodeScanning": "off"
+      }
+    },
+    "remoteUser": "vscode"
+  }
 }
