@@ -1,32 +1,177 @@
-/* Powerbouwer blue, adapted for the default VitePress surfaces. */
+@font-face {
+  font-family: "Powerbouwer Arboria";
+  src: url("/fonts/arboria-book.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Powerbouwer Arboria";
+  src: url("/fonts/arboria-bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 :root {
-  --vp-c-bg-alt: #dbdbdb;
-  --vp-c-bg-soft: var(--vp-c-bg-alt);
-  --vp-c-text-2: #5c5c63;
+  --vp-font-family-base: "Powerbouwer Arboria", Arial, sans-serif;
 
-  --vp-c-brand-1: #0010b2;
-  --vp-c-brand-2: #0017d8;
-  --vp-c-brand-3: #001fff;
-  --vp-c-brand-soft: rgba(0, 31, 255, 0.14);
+  --pb-navy: #000064;
+  --pb-blue: #001fff;
+  --pb-gray: #dbdbdb;
+  --pb-white: #ffffff;
 
-  /* Keep white button labels readable in both color modes. */
-  --vp-button-brand-bg: #001fff;
-  --vp-button-brand-hover-bg: #0017d8;
-  --vp-button-brand-active-bg: #0010b2;
+  --vp-c-text-1: var(--pb-navy);
+  --vp-c-text-2: #3c3c60;
+  --vp-c-bg-soft: #f3f3f8;
+  --vp-c-brand-1: var(--pb-blue);
+  --vp-c-brand-2: var(--pb-navy);
+  --vp-c-brand-3: var(--pb-blue);
+  --vp-c-brand-soft: rgba(0, 31, 255, 0.1);
+  --vp-home-hero-name-color: var(--pb-navy);
 }
 
 .dark {
-  --vp-c-bg: #000064;
-  --vp-c-bg-alt: #000050;
-  --vp-c-bg-elv: #0a166e;
+  --vp-c-bg: var(--pb-navy);
+  --vp-c-bg-alt: var(--vp-c-bg);
+  --vp-c-bg-elv: color-mix(in srgb, var(--pb-blue) 15%, var(--pb-navy));
   --vp-c-bg-soft: var(--vp-c-bg-elv);
-  --vp-c-text-2: #dbdbdb;
-  --vp-c-border: #364e94;
-  --vp-c-divider: #243878;
-  --vp-c-gutter: var(--vp-c-bg-alt);
+  --vp-c-border: rgba(219, 219, 219, 0.28);
+  --vp-c-divider: rgba(219, 219, 219, 0.18);
+  --vp-c-gutter: var(--vp-c-bg);
+  --vp-c-text-1: var(--pb-white);
+  --vp-c-text-2: var(--pb-gray);
+  --vp-c-text-3: var(--pb-gray);
+  --vp-c-brand-1: var(--pb-gray);
+  --vp-c-brand-2: var(--pb-white);
+  --vp-c-brand-3: var(--pb-blue);
+  --vp-c-brand-soft: rgba(219, 219, 219, 0.16);
+  --vp-home-hero-name-color: var(--pb-white);
+}
 
-  --vp-c-brand-1: #9bbdff;
-  --vp-c-brand-2: #78a7ff;
-  --vp-c-brand-3: #528eff;
-  --vp-c-brand-soft: rgba(82, 142, 255, 0.16);
+:root:not(.dark) .VPFeature {
+  background-color: var(--pb-gray);
+}
+
+.dark .VPFeature {
+  border-color: transparent;
+}
+
+.dark .VPFeature.link:hover,
+.dark .VPFeature.link:focus-visible {
+  border-color: var(--vp-c-border);
+}
+
+.dark ::selection {
+  color: var(--pb-navy);
+  background: var(--pb-gray);
+}
+
+.VPLocalNav.empty:not(.has-sidebar) {
+  display: none;
+}
+
+.VPNavBar .menu + .appearance::before {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .VPNavBar .VPNavBarAppearance {
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
+  }
+
+  .VPNavBar .VPNavBarExtra {
+    display: none;
+  }
+}
+
+.VPNavBarMenuLink span {
+  -webkit-text-stroke: 0 currentColor;
+  transition: -webkit-text-stroke-width 0.2s ease;
+}
+
+.VPNavBarMenuLink:hover span,
+.VPNavBarMenuLink:focus-visible span {
+  -webkit-text-stroke-width: 0.35px;
+}
+
+.VPNavBar.screen-open {
+  border-bottom: 0 !important;
+}
+
+.VPNavBar .divider,
+.VPNavBar .divider-line {
+  background-color: transparent !important;
+}
+
+.VPNavScreen .VPNavScreenMenuLink {
+  border: 0;
+  padding: 8px 0;
+  font-size: 16px;
+}
+
+.VPNavScreen .VPNavScreenAppearance {
+  justify-content: flex-start;
+  padding: 0;
+  background: transparent;
+}
+
+.VPNavScreen .menu + .VPNavScreenAppearance {
+  margin-top: 16px;
+}
+
+.VPNavScreen .VPNavScreenAppearance .text {
+  display: none;
+}
+
+.VPNavScreen .VPNavScreenAppearance .VPSwitchAppearance,
+.VPNavBar .VPNavBarAppearance .VPSwitchAppearance {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+}
+
+.VPNavScreen .VPNavScreenAppearance .VPSwitchAppearance .check,
+.VPNavBar .VPNavBarAppearance .VPSwitchAppearance .check {
+  top: 13px;
+  left: 13px;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.VPNavScreen .VPNavScreenAppearance .VPSwitchAppearance .check {
+  left: 0;
+}
+
+.VPNavScreen .VPNavScreenAppearance .VPSwitchAppearance .icon [class^="vpi-"],
+.VPNavBar .VPNavBarAppearance .VPSwitchAppearance .icon [class^="vpi-"] {
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.VPNavBar .VPNavBarAppearance .VPSwitchAppearance .icon [class^="vpi-"] {
+  color: var(--vp-c-text-1);
+}
+
+.VPNavScreen .VPNavScreenAppearance .VPSwitchAppearance:focus-visible,
+.VPNavBar .VPNavBarAppearance .VPSwitchAppearance:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.vp-doc h2 {
+  border-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.vp-doc h2 .header-anchor {
+  top: 0;
+  font-weight: inherit;
 }
