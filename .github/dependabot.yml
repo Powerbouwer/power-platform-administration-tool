@@ -45,3 +45,12 @@ updates:
       timezone: Europe/Amsterdam
     cooldown:
       default-days: 7
+  - package-ecosystem: devcontainers
+    directory: /
+    schedule:
+      interval: weekly
+      day: wednesday
+      time: "08:00"
+      timezone: Europe/Amsterdam
+    cooldown:
+      default-days: 7

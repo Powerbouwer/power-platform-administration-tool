@@ -9,7 +9,6 @@ export default defineConfig([
     "**/node_modules/**",
     "**/.vitepress/dist/**",
     "**/.vitepress/cache/**",
-    "**/naming-reports/**",
   ]),
 
   // Node.js specific configuration
