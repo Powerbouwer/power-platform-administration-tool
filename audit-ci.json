@@ -7,7 +7,7 @@
     {
       "GHSA-67mh-4wv8-2f99": {
         "active": true,
-        "note": "This package is used in Vitepress documentation. The Esbuild serve functionality that this vulnerability affects is not used in our setup."
+        "notes": "This package is used in Vitepress documentation. The Esbuild serve functionality that this vulnerability affects is not used in our setup."
       }
     }
   ]
