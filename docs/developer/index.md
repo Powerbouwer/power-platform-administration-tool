@@ -37,7 +37,9 @@ Install the [Dev Containers extension](https://marketplace.visualstudio.com/item
 
 The extension list in `.devcontainer/devcontainer.json` matches the recommendations in `.vscode/extensions.json`. Update both lists when changing the recommendations.
 
-The container gets Node.js `26.13.1` and npm `11.20.0`, matching `.nvmrc` and `package.json`. It restores the pinned Power Platform CLI (PAC) from `.config/dotnet-tools.json`. Run this tool with `dotnet tool run pac`. A separate Docker volume stores `node_modules`, so Linux packages don't overwrite or mix with a host installation. The container forwards port `5173` for VitePress.
+The container gets Node.js `26.13.1` and npm `11.20.0`, matching `.nvmrc` and `package.json`. It restores the pinned Power Platform CLI (PAC) from `.config/dotnet-tools.json`. Run this tool with `dotnet tool run pac`. The container forwards port `5173` for VitePress.
+
+The repository workspace contains the `node_modules` directory. Use a separate checkout or workspace volume for each container to keep their dependencies separate. If you open a local folder in a container, the host and container share that folder, including `node_modules`. Avoid using the same dependency installation on different operating systems.
 
 After signing in to GitHub Packages as described below, install the project dependencies from the repository root in the container:
 

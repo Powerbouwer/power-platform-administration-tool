@@ -10,10 +10,7 @@
       "version": "10.0"
     }
   },
-  "mounts": [
-    "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume,volume-nocopy"
-  ],
-  "postCreateCommand": "sudo chown \"$(id -u):$(id -g)\" node_modules && dotnet tool restore",
+  "postCreateCommand": "dotnet tool restore",
   "forwardPorts": [5173, 4173],
   "portsAttributes": {
     "5173": {
