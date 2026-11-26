@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "audit": "audit-ci",
+    "audit": "audit-ci --config ./audit-ci.json",
     "powerbouwer:login": "npm login --scope=@powerbouwer --auth-type=legacy --registry=https://npm.pkg.github.com",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -27,13 +27,13 @@
     "@eslint/js": "10.0.1",
     "@microsoft/eslint-plugin-power-apps": "0.6.0",
     "@powerbouwer/coding-standards": "latest",
-    "@stoplight/spectral-cli": "6.17.0",
+    "@stoplight/spectral-cli": "6.17.1",
     "@vvago/vale": "3.25.1",
     "audit-ci": "7.1.0",
-    "eslint": "10.13.0",
+    "eslint": "10.15.0",
     "eslint-plugin-html": "8.2.1",
-    "globals": "17.13.0",
-    "prettier": "3.9.10",
+    "globals": "17.14.0",
+    "prettier": "3.10.1",
     "vitepress": "1.6.4",
     "yaml": "2.9.1"
   },
