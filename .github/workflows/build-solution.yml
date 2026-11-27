@@ -82,19 +82,19 @@ jobs:
         run: echo "version=$(jq -er '.tools["microsoft.powerapps.cli.tool"].version' .config/dotnet-tools.json)" >> "$GITHUB_OUTPUT"
 
       - name: Install Power Platform tools
-        uses: microsoft/powerplatform-actions/actions-install@v1.9.2
+        uses: microsoft/powerplatform-actions/actions-install@v1.10.0
         with:
           pac-version-override: ${{ steps.pac-version.outputs.version }}
 
       - name: Pack managed solution
-        uses: microsoft/powerplatform-actions/pack-solution@v1.9.2
+        uses: microsoft/powerplatform-actions/pack-solution@v1.10.0
         with:
           solution-folder: solutions/${{ matrix.solution.name }}
           solution-file: dist/${{ matrix.solution.filename }}_managed.zip
           solution-type: Managed
 
       - name: Pack unmanaged solution
-        uses: microsoft/powerplatform-actions/pack-solution@v1.9.2
+        uses: microsoft/powerplatform-actions/pack-solution@v1.10.0
         with:
           solution-folder: solutions/${{ matrix.solution.name }}
           solution-file: dist/${{ matrix.solution.filename }}.zip
