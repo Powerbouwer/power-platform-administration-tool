@@ -4,23 +4,14 @@ layout: home
 
 hero:
   name: PPAT
-  text: |
-    Power
-    Platform
-    Administration
-    Tool
-  tagline: Open-source administration and governance toolkit for Microsoft Power Platform, built on the Power Platform Inventory API.
+  tagline: Power Platform Administration Tool
   actions:
     - theme: brand
-      text: View releases
+      text: Releases
       link: https://github.com/Powerbouwer/power-platform-administration-tool/releases
-
-features:
-  - title: CoE Starter Kit
-    details: The good from the sunsetted CoE Starter Kit
-  - title: Inventory API
-    details: Drasctically limits sync flows using the modern Inventory API
-  - title: Governance Experience
-    details: Added features based on years of Power Platform governance experience
+    - theme: alt
+      text: View on GitHub
+      link: https://github.com/vuejs/vitepress
 ---
 
+## Stable release <Badge type="info" text="default" />

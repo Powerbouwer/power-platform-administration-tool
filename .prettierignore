@@ -1,0 +1,10 @@
+# Files synced with the native git integration won't be formatted by Prettier.
+# Reason for this is that Power Platform will overwrite any changes made by Prettier anyway.
+# Unnecessary git changes are reduces with this exclusion.
+# JS files must be linted, so they are not excluded here.
+
+solutions/**/*.yml
+solutions/**/*.yaml
+solutions/**/*.json
+solutions/**/*.sarif
+.vale/styles/Microsoft/

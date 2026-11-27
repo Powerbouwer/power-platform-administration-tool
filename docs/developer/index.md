@@ -3,9 +3,139 @@ title: "Developer Guidelines"
 layout: doc
 ---
 
-# Developer Guide
+# Developer guide
 
 This guide describes how to prepare a development environment and contribute to PPAT through Power Platform native Git integration. Each developer works from a separate developer tenant and environment so that development work remains isolated.
+
+## Feature and improvement work
+
+Use the [Feature / Improvement issue form](https://github.com/Powerbouwer/power-platform-administration-tool/issues/new?template=feature.yml) for both initial ideas and defined product development work. The form uses the `feature` issue type.
+
+Describe the problem or reason for change and the desired outcome. The audience, target solution, acceptance criteria, and technical context are optional when you first submit the issue. Refine the scope, constraints, and acceptance criteria in the issue as the proposal develops. You don't need a separate issue template.
+
+Use the [Feature / Improvement PR checklist](https://github.com/Powerbouwer/power-platform-administration-tool/blob/main/.github/PULL_REQUEST_TEMPLATE/feature.md) to review the delivered result, agreed scope, applicable standards, verification, and documentation. Keep the detailed explanation and agreements in the issue rather than repeating them in the PR.
+
+Use the Bug, Documentation, ADR, or Project forms for problems in existing behavior, documentation changes, architecture decisions, or repository/tooling/process work respectively.
+
+## Resource standards
+
+Follow the [Power Platform resource standards](./standards/) when building solution components. The naming validator checks all solutions, not just changed resources. Naming errors block pull requests regardless of the target branch. Power Fx analysis and Solution Checker are outside this validator.
+
+## Use a development container
+
+The repository includes a Linux development container for Windows, macOS, and Linux. It provides consistent versions of Node.js, npm, and the Power Platform CLI without installing those tools on the host. VS Code and its Dev Containers extension run on the host. Docker mounts the repository folder into the container. Docker also downloads the Microsoft base image and builds the container locally. The repository doesn't publish a custom image.
+
+Install these host tools:
+
+- **Windows:** Install [Docker Desktop](https://docs.docker.com/desktop/setup/install/windows-install/) and [Visual Studio Code](https://code.visualstudio.com/). Docker Desktop uses Windows Subsystem for Linux (WSL) version 2 for Linux containers by default. WSL is a Linux environment built into Windows. Keeping the repository in the WSL file system can improve performance, but isn't required.
+- **macOS:** Install [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/) and [Visual Studio Code](https://code.visualstudio.com/). Docker Desktop selects the matching image architecture on Intel and Apple silicon Macs.
+- **Linux:** Install [Docker Engine](https://docs.docker.com/engine/install/) for your distribution and [Visual Studio Code](https://code.visualstudio.com/). Configure Docker for your user according to the installation guide.
+
+Docker Desktop is free for personal use and some organizations, but larger organizations may need a paid subscription. Check [Docker's current license terms](https://www.docker.com/pricing/faq/) before installing it for work. Docker Engine on Linux doesn't require Docker Desktop. You can also use Engine in WSL 2 on Windows or Colima on macOS, but both alternatives require additional setup.
+
+Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) in VS Code, open the repository folder, and run **Dev Containers: Reopen in Container** from the Command Palette (`F1`). The first start downloads the base image and features and can take several minutes. VS Code then connects to the container and installs the configured extensions.
+
+The extension list in `.devcontainer/devcontainer.json` matches the recommendations in `.vscode/extensions.json`. Update both lists when changing the recommendations.
+
+The container gets Node.js `26.13.1` and npm `11.20.0`, matching `.nvmrc` and `package.json`. It restores the pinned Power Platform CLI (PAC) from `.config/dotnet-tools.json`. Run this tool with `dotnet tool run pac`. The container forwards port `5173` for VitePress.
+
+The repository workspace contains the `node_modules` directory. Use a separate checkout or workspace volume for each container to keep their dependencies separate. If you open a local folder in a container, the host and container share that folder, including `node_modules`. Avoid using the same dependency installation on different operating systems.
+
+After signing in to GitHub Packages as described below, install the project dependencies from the repository root in the container:
+
+```sh
+npm ci
+```
+
+Start the documentation site with `npm run docs:dev`. Open the forwarded port when VS Code prompts. To apply changes to `.devcontainer/devcontainer.json`, run **Dev Containers: Rebuild Container**. To stop working, close the remote VS Code window. To continue, reopen the repository and choose **Dev Containers: Reopen in Container**.
+
+## Install development dependencies
+
+The repository uses `@powerbouwer/coding-standards` from GitHub Packages. The project `.npmrc` selects the registry but doesn't contain credentials.
+
+Use your own GitHub account with access to the package. The same steps apply on your computer and in the development container:
+
+1. Create a [personal access token (classic)](https://github.com/settings/tokens) with `read:packages`. GitHub Packages doesn't support fine-grained tokens. If your organization requires single sign-on, authorize the token for the organization.
+1. In the VS Code terminal, sign in to the GitHub Packages registry:
+
+   ```sh
+   npm login --scope=@powerbouwer --auth-type=legacy --registry=https://npm.pkg.github.com
+   ```
+
+1. Respond to the prompts:
+   - **Username:** enter your GitHub username.
+   - **Password:** paste your personal access token, not your GitHub password. In the VS Code terminal, paste with **Ctrl+Shift+V** on Windows and Linux or **Cmd+V** on macOS. **Ctrl+V** may not paste the token correctly. The terminal shows no characters while you paste or type. Press Enter after pasting.
+
+1. Check access to the package:
+
+   ```sh
+   npm view @powerbouwer/coding-standards version
+   ```
+
+1. Run `npm ci` from the repository root.
+
+`npm login` stores the token as plain text in your user `.npmrc`, not in the repository. On your computer, it remains available until you sign out with `npm logout --scope=@powerbouwer --registry=https://npm.pkg.github.com` or revoke the token. In the development container, it remains available when you stop and restart the same container. Sign in again after you rebuild or recreate the container. Git credentials forwarded by VS Code don't grant npm access to GitHub Packages. Never share or commit the token.
+
+GitHub Actions uses the `GH_PACKAGES_TOKEN` repository secret instead of a developer's local token. An administrator must add a personal access token (classic) as `GH_PACKAGES_TOKEN` under **Settings** > **Secrets and variables** > **Actions**. The token must have `read:packages` and access to the package. Renew it before it expires.
+
+Workflows triggered by Dependabot use Dependabot secrets. Add `GH_PACKAGES_TOKEN` under **Settings** > **Secrets and variables** > **Dependabot** too. Pull requests from forks normally can't access repository secrets, so those pull requests can't install this package using this secret.
+
+## Documentation development
+
+Use the repository's configured Node.js version and run `npm ci` from the repository root. The root package owns VitePress and the documentation scripts, so you don't need a separate installation in `docs`.
+
+Run these commands from the repository root:
+
+```sh
+npm run docs:dev
+npm run docs:build
+npm run docs:preview
+```
+
+Build before starting the preview server. VitePress writes the generated site to `docs/.vitepress/dist`.
+
+The root package provides the shared Prettier setup. Check repository formatting with:
+
+```sh
+npm run lint:prettier
+```
+
+The PR workflow runs this formatting check as part of `npm run lint`. Prettier respects the repository's ignore configuration. The documentation build is a separate command.
+
+## JavaScript standards
+
+Use the repository's configured Node.js version and run `npm ci` from the repository root to install the locked development tools.
+ESLint checks all maintained `.js`, `.mjs`, and `.cjs` files, including tooling under `.github`, documentation loaders, and JavaScript in solutions.
+The configuration excludes generated VitePress output/cache, `node_modules`, and naming reports.
+ESLint doesn't check TypeScript, Vue, JavaScript embedded in Markdown, or inline JavaScript in workflow YAML.
+
+The flat configuration in `.github/eslint/eslint.config.mjs` combines recommended JavaScript error detection with `eqeqeq`, `prefer-const` and explicit formatting rules through `@stylistic`:
+
+- Two spaces for indentation.
+- Single quotes, allowing double quotes when they avoid escaping.
+- Required semicolons.
+- Trailing commas for multiline lists.
+- Consistent spacing and no trailing whitespace.
+
+Run these commands from the repository root:
+
+```sh
+npm run js:lint
+npm run js:lint:fix
+```
+
+The second command applies safe automatic fixes. Review the diff and resolve any remaining errors manually.
+Because the configuration lives under `.github/eslint` rather than in the root, direct ESLint invocations must include `--config .github/eslint/eslint.config.mjs`.
+The npm scripts and the recommended VS Code ESLint extension already use that configuration. This setup doesn't enable automatic fixes on save.
+
+`.mjs` files use ES modules and `.cjs` files use CommonJS.
+Plain `.js` files use script mode, except for `.github` tooling, which uses CommonJS.
+The configuration enables Node.js globals only for `.github` tooling and documentation `.mjs` loaders.
+If browser or Dataverse scripts need platform globals, declare them in a narrowly scoped configuration block. Don't enable Node.js globals or disable undefined-variable checks for all files.
+
+Every valid pull request runs `npm run lint`, which includes `npm run lint:eslint`.
+The validator checks the entire JavaScript scope, not just changed files, and errors or warnings fail the shared **Validation result** check.
+Require this check in branch protection to prevent merges. The lint setup doesn't change repository protection settings.
 
 ## Prerequisites
 
@@ -17,7 +147,7 @@ Before starting, make sure that you have:
 - An Azure subscription in the same Microsoft Entra tenant as the Dataverse environment.
 - Permission to create an Azure Key Vault and assign roles.
 
-## Set Up Git Integration
+## Set up Git integration
 
 The setup uses the existing PPAT GitHub App:
 
@@ -34,30 +164,30 @@ Never commit the GitHub App Private Key or a Personal Access Token (PAT) to the 
 ### 1. Request access
 
 1. Ask a PPAT administrator for the GitHub App private key (`.pem` file).
-1. Ask the administrator to grant your account temporary administrator access to the PPAT repository if you do not already have it. This access is required to establish the connection.
+1. Ask the administrator to grant your account temporary administrator access to the PPAT repository if you don't already have it. You need this access to establish the connection.
 
-### 2. Configure Azure Key Vault
+### 2. Configure a key vault in Azure
 
-1. In the developer tenant, create or select an Azure Key Vault.
+1. In the developer tenant, select an existing Azure Key Vault or create one.
 1. Navigate to the **Access control (IAM)** section of the Key Vault.
 1. Assign your account the **Key Vault Administrator** role on the vault.
 1. In the Key Vault, go to **Keys** and select **Generate/Import**.
-1. Select **Import**, choose the supplied `.pem` file, enter a recognizable key name (e.g. `ppat-github-app-private-key`), and create the key.
+1. Select **Import**, choose the supplied `.pem` file, enter a recognizable key name (for example, `ppat-github-app-private-key`), and create the key.
 1. Record the Key Vault URI and key name. You need both when connecting the solution.
 
 ::: info Import the private key correctly
 Import the file as a **key**, not as a secret. See [Configure Azure Key Vault](https://learn.microsoft.com/en-us/power-platform/alm/git-integration/connecting-to-github#configure-azure-key-vault) for the current Microsoft procedure.
 :::
 
-### 3. Create a fine-grained Personal Access Token (PAT)
+### 3. Create a fine-grained personal access token
 
 Create a temporary fine-grained PAT in GitHub for the initial connection:
 
-1. Set the resource owner to `Powerbouwer`.
+1. Choose `Powerbouwer` as the resource owner.
 1. Limit repository access to the `power-platform-administration-tool` repository.
-1. Under **Repository permissions**, set **Contents** to **Read and write**.
-1. Leave all other repository permissions at their minimum required values.
-1. Set a short expiration period and create the token.
+1. Update the **Contents** permission to **Read and write**.
+1. Keep all other repository permissions at their minimum required values.
+1. Choose a short expiration period and create the token.
 1. Store the token temporarily in a secure location. GitHub only displays it once.
 
 ### 4. Connect the solution
@@ -74,21 +204,21 @@ Create a temporary fine-grained PAT in GitHub for the initial connection:
 The interface is currently a preview feature and can change. Follow [Connect Dataverse Git integration to GitHub](https://learn.microsoft.com/en-us/power-platform/alm/git-integration/connecting-to-github) alongside these project-specific settings.
 :::
 
-### 5. Grant Key Vault access to Dataverse
+### 5. Give Dataverse access to the key vault
 
-After the GitHub App configuration is created, Dataverse creates a managed identity for it. In Microsoft Entra ID, this identity is represented by a service principal.
+After you create the GitHub App configuration, Dataverse creates a managed identity for it. Microsoft Entra ID represents this identity as a service principal.
 
 1. Open the Key Vault in the Azure portal and go to **Access control (IAM)**.
 1. Add the **Key Vault Crypto User** role assignment.
-1. For **Assign access to**, select **User, group, or service principal**. Do not select **Managed identity**, because the Dataverse identity does not appear in that list.
+1. For **Assign access to**, select **User, group, or service principal**. Don't select **Managed identity**, because that list doesn't show the Dataverse identity.
 1. Select **Members**, search for the following name, and select the matching application (service principal):
 
-	```text
-	PPMI-githubappconfigmanagedidentity-{GUID}
-	```
+   ```text
+   PPMI-githubappconfigmanagedidentity-{GUID}
+   ```
 
 ::: info Managed identity availability
-The identity is created asynchronously. If it is not available yet, wait briefly and check **Settings** > **System Jobs** in the Dataverse environment for errors related to the GitHub App configuration.
+Dataverse creates the identity asynchronously. If it doesn't appear, check **Settings** > **System Jobs** in the Dataverse environment for GitHub App configuration errors.
 :::
 
 ### 6. Verify and clean up
@@ -97,45 +227,35 @@ The identity is created asynchronously. If it is not available yet, wait briefly
 1. Verify the provider, organization, repository, branch, and folder.
 1. Commit a small solution change to confirm that the end-to-end connection works.
 1. Revoke or delete the fine-grained PAT after the test commit succeeds. Runtime access uses the GitHub App.
-1. Ask a PPAT administrator to remove any temporary repository administrator access that is no longer required.
+1. Ask a PPAT administrator to remove temporary repository administrator access after connection setup.
 
-## Branch Strategy
+## Branch strategy
 
-PPAT uses shared release and sprint branches:
+Create branches manually from `main` and choose a descriptive name. There's no required branch prefix, solution token, version, or sprint number. Existing branches can keep their names.
 
-<VPButton
-	text="Create development branches"
-	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/create-dev-branch.yml"
-	theme="brand"
-/>
+1. Create a branch in GitHub or with Git.
+1. For solution work, connect each participating developer environment to the agreed branch.
+1. Collaborate by pulling from and pushing to that branch.
+1. Before merging solution changes to `main`, set each changed solution's version to an unused `X.Y.Z.0` release version.
+1. Create or reuse an open `{uniqueName}-vX.Y.Z` milestone for each release. Assign and close the completed issues before merging.
+1. Open a pull request to `main` when the work is ready.
 
-1. Open **Actions** > **Create development branches** in GitHub.
-1. Select the `solution` you are going to work on, enter the three-part release version without a `v` prefix, for example `1.0.0`, and enter the numeric sprint number.
-1. The workflow creates `{solution}/v{major}.{minor}.{build}/release` from `main`, updates that solution to `{major}.{minor}.{build}.0`, and creates an open `{solution}-v{major}.{minor}.{build}` milestone.
-1. The workflow creates `{solution}/v{major}.{minor}.{build}/spr-{sprint number}` from the release branch. For example, sprint 70 targeting core release `1.0.0` uses `core/v1.0.0/spr-70`. If the release branch already exists with the expected solution version, only the new sprint branch is created.
-1. Additional sprint branches for the same release reuse the existing open milestone.
-1. Connect each participating developer environment to the shared sprint branch.
-1. Collaborate by pulling from and pushing to that sprint branch.
-1. Merge completed sprint work into the release branch. The solution and version in the sprint branch must exactly match the target release branch.
-1. When the release is ready, merge the release branch into `main`.
+Milestone names use `{uniqueName}-vX.Y.Z`. Release tags match the ZIP asset filename prefix: `{uniqueName}_X_Y_Z_0`. For example, `ppat_core` version `1.0.0.0` uses the release tag `ppat_core_1_0_0_0`.
 
-Branch tokens use kebab-case, while Dataverse solution names use underscores. Workflows add the fixed `ppat_` prefix and replace hyphens with underscores. For example, `core` maps to `ppat_core`, and `change-viewer` maps to `ppat_change_viewer`.
+Pull request checks classify changes by file path, not branch name. A PR can change multiple solutions. Spectral checks solution resource naming independently of branch names.
 
-The **Development changes only** check permits a solution pull request to change only its corresponding `solutions/ppat_*/` folder, files below `docs/`, and the root files `package.json`, `package-lock.json`, and `.gitignore`. It checks both current and previous paths for renamed files. A sprint branch may only target the release branch whose solution and version appear in its name, and a release branch may only target `main`.
+The workflow labels pull requests based on changed paths. It applies `dev` to solution changes, `docs` to documentation changes, and `project` to repository changes. Mixed changes receive multiple labels. Keep development and project changes in separate PRs. Combining them fails validation. You can include documentation changes with either category. Labels show the review scope, and validators enforce the policy.
 
-Pull requests are automatically labeled by change type. Solution sprint and release pull requests receive `dev`, pull requests from `docs/*` receive `docs`, and pull requests from `project/*` receive `project`. These labels make the expected review scope visible; the branch-route and changed-file checks remain the enforcement mechanism.
-
-We deliberately use a shared sprint branch instead of separate feature branches because development is performed as planned sprint work. Developers regularly need to exchange work between their individual environments, and the shared branch keeps this to a straightforward pull-and-push workflow. It also avoids branch-related issues previously encountered with native Git integration.
+Developers can share a branch to exchange work between their individual environments through native Git integration. Agree on the branch with the participating developers. Its name doesn't affect validation.
 
 ### Patches
 
 Production patches follow a separate path:
 
-1. Start a release cycle with an incremented build number. For example, a core patch for `core-v1.0.0` uses version `1.0.1` and release branch `core/v1.0.1/release`.
+1. Create a branch for the fix and increment the build number. For example, a `ppat_core` patch for `ppat_core-v1.0.0` uses solution version `1.0.1.0`.
 1. Complete and verify the fix on the patch branch.
 1. Merge the patch into `main`.
-1. Apply the same patch to the active release branch so that the fix is retained in the next release.
-
+1. Apply the same patch to any active development branches to carry the fix into the next release.
 
 ## Versioning
 
@@ -147,104 +267,96 @@ MAJOR.MINOR.BUILD.REVISION
 
 | Part       | Meaning                                                                                            |
 | ---------- | -------------------------------------------------------------------------------------------------- |
-| `MAJOR`    | The PPAT module. Each module is assigned a major version.                                          |
+| `MAJOR`    | Identifies the PPAT module. Each module uses its own major version.                                |
 | `MINOR`    | A new feature set or a meaningful increment of work within that module.                            |
 | `BUILD`    | The patch number. Increment it for a bug fix or small, nonbreaking change.                         |
 | `REVISION` | An automatically incremented deployment iteration within the same major, minor, and build version. |
 
-Release branch names use the first three components of the solution version in `{solution}/vX.Y.Z/release`. Sprint branches use `{solution}/vX.Y.Z/spr-N`. Both branch names share the `{solution}/vX.Y.Z` namespace, so Git can store them as sibling refs. The deployment-generated revision is not included in either branch name. For example, core solution version `1.0.1.4` belongs to release branch `core/v1.0.1/release`, with sprint 70 on `core/v1.0.1/spr-70`. Solutions are versioned independently. Before using the new names for an existing release, rename its old `{solution}/vX.Y.Z` release branch to `{solution}/vX.Y.Z/release`; the old ref blocks creating either nested branch.
+Each solution has an independent version. Branch names don't determine that version. Before merging solution changes to `main`, update the solution metadata to `X.Y.Z.0` and create or reuse the matching open `{uniqueName}-vX.Y.Z` milestone. The release workflow reads the version from the metadata and rejects an existing release tag.
 
-Solution metadata is stored in `solutions/{unique name}/solutions/{unique name}/solution.yml`. Release packaging uses `solutions/{unique name}` as the native Dataverse Git YAML root.
+Store solution metadata in `solutions/{unique name}/solutions/{unique name}/solution.yml`. Release packaging uses `solutions/{unique name}` as the native Dataverse Git YAML root.
 
 ### Initialize a new solution
 
 A repository maintainer prepares a solution before its first development cycle:
 
-1. Add its kebab-case token to the solution dropdown in the **Create development branches** workflow. This dropdown is the only registered-solution list. The technical unique name is `ppat_` plus the token with hyphens replaced by underscores.
-1. Run **Create development branches**. The workflow may create the release and sprint branches even though the solution folder doesn't exist yet.
-1. Connect Power Platform Git integration to the new sprint branch and Git folder `solutions`, then commit the solution. Git integration creates `solutions/{unique name}/`.
-1. Set the new solution's version to the `X.Y.Z.0` version represented by the target release branch. The **Development changes only** check enforces this version before merge.
-1. Open a pull request from the sprint branch to its release branch. Continue with the normal release process after the solution metadata exists.
+1. Choose a technical unique name with the `ppat_` prefix and underscores, such as `ppat_change_viewer`.
+1. Create a branch from `main`.
+1. Connect Power Platform Git integration to the new branch and Git folder `solutions`, then commit the solution. Git integration creates `solutions/{unique name}/`.
+1. Assign the new solution an unused `X.Y.Z.0` version and create the matching open release milestone.
+1. Open a pull request to `main`. Continue with the normal release process after the solution metadata exists.
 
-The scope, release, and publishing workflows derive solution names from branches, changed paths, or tags. They validate the derived technical name against the solution metadata, so they don't maintain separate solution lists.
+The release workflow derives solution names from changed paths and compares them with the solution metadata. It doesn't maintain a separate solution list or derive solution names from branches.
 
-The development, documentation, and project scope checks succeed without further validation when GitHub returns no changed files, for example for a newly created branch that doesn't differ from its target yet. Failure to retrieve the changed files is still an error. Pull requests with changes remain subject to all path, branch-route, and solution metadata checks.
+The pull request validation workflow classifies both the old and new paths of a renamed file. For every valid PR, it installs dependencies, audits them, and runs `npm run lint`. That command checks vulnerability documentation, formatting, prose, JavaScript, and solution naming. It doesn't check branch names or compare versions with branch names. If the workflow can't retrieve the diff, it reports an error.
 
-## Documentation Changes
+## Documentation changes
 
-Documentation work does not require a solution release cycle:
+Documentation work doesn't require a solution release cycle:
 
-<VPButton
-	text="Create documentation branch"
-	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/create-docs-branch.yml"
-	theme="brand"
-/>
-
-1. Open **Actions** > **Create documentation branch**.
-1. Enter a short lowercase kebab-case name, for example `update-installation`.
-1. The workflow creates `docs/update-installation` from the current `main` branch.
+1. Create a branch from `main` in GitHub or with Git.
+1. Choose a descriptive name. You don't need a documentation prefix.
 1. Commit documentation changes and open a pull request to `main`.
 
-A pull request from `docs/*` may modify files below `docs/`, plus the root files `package.json`, `package-lock.json`, and `.gitignore`. The package files are included because they configure and lock the VitePress toolchain. The **Documentation changes only** check blocks all other renamed, removed, or added files. Changes to `docs/` or either package file trigger the documentation deployment after merge. Documentation changes don't create a solution release.
+Changes below `docs/`, including `.vitepress/`, are docs work. The PR workflow checks formatting and prose but doesn't build the VitePress site. Changes to `docs/` or either package file trigger the documentation deployment after merge. Documentation changes don't create a solution release.
 
-## Project Changes
+## Project changes
 
-Repository-wide changes that don't modify Power Platform solutions use a separate project branch:
+Repository-wide changes that don't modify Power Platform solutions use a separate branch:
 
-<VPButton
-	text="Create project branch"
-	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/create-project-branch.yml"
-	theme="brand"
-/>
-
-1. Open **Actions** > **Create project branch**.
-1. Enter a short lowercase kebab-case name, for example `update-workflows`.
-1. The workflow creates `project/update-workflows` from the current `main` branch.
+1. Create a branch from `main` in GitHub or with Git.
+1. Choose a descriptive name. You don't need a project prefix.
 1. Commit the project changes and open a pull request to `main`.
 
-The **Project files only** check allows changes anywhere in the repository except below `solutions/`. This includes repository configuration, workflows, community files, build and CI/CD tooling, package files, and documentation. Changes below `solutions/` require the corresponding solution development and release cycle, because merging them to `main` starts the solution release workflow.
+Project changes include repository configuration such as `.github/` and paths outside solution or documentation content. The PR workflow runs the same repository-wide lint checks regardless of the changed category.
 
-The check evaluates both the current and previous paths of renamed files. Moving a file into or out of `solutions/` is therefore also blocked on a project branch.
+You can combine documentation with project or solution changes, but you can't combine solution and project changes in one pull request. Solution changes still require the corresponding solution development and release cycle because merging them to `main` starts the solution release workflow.
 
-## Branch Governance
+## Branch governance
 
-Engineers with repository write access can update existing sprint, documentation, and project branches and open pull requests. They don't create branches manually. Maintainers have ruleset bypass access for exceptional recovery work, so this policy deliberately has a controlled administrative escape hatch.
+Engineers with repository write access create and update working branches and open pull requests. Branch names don't determine the review scope or required checks.
 
-For every pull request targeting `main`, the author must select a fellow developer as reviewer. At least one approval is required before the pull request can be merged.
+Repository administrators must also update GitHub settings when removing the branch creation workflows:
 
-The branch workflows use the repository secret `BRANCH_AUTOMATION_TOKEN`. The token and its expiration date are stored in the team's restricted 1Password vault. The repository administrator must renew the token before it expires.
+1. Open **Settings** > **Rules** > **Rulesets** and inspect the rules that apply to working branches.
+1. Remove branch name restrictions and disable **Restrict creations** where it prevents developers from creating working branches. If a ruleset exists only for those restrictions, disable or delete that ruleset.
+1. Check **Settings** > **Branches** for classic branch protection rules with equivalent restrictions.
+1. Remove required status checks belonging to deleted workflows, if configured. Keep **Validation result**, required reviews, and protections for `main`.
 
-## Release Process
+Keep unrelated protections in place. If an organization-level ruleset supplies the restrictions, an organization administrator must update it.
 
-Before merging a release branch to `main`, assign every completed issue included in the release to the `{solution}-vX.Y.Z` milestone and close it.
+For every pull request targeting `main`, the person who opens it must select a fellow developer as reviewer. A maintainer must approve the pull request before GitHub can merge it.
 
-Reference related issues in pull requests with `Refs #123`, using one line per issue. A reference makes the relationship visible but doesn't close the issue or include it in release notes. Avoid `Closes #123` in sprint-to-release pull requests because GitHub only applies closing keywords when a pull request is merged into the default branch. Release notes include an issue only when it is closed and assigned to the matching milestone before the release branch is merged into `main`.
+The **Document issues** workflow still uses the repository secret `BRANCH_AUTOMATION_TOKEN` to create documentation pull requests. Don't delete this secret when removing the branch creation workflows. The team stores the token and its expiration date in a restricted 1Password vault. The repository administrator must renew the token before it expires.
 
-When solution files under `solutions/` change on `main`, the release workflow:
+## Release process
 
-1. Confirms that exactly one registered solution changed and reads `X.Y.Z.0` from its metadata.
-1. Packs managed and unmanaged ZIP files from the repository with Power Platform CLI.
-1. Validates both packages and generates SHA-256 checksums.
-1. Creates tag `{solution}-vX.Y.Z` and a public GitHub pre-release that isn't marked as **Latest**.
+Before merging solution changes to `main`, create or reuse an open `{uniqueName}-vX.Y.Z` milestone, assign every completed issue included in the release to it, and close those issues.
+
+Reference related issues in pull requests with `Refs #123`, using one line per issue. A reference makes the relationship visible but doesn't close the issue or include it in release notes. GitHub applies closing keywords such as `Closes #123` only when someone merges a pull request into the default branch. Write release notes manually in GitHub and include the relevant issue links.
+
+When solution files under `solutions/` change on `main`, the release workflow detects all changed solutions and runs these steps for each solution:
+
+1. Reads `X.Y.Z.0` from the solution metadata.
+1. Packs managed and unmanaged ZIP files from the repository with Power Platform Actions.
+1. Creates a tag matching the ZIP filename prefix, `{uniqueName}_X_Y_Z_0`, and a public GitHub pre-release that isn't marked as **Latest**.
 1. Names the solution assets like a platform export: `{unique name}_X_Y_Z_0.zip` for unmanaged and `{unique name}_X_Y_Z_0_managed.zip` for managed.
-1. Adds all closed issues assigned to milestone `{solution}-vX.Y.Z` to the release notes. Pull requests assigned to the milestone are excluded.
 
-Import the managed ZIP into a test environment and complete acceptance testing. When approved, open **Actions** > **Publish solution release**, enter the existing `{solution}-vX.Y.Z` tag, and approve the `production-release` environment when required. Publishing removes the pre-release status, marks the same release as stable and **Latest**, and closes the matching milestone. It doesn't change visibility, rebuild, or replace its assets.
+The builds run in parallel. If one solution fails, the other builds continue. The workflow has no manual trigger and refuses to replace an existing release tag. Before merging to `main`, confirm that each changed solution has a new version.
 
-<VPButton
-	text="Publish solution release"
-	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/publish-release.yml"
-	theme="brand"
-/>
+Manage release scope by assigning issues to milestones in GitHub. The workflow doesn't read or require a milestone and leaves release notes empty for manual editing. Each pre-release contains only the managed and unmanaged ZIP files.
 
-<VPButton
-	text="Publish solution release"
-	href="https://github.com/Powerbouwer/power-platform-administration-tool/actions/workflows/publish-release.yml"
-	theme="brand"
-/>
+Import the managed ZIP into a test environment and complete acceptance testing. After approval, publish the existing release manually in GitHub:
 
-Configure the `production-release` GitHub Environment with required reviewers to separate testing from production approval.
+1. Open [Releases](https://github.com/Powerbouwer/power-platform-administration-tool/releases) and edit the pre-release matching the tag `{uniqueName}_X_Y_Z_0`.
+1. Add the release notes and links to the included issues.
+1. Remove ` (pre-release)` from the title. Keep the existing tag and ZIP files.
+1. Clear **Set as a pre-release** and select **Set as the latest release**.
+1. Select **Update release**.
+1. Close the matching `{uniqueName}-vX.Y.Z` milestone.
 
-## Naming Conventions
+This keeps the tested assets unchanged. Publish releases manually. No separate workflow or automated approval gate handles publication.
 
-Naming conventions will be added in a later revision of this guide.
+## Naming conventions
+
+The team will add naming conventions in a later revision of this guide.

@@ -1,0 +1,58 @@
+{
+  "name": "Power Platform Administration Tool",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu26.04",
+  "features": {
+    "ghcr.io/devcontainers/features/node:2": {
+      "version": "26.13.1",
+      "npmVersion": "11.20.0"
+    },
+    "ghcr.io/devcontainers/features/dotnet:2": {
+      "version": "10.0"
+    }
+  },
+  "postCreateCommand": "dotnet tool restore",
+  "forwardPorts": [5173, 4173],
+  "portsAttributes": {
+    "5173": {
+      "label": "VitePress",
+      "onAutoForward": "silent"
+    },
+    "4173": {
+      "label": "VitePress Preview",
+      "onAutoForward": "silent"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot-chat",
+        "github.vscode-github-actions",
+        "MS-SarifVSCode.sarif-viewer",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "stoplight.spectral",
+        "chrischinchilla.vale-vscode",
+        "yzhang.markdown-all-in-one",
+        "redhat.vscode-yaml",
+        "Vue.volar",
+        "ms-vscode-remote.remote-containers",
+        "microsoft-IsvExpTools.powerplatform-vscode",
+        "GitHub.vscode-pull-request-github"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "vale.valeCLI.installVale": true,
+        "vale.valeCLI.config": ".vale.ini",
+        "yaml.schemas": {
+          "https://raw.githubusercontent.com/microsoft/PowerApps-Tooling/master/schemas/pa-yaml/v3.0/pa.schema.yaml": "*.pa.yaml"
+        },
+        "json.schemaDownload.trustedDomains": {
+          "https://github.com/IBM/audit-ci/raw/main/docs/schema.json": true
+        },
+        "sarif-viewer.connectToGithubCodeScanning": "off"
+      }
+    },
+    "remoteUser": "vscode"
+  }
+}

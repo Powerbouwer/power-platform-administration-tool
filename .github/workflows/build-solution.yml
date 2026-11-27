@@ -1,0 +1,116 @@
+name: Build and pre-release solution
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "solutions/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: solution-release
+  cancel-in-progress: false
+
+jobs:
+  changes:
+    name: Detect changed solutions
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+    outputs:
+      solutions: ${{ steps.changes.outputs.solutions }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        # Fetch the full history for accurate change detection
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+
+      - name: Install dependencies
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+        run: |
+          if [[ -z "$NODE_AUTH_TOKEN" ]]; then
+            echo "::error::Repository secret GH_PACKAGES_TOKEN is missing or unavailable."
+            exit 1
+          fi
+          npm ci
+
+      - name: Audit dependencies
+        run: npm run audit
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Detect changed solutions
+        id: changes
+        run: node scripts/classify-scope.mjs
+
+  release:
+    name: Build and pre-release ${{ matrix.solution.name }}
+    needs: changes
+    runs-on: ubuntu-26.04
+    strategy:
+      fail-fast: false
+      matrix:
+        solution: ${{ fromJSON(needs.changes.outputs.solutions) }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Checkout release commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Create output directory
+        run: mkdir -p dist
+
+      - name: Read PAC CLI version
+        id: pac-version
+        run: echo "version=$(jq -er '.tools["microsoft.powerapps.cli.tool"].version' .config/dotnet-tools.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Install Power Platform tools
+        uses: microsoft/powerplatform-actions/actions-install@v1.9.2
+        with:
+          pac-version-override: ${{ steps.pac-version.outputs.version }}
+
+      - name: Pack managed solution
+        uses: microsoft/powerplatform-actions/pack-solution@v1.9.2
+        with:
+          solution-folder: solutions/${{ matrix.solution.name }}
+          solution-file: dist/${{ matrix.solution.filename }}_managed.zip
+          solution-type: Managed
+
+      - name: Pack unmanaged solution
+        uses: microsoft/powerplatform-actions/pack-solution@v1.9.2
+        with:
+          solution-folder: solutions/${{ matrix.solution.name }}
+          solution-file: dist/${{ matrix.solution.filename }}.zip
+          solution-type: Unmanaged
+
+      - name: Create pre-release
+        env:
+          FILE_PREFIX: ${{ matrix.solution.filename }}
+          TAG: ${{ matrix.solution.tag }}
+        run: |
+          gh release create "$TAG" \
+            "dist/${FILE_PREFIX}_managed.zip#Managed solution" \
+            "dist/${FILE_PREFIX}.zip#Unmanaged solution" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "$TAG (pre-release)" \
+            --notes "" \
+            --prerelease \
+            --latest=false
