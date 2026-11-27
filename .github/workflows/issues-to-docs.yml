@@ -82,4 +82,4 @@ jobs:
             --base "$BASE" \
             --head "$BRANCH" \
             --title "$PR_TITLE" \
-            --template .github/pull_request_template.md
+            --body-file .github/pull_request_template.md
