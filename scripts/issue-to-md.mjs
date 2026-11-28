@@ -25,7 +25,10 @@ const createBodyField = (issue) => {
       const adrTitle = issue.title.replace(/^.*?\[ADR\] /su, ""),
         field = createBodyField(issue),
         sections = [
-          ["Context and problem statement", field("Context and problem statement")],
+          [
+            "Context and problem statement",
+            field("Context and problem statement"),
+          ],
           ["Decision drivers", field("Decision drivers")],
           ["Considered options", field("Considered options")],
           ["Decision outcome", field("Decision outcome")],
@@ -73,7 +76,8 @@ const createBodyField = (issue) => {
             `# ${adrTitle}`,
             `Source: [Issue #${issue.number}](${issue.html_url})`,
             ...sections,
-          ].join("\n\n") + "\n",
+          ].join("\n\n") +
+          "\n",
         path: `docs/architecture/decisions/${slug}/index.md`,
         title: `Document ADR from issue #${issue.number}`,
       };
