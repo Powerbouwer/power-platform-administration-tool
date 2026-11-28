@@ -51,6 +51,7 @@ jobs:
           exit 1
 
       - name: Install package lock dependencies
+        if: github.actor != 'dependabot[bot]'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
         run: |
@@ -61,9 +62,11 @@ jobs:
           npm ci
 
       - name: Audit dependencies
+        if: github.actor != 'dependabot[bot]'
         run: npm run audit
 
       - name: Lint repository
+        if: github.actor != 'dependabot[bot]'
         run: npm run lint
 
   label-pull-request:
