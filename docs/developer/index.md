@@ -78,7 +78,7 @@ Use your own GitHub account with access to the package. The same steps apply on 
 
 GitHub Actions uses the `GH_PACKAGES_TOKEN` repository secret instead of a developer's local token. An administrator must add a personal access token (classic) as `GH_PACKAGES_TOKEN` under **Settings** > **Secrets and variables** > **Actions**. The token must have `read:packages` and access to the package. Renew it before it expires.
 
-Workflows triggered by Dependabot use Dependabot secrets. Add `GH_PACKAGES_TOKEN` under **Settings** > **Secrets and variables** > **Dependabot** too. Pull requests from forks normally can't access repository secrets, so those pull requests can't install this package using this secret.
+Pull request checks skip dependency installation, auditing, and linting for Dependabot pull requests because Dependabot can't access repository secrets. Pull requests from forks normally can't access repository secrets, so those pull requests can't install this package using this secret either.
 
 ## Documentation development
 
