@@ -24,6 +24,32 @@ const createBodyField = (issue) => {
       // Remove the [ADR] prefix from the issue title if present to get the ADR title
       const adrTitle = issue.title.replace(/^.*?\[ADR\] /su, ""),
         field = createBodyField(issue),
+        sections = [
+          [
+            "Context and problem statement",
+            field("Context and problem statement"),
+          ],
+          ["Decision drivers", field("Decision drivers")],
+          ["Considered options", field("Considered options")],
+          ["Decision outcome", field("Decision outcome")],
+          ["Consequences", field("Consequences")],
+          ["Participants", field("Participants")],
+          ["Links", field("Links")],
+        ]
+          .filter(([, content]) => content)
+          .map(
+            ([heading, content]) =>
+              `## ${heading}\n\n${content
+                .replace(/\n{3,}/gu, "\n\n")
+                .replace(
+                  /^(Positive|Negative or trade-offs|Follow-up):?\n(?=- )/gmu,
+                  "**$1:**\n\n",
+                )
+                .replace(
+                  /^(Positive|Negative or trade-offs|Follow-up):?$/gmu,
+                  "**$1:**",
+                )}`,
+          ),
         // Generate a URL-friendly slug from the ADR title
         slug = adrTitle
           .toLowerCase()
@@ -46,8 +72,12 @@ const createBodyField = (issue) => {
             .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
             .join("\n")}\n---\n\n` +
           // Main content for the ADR document follows the front matter
-          `# ${adrTitle}\n\n` +
-          `Source: [Issue #${issue.number}](${issue.html_url})\n\n${issue.body}\n`,
+          [
+            `# ${adrTitle}`,
+            `Source: [Issue #${issue.number}](${issue.html_url})`,
+            ...sections,
+          ].join("\n\n") +
+          "\n",
         path: `docs/architecture/decisions/${slug}/index.md`,
         title: `Document ADR from issue #${issue.number}`,
       };
